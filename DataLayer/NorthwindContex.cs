@@ -2,42 +2,34 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
+
 namespace DataLayer;
+
 
 public class NorthwindContex : DbContext
 {
 
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<Product> Products { get; set; }
+    public DbSet<Objects.Media> Media { get; set; }
+    //public DbSet<Product> Products { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder
             .LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
-        optionsBuilder.UseNpgsql("host=localhost;db=northwind;uid=bulskov;pwd=henrik");
+        optionsBuilder.UseNpgsql("host=cit.ruc.dk;db=cit04;uid=cit04;pwd=xbSNeklDajCG");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Category>().ToTable("categories");
-        modelBuilder.Entity<Category>()
-            .Property(x => x.Id).HasColumnName("categoryid");
-        modelBuilder.Entity<Category>()
-            .Property(x => x.Name).HasColumnName("categoryname");
-        modelBuilder.Entity<Category>()
-            .Property(x => x.Description).HasColumnName("description");
+        modelBuilder.Entity<Objects.Media>().ToTable("media");
+        modelBuilder.Entity<Objects.Media>()
+            .Property(x => x.Id).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.Media>()
+            .Property(x => x.Title).HasColumnName("title");
 
 
-        modelBuilder.Entity<Product>().ToTable("products");
-        modelBuilder.Entity<Product>()
-            .Property(x => x.Id).HasColumnName("productid");
-        modelBuilder.Entity<Product>()
-            .Property(x => x.Name).HasColumnName("productname");
-        modelBuilder.Entity<Product>()
-            .Property(x => x.Price).HasColumnName("unitprice");
-        modelBuilder.Entity<Product>()
-            .Property(x => x.CategoryId).HasColumnName("categoryid");
+
     }
 }
 
