@@ -30,6 +30,20 @@ public class MediaController : BaseController
 
         return Ok(result);
     }
+
+    [HttpGet("{id}", Name = nameof(GetMedia))]
+    public IActionResult GetMedia(string id)
+    {
+        var media = _dataService.GetMedia(id);
+        if (media == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(CreateMediaModel(media));
+    }
+
+
     private MediaModel CreateMediaModel(Media media)
     {
         return new MediaModel

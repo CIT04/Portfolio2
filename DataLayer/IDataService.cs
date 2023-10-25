@@ -7,5 +7,10 @@ namespace DataLayer
     public interface IDataService
     {
         (IList<Media> products, int count) GetMedias(int page, int pageSize);
+        
+        Media? GetMedia(string id);
+
+        IList<Media> GetMediasByTitle(string search);
+
     }
 }

@@ -18,5 +18,16 @@ public class DataService : IDataService
                 .ToList();
             return (media, db.Media.Count());
     }
+    public IList<Media> GetMediasByTitle(string search)
+    {
+        var db = new NorthwindContex();
+        return db.Media.Where(x => x.Title.ToLower().Contains(search.ToLower())).ToList();
+    }
+
+    public Media? GetMedia(string id)
+    {
+        var db = new NorthwindContex();
+        return db.Media.FirstOrDefault(x => x.Id == id);
+    }
 }
 
