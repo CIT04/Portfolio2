@@ -13,6 +13,7 @@ public class NorthwindContex : DbContext
     public DbSet<Objects.Team> Team { get; set; }
     public DbSet<Objects.User> User { get; set; }
 
+    public DbSet<Objects.SeasonEpisode> SeasonEpisode{ get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
@@ -66,8 +67,16 @@ public class NorthwindContex : DbContext
             .Property(x => x.Id).HasColumnName("u_id");
         modelBuilder.Entity<Objects.User>()
             .Property(x => x.Username).HasColumnName("username");
-        
 
+        modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");
+        modelBuilder.Entity<Objects.SeasonEpisode>()
+            .Property(x => x.M_id).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.SeasonEpisode>()
+            .Property(x => x.Episode).HasColumnName("episode");
+        modelBuilder.Entity<Objects.SeasonEpisode>()
+            .Property(x => x.SeasonNumber).HasColumnName("seasonnumber");
+        modelBuilder.Entity<Objects.SeasonEpisode>()
+            .Property(x => x.TotalSeasons).HasColumnName("totalseasons");
 
 
 
