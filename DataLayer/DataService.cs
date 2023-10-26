@@ -36,7 +36,7 @@ public class DataService : IDataService
     {
         var db = new NorthwindContex();
         var user =
-            db.Media
+            db.User
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();

@@ -10,7 +10,7 @@ public class NorthwindContex : DbContext
 {
 
     public DbSet<Objects.Media> Media { get; set; }
-    //public DbSet<Product> Products { get; set; }
+    public DbSet<Objects.User> User { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
