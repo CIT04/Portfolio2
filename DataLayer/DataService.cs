@@ -52,6 +52,23 @@ public class DataService : IDataService
         return db.User.FirstOrDefault(x => x.Id == id);
     }
 
+    /*------------SeasonEpisode--------------*/
+    public (IList<SeasonEpisode> products, int count) GetSeasonEpisodes(int page, int pageSize)
+    {
+        var db = new NorthwindContex();
+        var se =
+            db.SeasonEpisode
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (se, db.SeasonEpisode.Count());
+    }
+
+    public SeasonEpisode? GetSeasonEpisode(string id)
+    {
+        var db = new NorthwindContex();
+        return db.SeasonEpisode.FirstOrDefault(x => x.M_id == id);
+    }
 
 }
 
