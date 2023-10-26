@@ -10,6 +10,8 @@ namespace DataLayer
         
         Media? GetMedia(string id);
 
+        User? GetUser(string id);
+
         IList<Media> GetMediasByTitle(string search);
 
         (IList<User>  products, int count) GetUsers(int page, int pageSize);

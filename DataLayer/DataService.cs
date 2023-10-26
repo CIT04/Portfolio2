@@ -46,6 +46,12 @@ public class DataService : IDataService
         return (user, db.User.Count());
     }
 
+    public User? GetUser(string id)
+    {
+        var db = new NorthwindContex();
+        return db.User.FirstOrDefault(x => x.Id == id);
+    }
+
 
 }
 
