@@ -52,8 +52,8 @@ public class MediaController : BaseController
             Title = media.Title,
             Year = media.Year,
             Plot = media.Plot,
-            Released = media.Released
-            
+            Released = media.Released,
+            Poster = media.Poster
         };
     }
 

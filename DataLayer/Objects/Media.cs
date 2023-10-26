@@ -19,7 +19,7 @@ namespace DataLayer.Objects
 
         public string Released { get; set; }
 
-        //public string Poster { get; set; }
+        public string Poster { get; set; }
 
         //public int Runtime { get; set; }
 

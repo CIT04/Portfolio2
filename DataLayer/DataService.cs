@@ -32,18 +32,7 @@ public class DataService : IDataService
 
     /*--------User------------*/
 
-<<<<<<< Updated upstream
-    public (IList<User> products, int count) GetUsers(int page, int pageSize)
-    {
-        var db = new NorthwindContex();
-        var user =
-            db.User
-            .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToList();
-        return (user, db.User.Count());
-    }
-=======
+
     //public (IList<User> products, int count) GetUsers(int page, int pageSize)
     //{
     //    var db = new NorthwindContex();
@@ -54,6 +43,6 @@ public class DataService : IDataService
     //        .ToList();
     //    return (user, db.User.Count());
     //}
->>>>>>> Stashed changes
+
 }
 
