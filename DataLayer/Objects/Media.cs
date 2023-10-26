@@ -21,7 +21,7 @@ namespace DataLayer.Objects
 
         public string Poster { get; set; }
 
-        public string Runtime { get; set; }
+        public string? Runtime { get; set; }
 
         ////Måske ikke bool?
         public bool IsAdult { get; set; }

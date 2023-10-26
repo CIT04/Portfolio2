@@ -12,5 +12,6 @@ namespace DataLayer
 
         IList<Media> GetMediasByTitle(string search);
 
+        (IList<User>  products, int count) GetUsers(int page, int pageSize);
     }
 }

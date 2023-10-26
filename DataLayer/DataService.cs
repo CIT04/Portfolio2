@@ -5,6 +5,8 @@ using Microsoft.Extensions.Options;
 using System.Xml.Linq;
 
 namespace DataLayer;
+using DataLayer.Objects; 
+
 
 public class DataService : IDataService
 {
@@ -33,16 +35,20 @@ public class DataService : IDataService
     /*--------User------------*/
 
 
-    //public (IList<User> products, int count) GetUsers(int page, int pageSize)
-    //{
-    //    var db = new NorthwindContex();
-    //    var user =
-    //        db.Media
-    //        .Skip(page * pageSize)
-    //        .Take(pageSize)
-    //        .ToList();
-    //    return (user, db.User.Count());
-    //}
+    public (IList<User> products, int count) GetUsers(int page, int pageSize)
+    {
+        var db = new NorthwindContex();
+        var user =
+            db.User
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (user, db.User.Count());
+    }
 
+    (IList<global::User> products, int count) IDataService.GetUsers(int page, int pageSize)
+    {
+        throw new NotImplementedException();
+    }
 }
 
