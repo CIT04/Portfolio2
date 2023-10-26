@@ -25,8 +25,15 @@ public class NorthwindContex : DbContext
         modelBuilder.Entity<Objects.Media>().ToTable("media");
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Id).HasColumnName("m_id");
+
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Title).HasColumnName("title");
+
+        modelBuilder.Entity<Objects.Media>()
+            .Property(x => x.Year).HasColumnName("year");
+
+        modelBuilder.Entity<Objects.Media>()
+            .Property(x => x.Plot).HasColumnName("plot");
 
 
 
