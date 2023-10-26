@@ -81,6 +81,10 @@ public class NorthwindContex : DbContext
 
         modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");
         modelBuilder.Entity<Objects.SeasonEpisode>()
+    .HasKey(x => x.M_id);
+
+
+        modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.M_id).HasColumnName("m_id");
         modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.Episode).HasColumnName("episode");

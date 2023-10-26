@@ -38,7 +38,13 @@ public class BaseController : ControllerBase
 
     protected string GetUrl(string name, object values)
     {
-        return _linkGenerator.GetUriByName(HttpContext, name, values) ?? "Not specified";
+        var url = _linkGenerator.GetUriByName(HttpContext, name, values);
+        if (url != null)
+        {
+            url = url.TrimEnd('%', '2', '0');
+        }
+        return url ?? "Not specified";
     }
+
 }
 
