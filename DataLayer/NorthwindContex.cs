@@ -39,6 +39,8 @@ public class NorthwindContex : DbContext
             .Property(x => x.Runtime).HasColumnName("runtime");
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.IsAdult).HasColumnName("isadult");
+        modelBuilder.Entity<Objects.Media>()
+            .Property(x => x.Boxoffice).HasColumnName("boxoffice");
 
         modelBuilder.Entity<Objects.User>().ToTable("user");
         modelBuilder.Entity<Objects.User>()

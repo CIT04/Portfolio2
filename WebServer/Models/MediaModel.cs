@@ -17,4 +17,7 @@ public class MediaModel
     public string Runtime { get; set;}
 
     public bool IsAdult { get; set; }
+
+    public string? Boxoffice { get; set; }
+
 }
