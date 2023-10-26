@@ -21,10 +21,10 @@ namespace DataLayer.Objects
 
         public string Poster { get; set; }
 
-        //public int Runtime { get; set; }
+        public string Runtime { get; set; }
 
         ////Måske ikke bool?
-        //public bool IsAdult { get; set; }
+        public bool IsAdult { get; set; }
 
         //public string EndYear {get; set;}
 
