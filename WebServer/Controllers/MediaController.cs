@@ -57,7 +57,8 @@ public class MediaController : BaseController
             Runtime = media.Runtime,
             IsAdult = media.IsAdult,
             EndYear = media.EndYear,
-            Rated = media.Rated
+            Rated = media.Rated,
+            Awards= media.Awards,
 
         };
     }

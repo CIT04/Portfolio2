@@ -28,6 +28,9 @@ namespace DataLayer.Objects
         public string EndYear {get; set;}
 
         public string Rated { get; set;}
+        public string Awards { get; set;}
+
+
 
 
         //Magnler - Awards, Dvd,  Production,Website, Parrenttconst

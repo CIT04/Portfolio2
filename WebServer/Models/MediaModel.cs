@@ -21,4 +21,5 @@ public class MediaModel
 
     public string EndYear { get; set; }
     public string Rated { get; set; }
+    public string Awards { get; set; }
 }
