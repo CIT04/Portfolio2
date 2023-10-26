@@ -8,8 +8,9 @@ namespace DataLayer;
 
 public class NorthwindContex : DbContext
 {
-
+    public DbSet<Objects.Person> Person { get; set; }
     public DbSet<Objects.Media> Media { get; set; }
+    public DbSet<Objects.Team> Team { get; set; }
     public DbSet<Objects.User> User { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -46,6 +47,18 @@ public class NorthwindContex : DbContext
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Awards).HasColumnName("awards");
 
+        modelBuilder.Entity<Objects.Person>().ToTable("person");
+        modelBuilder.Entity<Objects.Person>()
+           .Property(x => x.Id).HasColumnName("p_id");
+        modelBuilder.Entity<Objects.Person>()
+          .Property(x => x.Name).HasColumnName("primaryname");
+
+        modelBuilder.Entity<Objects.Team>().ToTable("team");
+        modelBuilder.Entity<Objects.Team>().HasKey(x => new { x.M_id, x.P_id });
+        modelBuilder.Entity<Objects.Team>()
+            .Property(x => x.M_id).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.Team>()
+            .Property(x => x.P_id).HasColumnName("p_id");
 
 
         modelBuilder.Entity<Objects.User>().ToTable("user");

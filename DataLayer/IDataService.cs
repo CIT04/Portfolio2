@@ -13,5 +13,7 @@ namespace DataLayer
         IList<Media> GetMediasByTitle(string search);
 
         (IList<User>  products, int count) GetUsers(int page, int pageSize);
+        
+        IList<ActorsForMediaDTO> GetActorsForMedia(int page, int pageSize, string m_id);
     }
 }
