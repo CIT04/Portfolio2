@@ -5,20 +5,21 @@ using Microsoft.Extensions.Options;
 using System.Xml.Linq;
 
 namespace DataLayer;
-using DataLayer.Objects; 
+using DataLayer.Objects;
 
 
 public class DataService : IDataService
 {
+
     public (IList<Media> products, int count) GetMedias(int page, int pageSize)
     {
-            var db = new NorthwindContex();
-            var media =
-                db.Media
-                .Skip(page * pageSize)
-                .Take(pageSize)
-                .ToList();
-            return (media, db.Media.Count());
+        var db = new NorthwindContex();
+        var media =
+            db.Media
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (media, db.Media.Count());
     }
     public IList<Media> GetMediasByTitle(string search)
     {
@@ -52,6 +53,7 @@ public class DataService : IDataService
         return db.User.FirstOrDefault(x => x.Id == id);
     }
 
+
     /*------------SeasonEpisode--------------*/
     public (IList<SeasonEpisode> products, int count) GetSeasonEpisodes(int page, int pageSize)
     {
@@ -68,7 +70,26 @@ public class DataService : IDataService
     {
         var db = new NorthwindContex();
         return db.SeasonEpisode.FirstOrDefault(x => x.M_id == id);
+
     }
 
-}
+        public Country? GetCountry(string country)
+        {
+            var db = new NorthwindContex();
+            return db.Country.FirstOrDefault(x => x.country == country);
+
+        }
+
+        public (IList<Country> products, int count) GetCountries(int page, int pageSize)
+        {
+            var db = new NorthwindContex();
+            var country =
+                db.Country
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+            return (country, db.Country.Count());
+        }
+    }
+
 

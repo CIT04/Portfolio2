@@ -10,6 +10,7 @@ namespace DataLayer
         
         Media? GetMedia(string id);
 
+
         User? GetUser(string id);
 
 
@@ -17,7 +18,14 @@ namespace DataLayer
 
         (IList<User>  products, int count) GetUsers(int page, int pageSize);
 
-   
+  
+
+
+        (IList<Country> products, int count) GetCountries(int page, int pageSize);
+        Country? GetCountry(string country);
+
+        
+
 
     }
 }
