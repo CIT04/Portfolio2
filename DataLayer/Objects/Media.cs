@@ -23,10 +23,14 @@ namespace DataLayer.Objects
 
         public string? Runtime { get; set; }
 
-        ////Måske ikke bool?
         public bool IsAdult { get; set; }
 
         public string EndYear {get; set;}
+
+        public string Rated { get; set;}
+
+
+        //Magnler - Awards, Dvd,  Production,Website, Parrenttconst
         
     }
 }
