@@ -51,7 +51,8 @@ public class MediaController : BaseController
             Url = GetUrl(nameof(GetMedias), new { media.Id }),
             Title = media.Title,
             Year = media.Year,
-            Plot = media.Plot
+            Plot = media.Plot,
+            Released = media.Released
             
         };
     }

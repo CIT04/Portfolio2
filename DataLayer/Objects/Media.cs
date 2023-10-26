@@ -17,7 +17,7 @@ namespace DataLayer.Objects
 
         public string Plot { get; set; }
 
-        //public string Released { get; set; }
+        public string Released { get; set; }
 
         //public string Poster { get; set; }
 
