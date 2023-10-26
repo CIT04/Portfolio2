@@ -29,5 +29,18 @@ public class DataService : IDataService
         var db = new NorthwindContex();
         return db.Media.FirstOrDefault(x => x.Id == id);
     }
+
+    /*--------User------------*/
+
+    public (IList<User> products, int count) GetUsers(int page, int pageSize)
+    {
+        var db = new NorthwindContex();
+        var user =
+            db.Media
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (user, db.User.Count());
+    }
 }
 
