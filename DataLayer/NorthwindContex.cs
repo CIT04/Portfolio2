@@ -12,6 +12,7 @@ public class NorthwindContex : DbContext
     public DbSet<Objects.Media> Media { get; set; }
     public DbSet<Objects.Team> Team { get; set; }
     public DbSet<Objects.User> User { get; set; }
+    public DbSet<Objects.Country> Country{ get; set; }
 
     public DbSet<Objects.SeasonEpisode> SeasonEpisode{ get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -67,6 +68,16 @@ public class NorthwindContex : DbContext
             .Property(x => x.Id).HasColumnName("u_id");
         modelBuilder.Entity<Objects.User>()
             .Property(x => x.Username).HasColumnName("username");
+
+
+        modelBuilder.Entity<Objects.Country>().ToTable("country");
+        modelBuilder.Entity<Objects.Country>()
+    .ToTable("country")
+    .HasKey(x => new {  x.country });
+        modelBuilder.Entity<Objects.Country>()
+            .Property(x => x.country).HasColumnName("country");
+
+
 
         modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");
         modelBuilder.Entity<Objects.SeasonEpisode>()
