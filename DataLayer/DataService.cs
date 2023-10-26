@@ -46,9 +46,6 @@ public class DataService : IDataService
         return (user, db.User.Count());
     }
 
-    (IList<global::User> products, int count) IDataService.GetUsers(int page, int pageSize)
-    {
-        throw new NotImplementedException();
-    }
+
 }
 
