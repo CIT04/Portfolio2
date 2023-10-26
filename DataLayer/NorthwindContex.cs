@@ -36,11 +36,13 @@ public class NorthwindContex : DbContext
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Poster).HasColumnName("poster");
         modelBuilder.Entity<Objects.Media>()
+<<<<<<< Updated upstream
             .Property(x => x.Runtime).HasColumnName("runtime");
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.IsAdult).HasColumnName("isadult");
-        modelBuilder.Entity<Objects.Media>()
-            .Property(x => x.Boxoffice).HasColumnName("boxoffice");
+=======
+            .Property(x => x.Endyear).HasColumnName("endyear");
+>>>>>>> Stashed changes
 
         modelBuilder.Entity<Objects.User>().ToTable("user");
         modelBuilder.Entity<Objects.User>()

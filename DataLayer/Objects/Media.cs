@@ -26,14 +26,8 @@ namespace DataLayer.Objects
         ////Måske ikke bool?
         public bool IsAdult { get; set; }
 
-       
-
-        //Magnler - Awards, DVD,Production,Boxoffice
-
-
-        public string? Boxoffice { get; set; }
-
-
+        public string EndYear {get; set;}
+        
     }
 }
 
