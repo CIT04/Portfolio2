@@ -20,4 +20,6 @@ public class MediaModel
     public bool IsAdult { get; set; }
 
     public string EndYear { get; set; }
+    public string Rated { get; set; }
+    public string Awards { get; set; }
 }
