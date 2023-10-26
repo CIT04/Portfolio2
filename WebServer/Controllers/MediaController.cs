@@ -54,8 +54,12 @@ public class MediaController : BaseController
             Plot = media.Plot,
             Released = media.Released,
             Poster = media.Poster,
+<<<<<<< Updated upstream
             Runtime = media.Runtime,
             IsAdult = media.IsAdult
+=======
+            Endyear = media.Endyear
+>>>>>>> Stashed changes
         };
     }
 

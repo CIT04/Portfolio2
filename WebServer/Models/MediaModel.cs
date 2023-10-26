@@ -14,7 +14,11 @@ public class MediaModel
 
     public string Poster { get; set; }
 
+<<<<<<< Updated upstream
     public string Runtime { get; set;}
 
     public bool IsAdult { get; set; }
+=======
+    public string EndYear { get; set; }
+>>>>>>> Stashed changes
 }
