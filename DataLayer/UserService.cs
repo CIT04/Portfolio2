@@ -11,7 +11,7 @@ namespace DataLayer
     {
         public (IList<User> products, int count) GetUsers(int page, int pageSize)
         {
-            var db = new NorthwindContex();
+            var db = new Context();
             var user =
                 db.User
                 .Skip(page * pageSize)
@@ -22,7 +22,7 @@ namespace DataLayer
 
         public User? GetUser(string id)
         {
-            var db = new NorthwindContex();
+            var db = new Context();
             return db.User.FirstOrDefault(x => x.Id == id);
         }
 

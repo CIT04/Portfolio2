@@ -8,12 +8,12 @@ namespace DataLayer;
 using DataLayer.Objects;
 
 
-public class DataService : IDataService
+public class MediaService : IMediaService
 {
 
     public (IList<Media> products, int count) GetMedias(int page, int pageSize)
     {
-        var db = new NorthwindContex();
+        var db = new Context();
         var media =
             db.Media
             .Skip(page * pageSize)
@@ -23,13 +23,13 @@ public class DataService : IDataService
     }
     public IList<Media> GetMediasByTitle(string search)
     {
-        var db = new NorthwindContex();
+        var db = new Context();
         return db.Media.Where(x => x.Title.ToLower().Contains(search.ToLower())).ToList();
     }
 
     public Media? GetMedia(string id)
     {
-        var db = new NorthwindContex();
+        var db = new Context();
         return db.Media.FirstOrDefault(x => x.Id == id);
     }
 
@@ -40,7 +40,7 @@ public class DataService : IDataService
     /*------------SeasonEpisode--------------*/
     public (IList<SeasonEpisode> products, int count) GetSeasonEpisodes(int page, int pageSize)
     {
-        var db = new NorthwindContex();
+        var db = new Context();
         var se =
             db.SeasonEpisode
             .Skip(page * pageSize)
@@ -51,21 +51,21 @@ public class DataService : IDataService
 
     public SeasonEpisode? GetSeasonEpisode(string id)
     {
-        var db = new NorthwindContex();
+        var db = new Context();
         return db.SeasonEpisode.FirstOrDefault(x => x.M_id == id);
 
     }
 
         public Country? GetCountry(string country)
         {
-            var db = new NorthwindContex();
+            var db = new Context();
             return db.Country.FirstOrDefault(x => x.country == country);
 
         }
 
         public (IList<Country> products, int count) GetCountries(int page, int pageSize)
         {
-            var db = new NorthwindContex();
+            var db = new Context();
             var country =
                 db.Country
                 .Skip(page * pageSize)
@@ -73,26 +73,7 @@ public class DataService : IDataService
                 .ToList();
             return (country, db.Country.Count());
         }
-    public IList<ActorsForMediaDTO> GetActorsForMedia(int page, int pageSize, string m_id)
-    {
-        var db = new NorthwindContex();
-
-        // Use LINQ to query the database
-        var actorsForMedia = (from team in db.Team
-                              where team.M_id == m_id
-                              join person in db.Person on team.P_id equals person.Id
-                              select new ActorsForMediaDTO
-                              {
-                                  Id = person.Id,
-                                  Name = person.Name
-                              })
-                              .Skip(page * pageSize)
-                              .Take(pageSize)
-                              .ToList();
-
-        return actorsForMedia;
-
-    }
+    
 }
 
 
