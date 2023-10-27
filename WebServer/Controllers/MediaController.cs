@@ -64,15 +64,6 @@ public class MediaController : BaseController
 
         };
     }
-    private ActorModel CreateActorModel(Person actor)
-    {
-        return new ActorModel
-        {
-            Id = actor.Id,
-           Name = actor.Name
-
-        };
-    }
-
+   
 
 }

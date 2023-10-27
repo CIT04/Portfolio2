@@ -8,7 +8,7 @@ using WebServer.Models;
 
 namespace WebServer.Controllers;
 
-[Route("api/media")]
+[Route("api/actors")]
 [ApiController]
 public class ActorController : BaseController
 {
@@ -21,18 +21,19 @@ public class ActorController : BaseController
         _mediadataService = mediaDataService;
 
     }
-    private ActorModel CreateActorModel(Person actor)
+   
+    [HttpGet(Name = nameof(GetActors))]
+    public IActionResult GetActors(int page = 0, int pageSize = 10)
     {
-        return new ActorModel
-        {
-            Id = actor.Id,
-            Name = actor.Name
+        (var actors, var total) = _actordataService.GetActors(page, pageSize);
 
-        };
+        var items = actors.Select(CreateActorModel);
+
+        var result = Paging(items, total, page, pageSize, nameof(GetActors));
+
+        return Ok(result);
     }
-
-    //Du skal nok være /actors/{m_id}  - LAV EN ACTORS CONTROLLER
-    [HttpGet("{m_id}/actors", Name = nameof(GetMediaActors))]
+    [HttpGet("{m_id}", Name = nameof(GetMediaActors))]
     public IActionResult GetMediaActors(string m_id, int page = 0, int pageSize = 10)
     {
 
@@ -51,5 +52,15 @@ public class ActorController : BaseController
         return Ok(result);
 
     }
+    private ActorModel CreateActorModel(Person actor)
+    {
+        return new ActorModel
+        {
+            Id = actor.Id,
+            Name = actor.Name
+
+        };
+    }
+
 
 }

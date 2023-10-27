@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models;
+using DataLayer.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace DataLayer
 {
     public interface IActorService
     {
+        (IList<Person> products, int count) GetActors(int page, int pageSize);
+
         IList<ActorsForMediaDTO> GetActorsForMedia(int page, int pageSize, string m_id);
     }
 }
