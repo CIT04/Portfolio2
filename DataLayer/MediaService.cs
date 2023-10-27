@@ -74,50 +74,8 @@ public class MediaService : IMediaService
                 .ToList();
             return (country, db.Country.Count());
         }
-<<<<<<< Updated upstream:DataLayer/MediaService.cs
-    
-=======
 
-    /*------------Language--------------*/
-
-    public Language? GetLanguage(string language)
-    {
-        var db = new NorthwindContex();
-        return db.Language.FirstOrDefault(x => x.language == language);
-
-    }
-
-    public (IList<Language> products, int count) GetLanguages(int page, int pageSize)
-    {
-        var db = new NorthwindContex();
-        var language =
-            db.Language 
-            .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToList();
-        return (language, db.Language.Count());
-    }
-    public IList<ActorsForMediaDTO> GetActorsForMedia(int page, int pageSize, string m_id)
-    {
-        var db = new NorthwindContex();
-
-        // Use LINQ to query the database
-        var actorsForMedia = (from team in db.Team
-                              where team.M_id == m_id
-                              join person in db.Person on team.P_id equals person.Id
-                              select new ActorsForMediaDTO
-                              {
-                                  Id = person.Id,
-                                  Name = person.Name
-                              })
-                              .Skip(page * pageSize)
-                              .Take(pageSize)
-                              .ToList();
-
-        return actorsForMedia;
-
-    }
->>>>>>> Stashed changes:DataLayer/DataService.cs
+ 
 }
 
 
