@@ -13,6 +13,7 @@ public class Context : DbContext
     public DbSet<Objects.Team> Team { get; set; }
     public DbSet<Objects.User> User { get; set; }
     public DbSet<Objects.Country> Country{ get; set; }
+    public DbSet<Objects.Language> Language { get; set; }
 
     public DbSet<Objects.SeasonEpisode> SeasonEpisode{ get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -77,6 +78,13 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.Country>()
             .Property(x => x.country).HasColumnName("country");
 
+
+        modelBuilder.Entity<Objects.Language>().ToTable("language");
+        modelBuilder.Entity<Objects.Language>()
+    .ToTable("language")
+    .HasKey(x => new { x.language });
+        modelBuilder.Entity<Objects.Language>()
+            .Property(x => x.language).HasColumnName("language");
 
 
         modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");
