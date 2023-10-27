@@ -1,0 +1,55 @@
+using DataLayer;
+using DataLayer.Objects;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq;
+using WebServer.Models;
+
+namespace WebServer.Controllers;
+
+[Route("api/media")]
+[ApiController]
+public class ActorController : BaseController
+{
+    private readonly IActorService _actordataService;
+    private readonly IMediaService _mediadataService;
+    public ActorController(IActorService actorDataService,IMediaService mediaDataService, LinkGenerator linkGenerator)
+       : base(linkGenerator)
+    {
+        _actordataService = actorDataService;
+        _mediadataService = mediaDataService;
+
+    }
+    private ActorModel CreateActorModel(Person actor)
+    {
+        return new ActorModel
+        {
+            Id = actor.Id,
+            Name = actor.Name
+
+        };
+    }
+
+    //Du skal nok være /actors/{m_id}  - LAV EN ACTORS CONTROLLER
+    [HttpGet("{m_id}/actors", Name = nameof(GetMediaActors))]
+    public IActionResult GetMediaActors(string m_id, int page = 0, int pageSize = 10)
+    {
+
+        var actorsDTO = _actordataService.GetActorsForMedia(page, pageSize, m_id);
+
+        var actorModels = actorsDTO.Select(dto => new ActorModel
+        {
+            // Map the properties from the DTO to the ActorModel
+            Id = dto.Id,
+            Name = dto.Name,
+            // You can map other properties as needed
+        });
+        
+        var result = Paging(actorModels, 0, page, pageSize, nameof(_mediadataService.GetMedias));
+
+        return Ok(result);
+
+    }
+
+}

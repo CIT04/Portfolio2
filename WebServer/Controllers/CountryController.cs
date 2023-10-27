@@ -10,9 +10,9 @@ namespace WebServer.Controllers;
 [ApiController]
 public class CountryController : BaseController
 {
-    private readonly IDataService _dataService;
+    private readonly IMediaService _dataService;
 
-    public CountryController(IDataService dataService, LinkGenerator linkGenerator)
+    public CountryController(IMediaService dataService, LinkGenerator linkGenerator)
         : base(linkGenerator)
     {
         _dataService = dataService;

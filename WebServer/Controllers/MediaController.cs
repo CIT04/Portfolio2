@@ -12,9 +12,9 @@ namespace WebServer.Controllers;
 [ApiController]
 public class MediaController : BaseController
 {
-    private readonly IDataService _dataService;
+    private readonly IMediaService _dataService;
 
-    public MediaController(IDataService dataService, LinkGenerator linkGenerator)
+    public MediaController(IMediaService dataService, LinkGenerator linkGenerator)
         :base(linkGenerator)
     {
         _dataService = dataService;
@@ -74,25 +74,5 @@ public class MediaController : BaseController
         };
     }
 
-    //Du skal nok være /actors/{m_id}  - LAV EN ACTORS CONTROLLER
-    [HttpGet("{m_id}/actors", Name = nameof(GetMediaActors))]
-    public IActionResult GetMediaActors(string m_id, int page = 0, int pageSize = 10)
-    {
-
-        var actorsDTO = _dataService.GetActorsForMedia(page, pageSize, m_id);
-
-        var actorModels = actorsDTO.Select(dto => new ActorModel
-        {
-            // Map the properties from the DTO to the ActorModel
-            Id = dto.Id,
-            Name = dto.Name,
-            // You can map other properties as needed
-        });
-
-        var result = Paging(actorModels, 0, page, pageSize, nameof(GetMedias));
-
-        return Ok(result);
-
-    }
 
 }

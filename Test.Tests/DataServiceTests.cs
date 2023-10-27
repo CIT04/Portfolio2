@@ -16,7 +16,7 @@ public class DataServiceTests
     [Fact]
     public void GetAllCategories_NoArgument_ReturnsAllCategories()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var categories = service.GetCategories();
         Assert.Equal(8, categories.Count);
         Assert.Equal("Beverages", categories.First().Name);
@@ -25,7 +25,7 @@ public class DataServiceTests
     [Fact]
     public void GetCategory_ValidId_ReturnsCategoryObject()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var category = service.GetCategory(1);
         Assert.Equal("Beverages", category.Name);
     }
@@ -33,7 +33,7 @@ public class DataServiceTests
     [Fact]
     public void CreateCategory_ValidData_CreteCategoryAndReturnsNewObject()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var category = service.CreateCategory("Test", "CreateCategory_ValidData_CreteCategoryAndReturnsNewObject");
         Assert.True(category.Id > 0);
         Assert.Equal("Test", category.Name);
@@ -46,7 +46,7 @@ public class DataServiceTests
     [Fact]
     public void DeleteCategory_ValidId_RemoveTheCategory()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var category = service.CreateCategory("Test", "DeleteCategory_ValidId_RemoveTheCategory");
         var result = service.DeleteCategory(category.Id);
         Assert.True(result);
@@ -57,7 +57,7 @@ public class DataServiceTests
     [Fact]
     public void DeleteCategory_InvalidId_ReturnsFalse()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var result = service.DeleteCategory(-1);
         Assert.False(result);
     }
@@ -65,7 +65,7 @@ public class DataServiceTests
     [Fact]
     public void UpdateCategory_NewNameAndDescription_UpdateWithNewValues()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var category = service.CreateCategory("TestingUpdate", "UpdateCategory_NewNameAndDescription_UpdateWithNewValues");
 
         var result = service.UpdateCategory(category.Id, "UpdatedName", "UpdatedDescription");
@@ -83,7 +83,7 @@ public class DataServiceTests
     [Fact]
     public void UpdateCategory_InvalidID_ReturnsFalse()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var result = service.UpdateCategory(-1, "UpdatedName", "UpdatedDescription");
         Assert.False(result);
     }
@@ -105,7 +105,7 @@ public class DataServiceTests
     [Fact]
     public void GetProduct_ValidId_ReturnsProductWithCategory()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var product = service.GetProduct(1);
         Assert.Equal("Chai", product.Name);
         Assert.Equal("Beverages", product.CategoryName);
@@ -114,7 +114,7 @@ public class DataServiceTests
     [Fact]
     public void GetProductsByCategory_ValidId_ReturnsProductWithCategory()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var products = service.GetProductByCategory(1);
         Assert.Equal(12, products.Count);
         Assert.Equal("Chai", products.First().Name);
@@ -125,7 +125,7 @@ public class DataServiceTests
     [Fact]
     public void GetProduct_NameSubString_ReturnsProductsThatMatchesTheSubString()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var products = service.GetProductByName("em");
         Assert.Equal(4, products.Count);
         Assert.Equal("NuNuCa Nu�-Nougat-Creme", products.First().ProductName);
@@ -149,7 +149,7 @@ public class DataServiceTests
     [Fact]
     public void GetOrder_ValidId_ReturnsCompleteOrder()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var order = service.GetOrder(10248);
         Assert.Equal(3, order.OrderDetails?.Count);
         Assert.Equal("Queso Cabrales", order.OrderDetails?.First().Product?.Name);
@@ -159,7 +159,7 @@ public class DataServiceTests
     [Fact]
     public void GetOrders()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var orders = service.GetOrders();
         Assert.Equal(830, orders.Count);
     }
@@ -182,7 +182,7 @@ public class DataServiceTests
     [Fact]
     public void GetOrderDetailByOrderId_ValidId_ReturnsProductNameUnitPriceAndQuantity()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var orderDetails = service.GetOrderDetailsByOrderId(10248);
         Assert.Equal(3, orderDetails.Count);
         Assert.Equal("Queso Cabrales", orderDetails.First().Product?.Name);
@@ -193,7 +193,7 @@ public class DataServiceTests
     [Fact]
     public void GetOrderDetailByProductId_ValidId_ReturnsOrderDateUnitPriceAndQuantity()
     {
-        var service = new DataService();
+        var service = new MediaService();
         var orderDetails = service.GetOrderDetailsByProductId(11);
         Assert.Equal(38, orderDetails.Count);
         Assert.Equal(10248, orderDetails.First().OrderId);

@@ -6,7 +6,7 @@ using System.Reflection.Emit;
 namespace DataLayer;
 
 
-public class NorthwindContex : DbContext
+public class Context : DbContext
 {
     public DbSet<Objects.Person> Person { get; set; }
     public DbSet<Objects.Media> Media { get; set; }

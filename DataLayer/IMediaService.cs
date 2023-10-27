@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataLayer
 {
-    public interface IDataService
+    public interface IMediaService
     {
         (IList<Media> products, int count) GetMedias(int page, int pageSize);
         
@@ -18,11 +18,8 @@ namespace DataLayer
 
         (IList<User>  products, int count) GetUsers(int page, int pageSize);
 
-  
-
-
         (IList<Country> products, int count) GetCountries(int page, int pageSize);
         Country? GetCountry(string country);
-        IList<ActorsForMediaDTO> GetActorsForMedia(int page, int pageSize, string m_id);
+        
     }
 }

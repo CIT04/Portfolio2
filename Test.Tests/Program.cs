@@ -1,7 +1,7 @@
 ﻿using DataLayer;
 using Microsoft.EntityFrameworkCore;
 
-var db = new NorthwindContex();
+var db = new Context();
 
 //CreateCategory(db);
 //DeleteCategory(db);
@@ -12,7 +12,7 @@ foreach (var entity in db.OrderDetails.Include(x=>x.Product).ThenInclude(x=>x.Ca
 
 
 
-static void CreateCategory(NorthwindContex db)
+static void CreateCategory(Context db)
 {
     var category = new Category
     {
@@ -26,7 +26,7 @@ static void CreateCategory(NorthwindContex db)
     db.SaveChanges();
 }
 
-static void DeleteCategory(NorthwindContex db)
+static void DeleteCategory(Context db)
 {
     var category = db.Categories.FirstOrDefault(x => x.Id == 101);
     if (category != null)
@@ -36,7 +36,7 @@ static void DeleteCategory(NorthwindContex db)
     }
 }
 
-static void UpdateCategory(NorthwindContex db)
+static void UpdateCategory(Context db)
 {
     var category = db.Categories.FirstOrDefault(x => x.Id == 101);
     if (category != null)
