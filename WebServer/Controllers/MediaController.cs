@@ -74,7 +74,7 @@ public class MediaController : BaseController
         };
     }
 
-
+    //Du skal nok være /actors/{m_id}  - LAV EN ACTORS CONTROLLER
     [HttpGet("{m_id}/actors", Name = nameof(GetMediaActors))]
     public IActionResult GetMediaActors(string m_id, int page = 0, int pageSize = 10)
     {
