@@ -1,7 +1,9 @@
 ﻿using DataLayer;
 using DataLayer.Objects;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq;
 using WebServer.Models;
 
 namespace WebServer.Controllers;
@@ -10,9 +12,9 @@ namespace WebServer.Controllers;
 [ApiController]
 public class LanguageController : BaseController
 {
-    private readonly IDataService _dataService;
+    private readonly ILanguageService _dataService;
 
-    public LanguageController(IDataService dataService, LinkGenerator linkGenerator)
+    public LanguageController(ILanguageService dataService, LinkGenerator linkGenerator)
         : base(linkGenerator)
     {
         _dataService = dataService;

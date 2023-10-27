@@ -75,24 +75,7 @@ public class MediaService : IMediaService
             return (country, db.Country.Count());
         }
 
-    public Language? GetLanguage(string language)
-    {
-        var db = new Context();
-        return db.Language.FirstOrDefault(x => x.language == language);
-
-    }
-
-    public (IList<Language> products, int count) GetLanguages(int page, int pageSize)
-    {
-        var db = new Context();
-        var language =
-            db.Language 
-            .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToList();
-        return (language, db.Language.Count());
-    }
-    
+ 
 }
 
 

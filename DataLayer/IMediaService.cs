@@ -16,10 +16,8 @@ namespace DataLayer
         (IList<Country> products, int count) GetCountries(int page, int pageSize);
         Country? GetCountry(string country);
 
+        
 
-        (IList<Language> products, int count) GetLanguages(int page, int pageSize);
-        Language? GetLanguage (string language);
-
-        IList<ActorsForMediaDTO> GetActorsForMedia(int page, int pageSize, string m_id);
+ 
     }
 }
