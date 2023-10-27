@@ -9,6 +9,17 @@ namespace DataLayer
 {
     public class ActorService: IActorService
     {
+        public (IList<Person> products, int count) GetActors(int page, int pageSize)
+        {
+            var db = new Context();
+            var actors =
+                db.Person
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+            return (actors, db.Media.Count());
+        }
+
         public IList<ActorsForMediaDTO> GetActorsForMedia(int page, int pageSize, string m_id)
         {
             var db = new Context();
