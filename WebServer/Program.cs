@@ -6,6 +6,7 @@ builder.Services.AddControllers();
 
 
 builder.Services.AddSingleton<IDataService, DataService>();
+builder.Services.AddSingleton<IUserService, UserService>();
 
 
 var app = builder.Build();
