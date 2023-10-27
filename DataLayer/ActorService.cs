@@ -20,7 +20,7 @@ namespace DataLayer
             return (actors, db.Media.Count());
         }
 
-        public IList<ActorsForMediaDTO> GetActorsForMedia(int page, int pageSize, string m_id)
+        public IList<ActorsForMediaDTO> GetActorsForMedia( string m_id)
         {
             var db = new Context();
 
@@ -33,8 +33,6 @@ namespace DataLayer
                                       Id = person.Id,
                                       Name = person.Name
                                   })
-                                  .Skip(page * pageSize)
-                                  .Take(pageSize)
                                   .ToList();
 
             return actorsForMedia;
