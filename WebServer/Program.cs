@@ -5,8 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
-builder.Services.AddSingleton<IMediaService, MediaService>();
-builder.Services.AddSingleton<IActorService, ActorService>();
+builder.Services.AddSingleton<IDataService, DataService>();
+builder.Services.AddSingleton<IUserService, UserService>();
 
 
 var app = builder.Build();

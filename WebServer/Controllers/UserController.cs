@@ -10,8 +10,8 @@ namespace WebServer.Controllers;
 [ApiController]
 public class UserController : BaseController
 {
-    private readonly IMediaService _dataService;
-    public UserController(IMediaService dataService, LinkGenerator linkGenerator)
+    private readonly IUserService _dataService;
+    public UserController(IUserService dataService, LinkGenerator linkGenerator)
       : base(linkGenerator)
     {
         _dataService = dataService;
