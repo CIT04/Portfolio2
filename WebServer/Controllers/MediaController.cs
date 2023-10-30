@@ -61,6 +61,7 @@ public class MediaController : BaseController
             EndYear = media.EndYear,
             Rated = media.Rated,
             Awards= media.Awards,
+            Genre = media.MediaGenres
 
         };
     }

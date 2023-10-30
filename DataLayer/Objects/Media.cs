@@ -31,10 +31,10 @@ namespace DataLayer.Objects
         public string Awards { get; set;}
 
 
-
+        public virtual ICollection<MediaGenre> MediaGenres { get; set; }
 
         //Magnler - Awards, Dvd,  Production,Website, Parrenttconst
-        
+
     }
 }
 

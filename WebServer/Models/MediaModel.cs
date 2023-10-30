@@ -1,4 +1,6 @@
-﻿namespace WebServer.Models;
+﻿using DataLayer.Objects;
+
+namespace WebServer.Models;
 
 public class MediaModel
 {
@@ -22,4 +24,6 @@ public class MediaModel
     public string EndYear { get; set; }
     public string Rated { get; set; }
     public string Awards { get; set; }
+
+    public Genre Genre {  get; set; }
 }

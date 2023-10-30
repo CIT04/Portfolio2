@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataLayer.Objects;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
@@ -12,6 +13,10 @@ public class Context : DbContext
     public DbSet<Objects.Media> Media { get; set; }
     public DbSet<Objects.Team> Team { get; set; }
     public DbSet<Objects.User> User { get; set; }
+    public DbSet<Genre> Genres { get; set; }
+    public DbSet<MediaGenre> MediaGenres { get; set; }
+
+
     public DbSet<Objects.Country> Country{ get; set; }
     public DbSet<Objects.Language> Language { get; set; }
 
@@ -49,6 +54,20 @@ public class Context : DbContext
             .Property(x => x.Rated).HasColumnName("rated");
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Awards).HasColumnName("awards");
+
+
+        modelBuilder.Entity<MediaGenre>()
+        .HasKey(mg => new { mg.MediaId, mg.GenreId });
+
+        modelBuilder.Entity<MediaGenre>()
+            .HasOne(mg => mg.Media)
+            .WithMany(m => m.MediaGenres)
+            .HasForeignKey(mg => mg.MediaId);
+
+        modelBuilder.Entity<MediaGenre>()
+            .HasOne(mg => mg.Genre)
+            .WithMany()
+            .HasForeignKey(mg => mg.GenreId);
 
         modelBuilder.Entity<Objects.Person>().ToTable("person");
         modelBuilder.Entity<Objects.Person>()
