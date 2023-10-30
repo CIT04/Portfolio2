@@ -66,6 +66,7 @@ public class MediaController : BaseController
     }
    
 
+<<<<<<< HEAD
     //--------------Genre--------------//
     [HttpGet(Name = nameof(GetGenres))]
     public IActionResult GetGenres(int page = 0, int pageSize = 10)
@@ -119,4 +120,6 @@ public class MediaController : BaseController
 
 
 
+=======
+>>>>>>> parent of b5d9555 (Genre Fix 4)
 }

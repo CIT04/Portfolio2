@@ -15,8 +15,6 @@ public class Context : DbContext
     public DbSet<Objects.Country> Country{ get; set; }
     public DbSet<Objects.Language> Language { get; set; }
 
-    public DbSet<Objects.Genre> Genre { get; set; }
-
     public DbSet<Objects.SeasonEpisode> SeasonEpisode{ get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -102,17 +100,6 @@ public class Context : DbContext
             .Property(x => x.SeasonNumber).HasColumnName("seasonnumber");
         modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.TotalSeasons).HasColumnName("totalseasons");
-
-
-
-          // Genre
-        modelBuilder.Entity<Objects.Genre>().ToTable("genre");
-        modelBuilder.Entity<Objects.Genre>()
-    .ToTable("genre")
-    .HasKey(x => new {  x.genre });
-        modelBuilder.Entity<Objects.Genre>()
-            .Property(x => x.genre).HasColumnName("genre");
-
 
 
 
