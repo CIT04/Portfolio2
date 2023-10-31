@@ -26,5 +26,22 @@ namespace DataLayer
             return db.User.FirstOrDefault(x => x.Id == id);
         }
 
+        public void CreateUser(User user)
+        {
+
+            var db = new Context();
+            var id = db.User.Max(x => x.Id) + 1;
+            var newUser = new User
+            {
+                Id = id.ToString(),
+                Username = user.Username,
+            };
+            db.Add(newUser);
+            db.SaveChanges();
+        }
+            
+
     }
+
 }
+

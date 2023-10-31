@@ -14,4 +14,6 @@ namespace DataLayer;
         User? GetUser(string id);
 
         (IList<User> products, int count) GetUsers(int page, int pageSize);
+
+        void CreateUser(User user);
     }

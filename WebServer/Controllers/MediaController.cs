@@ -72,7 +72,7 @@ public class MediaController : BaseController
     {
         (var genres, var total) = _dataService.GetGenres(page, pageSize);
 
-        var items = genres.Select(CreateMediaModel);
+        var items = genres.Select(CreateGenreModel);
 
         var result = Paging(items, total, page, pageSize, nameof(GetGenres));
 

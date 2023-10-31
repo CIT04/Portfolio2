@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using DataLayer;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -13,6 +14,101 @@ public class MediaTest
 
     /* /api/categories */
 
+}
+
+public class UserTest
+{
+    private const string UserApi = "http://localhost:5001/api/user";
+
+    [Fact]
+    public async Task ApiCategories_PostWithCategory_Created()
+    {
+        var newUser = new
+        {
+            Username = "Created"
+        };
+
+        var (user, statusCode) = await PostData(UserApi, newUser);
+
+        string? id = null;
+        if (user?.Value("id") == null)
+        {
+            var url = user?.Value("url");
+            if (url != null)
+            {
+                id = url.Substring(url.LastIndexOf('/') + 1);
+            }
+        }
+        else
+        {
+            id = user.Value("id");
+        }
+
+        Assert.Equal(HttpStatusCode.Created, statusCode);
+
+        await DeleteData($"{UserApi}/{id}");
+    }
+
+    [Fact]
+    public void CreateUser_ValidData_CreatesUserAndReturnsNewObject()
+    {
+        var service = new UserService();
+        var userToCreate = new DataLayer.Objects.User { Username = "Test" };
+
+        service.CreateUser(userToCreate);
+
+        Assert.NotNull(userToCreate); 
+        Assert.Equal("Test", userToCreate.Username);
+    }
+
+    // Helpers
+
+    async Task<(JsonArray?, HttpStatusCode)> GetArray(string url)
+    {
+        var client = new HttpClient();
+        var response = client.GetAsync(url).Result;
+        var data = await response.Content.ReadAsStringAsync();
+        return (JsonSerializer.Deserialize<JsonArray>(data), response.StatusCode);
+    }
+
+    async Task<(JsonObject?, HttpStatusCode)> GetObject(string url)
+    {
+        var client = new HttpClient();
+        var response = client.GetAsync(url).Result;
+        var data = await response.Content.ReadAsStringAsync();
+        return (JsonSerializer.Deserialize<JsonObject>(data), response.StatusCode);
+    }
+
+    async Task<(JsonObject?, HttpStatusCode)> PostData(string url, object content)
+    {
+        var client = new HttpClient();
+        var requestContent = new StringContent(
+            JsonSerializer.Serialize(content),
+            Encoding.UTF8,
+            "application/json");
+        var response = await client.PostAsync(url, requestContent);
+        var data = await response.Content.ReadAsStringAsync();
+        return (JsonSerializer.Deserialize<JsonObject>(data), response.StatusCode);
+    }
+
+    async Task<HttpStatusCode> PutData(string url, object content)
+    {
+        var client = new HttpClient();
+        var response = await client.PutAsync(
+            url,
+            new StringContent(
+                JsonSerializer.Serialize(content),
+                Encoding.UTF8,
+                "application/json"));
+        return response.StatusCode;
+    }
+
+    async Task<HttpStatusCode> DeleteData(string url)
+    {
+        var client = new HttpClient();
+        var response = await client.DeleteAsync(url);
+        return response.StatusCode;
+    }
 }
 
 static class HelperExt
