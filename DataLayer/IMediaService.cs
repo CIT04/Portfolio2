@@ -16,9 +16,7 @@ namespace DataLayer
         (IList<Country> products, int count) GetCountries(int page, int pageSize);
         Country? GetCountry(string country);
 
-        (IList<Genre> products, int count) GetGenres(int page, int pageSize);
-
-        Genre? GetGenre (string genre);
+    
 
  
     }

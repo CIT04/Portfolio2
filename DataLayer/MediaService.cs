@@ -76,32 +76,7 @@ public class MediaService : IMediaService
         }
 
 
-    /*------------Genre--------------*/
-    public Genre? GetGenre(string genre)
-        {
-            var db = new Context();
-            return db.Genre.FirstOrDefault(x => x.genre == genre);
-
-        }
-
-        public (IList<Genre> products, int count) GetGenres(int page, int pageSize)
-        {
-            var db = new Context();
-            var genre =
-                db.Genre
-                .Skip(page * pageSize)
-                .Take(pageSize)
-                .ToList();
-            return (genre, db.Genre.Count());
-        }
-
-
-    
    
-
-
-
-
 }
 
 
