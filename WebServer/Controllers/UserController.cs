@@ -2,11 +2,13 @@
 using DataLayer.Objects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Routing;
 using WebServer.Models;
 
 namespace WebServer.Controllers;
 
-[Route("api/User")]
+
+[Route("api/user")]
 [ApiController]
 public class UserController : BaseController
 {
@@ -30,6 +32,7 @@ public class UserController : BaseController
 
         return Ok(CreateUserModel(user));
     }
+
     [HttpGet(Name = nameof(GetUsers))]
     public IActionResult GetUsers(int page = 0, int pageSize = 10)
     {
@@ -41,6 +44,20 @@ public class UserController : BaseController
 
         return Ok(result);
     }
+
+    [HttpPost]
+    public IActionResult CreateUser(CreateUserModel model)
+    {
+        var user = new User
+        {
+            Username = model.Username
+        };
+
+        _dataService.CreateUser(user);
+
+        return Created($"api/user/{user.Id}", user);
+    }
+
     private UserModel CreateUserModel(User user)
     {
         return new UserModel
@@ -52,5 +69,6 @@ public class UserController : BaseController
         };
 
     }
+    
 
 }
