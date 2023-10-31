@@ -10,6 +10,10 @@ builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IActorService, ActorService>();
 builder.Services.AddSingleton<ILanguageService, LanguageService>();
 
+var service = new UserService();
+var userToCreate = new DataLayer.Objects.User { Username = "Test" };
+
+service.CreateUser(userToCreate.Username);
 
 var app = builder.Build();
 
@@ -17,7 +21,3 @@ app.MapControllers();
 
 app.Run();
 
-var service = new UserService();
-var userToCreate = new DataLayer.Objects.User { Username = "Test" };
-
-service.CreateUser(userToCreate);

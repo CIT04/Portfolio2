@@ -55,7 +55,7 @@ public class UserTest
         var service = new UserService();
         var userToCreate = new DataLayer.Objects.User { Username = "Test" };
 
-        service.CreateUser(userToCreate);
+        service.CreateUser(userToCreate.Username);
 
         Assert.NotNull(userToCreate); 
         Assert.Equal("Test", userToCreate.Username);

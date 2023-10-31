@@ -1,4 +1,5 @@
 ﻿using DataLayer.Objects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,26 +21,25 @@ namespace DataLayer
             return (user, db.User.Count());
         }
 
-        public User? GetUser(string id)
+        public User? GetUser(int id)
         {
             var db = new Context();
             return db.User.FirstOrDefault(x => x.Id == id);
         }
 
-        public void CreateUser(User user)
+        public void CreateUser(string Username)
         {
+            using var db = new Context();
+            var IdCount = db.User.Max(x => x.Id) + 1;
 
-            var db = new Context();
-            var id = db.User.Max(x => x.Id) + 1;
-            var newUser = new User
-            {
-                Id = id.ToString(),
-                Username = user.Username,
-            };
-            db.Add(newUser);
+            var id = IdCount;
+            var username = Username;
+
+            db.Database.ExecuteSqlInterpolated($"select insert_user({id}, {username})");
+
             db.SaveChanges();
         }
-            
+
 
     }
 

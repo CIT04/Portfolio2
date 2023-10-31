@@ -22,7 +22,7 @@ public class UserController : BaseController
     }
 
     [HttpGet("{id}", Name = nameof(GetUser))]
-    public IActionResult GetUser(string id)
+    public IActionResult GetUser(int id)
     {
         var user = _dataService.GetUser(id);
         if (user == null)
@@ -53,7 +53,7 @@ public class UserController : BaseController
             Username = model.Username
         };
 
-        _dataService.CreateUser(user);
+        _dataService.CreateUser(user.Username);
 
         return Created($"api/user/{user.Id}", user);
     }

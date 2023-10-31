@@ -11,9 +11,9 @@ namespace DataLayer;
     public interface IUserService
 
 { 
-        User? GetUser(string id);
+        User? GetUser(int id);
 
         (IList<User> products, int count) GetUsers(int page, int pageSize);
 
-        void CreateUser(User user);
+        void CreateUser(string Username);
     }
