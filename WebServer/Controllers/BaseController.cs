@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections;
 
 namespace WebServer.Controllers;
@@ -41,10 +42,11 @@ public class BaseController : ControllerBase
         var url = _linkGenerator.GetUriByName(HttpContext, name, values);
         if (url != null)
         {
-            url = url.TrimEnd('%', '2', '0');
+            url = url.Replace("%20", ""); // Remove only %20
         }
         return url ?? "Not specified";
     }
+
 
 }
 
