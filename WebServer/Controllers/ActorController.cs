@@ -34,9 +34,10 @@ public class ActorController : BaseController
         return Ok(result);
     }
     [HttpGet("{m_id}", Name = nameof(GetMediaActors))]
-    public IActionResult GetMediaActors(string m_id)
+    public IActionResult GetMediaActors(string m_id, int page = 0, int pageSize = 10)
     {
-        var actorsDTO = _actordataService.GetActorsForMedia(m_id);
+
+        var actorsDTO = _actordataService.GetActorsForMedia(page, pageSize, m_id);
 
         var actorModels = actorsDTO.Select(dto => new ActorModel
         {
@@ -45,10 +46,12 @@ public class ActorController : BaseController
             Name = dto.Name,
             // You can map other properties as needed
         });
+        
+        var result = Paging(actorModels, 0, page, pageSize, nameof(_mediadataService.GetMedias));
 
-        return Ok(actorModels);
+        return Ok(result);
+
     }
-
     private ActorModel CreateActorModel(Person actor)
     {
         return new ActorModel

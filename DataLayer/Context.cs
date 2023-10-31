@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataLayer.Objects;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
@@ -8,7 +9,7 @@ namespace DataLayer;
 
 public class Context : DbContext
 {
-    public DbSet<Objects.Person> Person { get; set; }
+    public DbSet<Person> Person { get; set; }
     public DbSet<Objects.Media> Media { get; set; }
     public DbSet<Objects.Team> Team { get; set; }
     public DbSet<Objects.User> User { get; set; }
@@ -16,6 +17,9 @@ public class Context : DbContext
     public DbSet<Objects.Language> Language { get; set; }
 
     public DbSet<Objects.Genre> Genre { get; set; }
+
+    public DbSet<Objects.Rating> Rating { get; set; }
+
 
     public DbSet<Objects.SeasonEpisode> SeasonEpisode{ get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -87,6 +91,24 @@ public class Context : DbContext
     .HasKey(x => new { x.language });
         modelBuilder.Entity<Objects.Language>()
             .Property(x => x.language).HasColumnName("language");
+
+
+        modelBuilder.Entity<Objects.Rating>().ToTable("rating");
+        modelBuilder.Entity<Objects.Rating>()
+    .ToTable("rating")
+    .HasKey(x => new { x.Ratings });
+        modelBuilder.Entity<Objects.Rating>()
+            .Property(x => x.M_id).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.Rating>()
+            .Property(x => x.ImdbRatings).HasColumnName("imdbratings");
+        modelBuilder.Entity<Objects.Rating>()
+            .Property(x => x.Ratings).HasColumnName("ratings");
+        modelBuilder.Entity<Objects.Rating>()
+            .Property(x => x.ImdbVotes).HasColumnName("imdbvotes");
+        modelBuilder.Entity<Objects.Rating>()
+            .Property(x => x.AverageRating).HasColumnName("averagerating");
+        modelBuilder.Entity<Objects.Rating>()
+            .Property(x => x.NumVotes).HasColumnName("numvotes");
 
 
         modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");

@@ -9,6 +9,7 @@ builder.Services.AddSingleton<IMediaService, MediaService>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IActorService, ActorService>();
 builder.Services.AddSingleton<ILanguageService, LanguageService>();
+builder.Services.AddSingleton<IRatingService, RatingService>();
 
 var service = new UserService();
 var userToCreate = new DataLayer.Objects.User { Username = "Test" };
