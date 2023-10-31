@@ -31,7 +31,7 @@ namespace DataLayer.Objects
         public string Awards { get; set;}
 
 
-
+        public IList<Genre> Genres { get; set;}
 
         //Magnler - Awards, Dvd,  Production,Website, Parrenttconst
         
