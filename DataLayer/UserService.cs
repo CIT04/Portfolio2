@@ -27,19 +27,35 @@ namespace DataLayer
             return db.User.FirstOrDefault(x => x.Id == id);
         }
 
-        public void CreateUser(string Username)
+
+        public void CreateUser(User user)
         {
-            //using var db = new Context();
-            //var IdCount = db.User.Max(x => x.Id) + 1;
+            using var db = new Context();
+            var IdCount = db.User.Max(x => x.Id) + 1;
+            var xUser = new User
+            { 
+                Id = IdCount,
+                Username = user.Username,
+                Password = user.Password,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Dob = user.Dob,
+                Email = user.Email,
+            };
+            
+            
 
-            //var id = IdCount;
-            //var username = Username;
+            db.Database.ExecuteSqlInterpolated($"select insert_user({xUser.Id}, {xUser.Username}, {xUser.Password},{xUser.FirstName},{xUser.LastName},{xUser.Dob},{xUser.Email})");
 
-            //db.Database.ExecuteSqlInterpolated($"select insert_user({id}, {username})");
-
-            //db.SaveChanges();
+            db.SaveChanges();
         }
 
+        public void DeleteUser(int u_id) 
+        {
+            using var db = new Context();
+            db.Database.ExecuteSqlInterpolated($"select delete_user_by_id({u_id})");
+            db.SaveChanges();
+        }
 
     }
 

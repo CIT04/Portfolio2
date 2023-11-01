@@ -53,12 +53,21 @@ public class UserTest
     public void CreateUser_ValidData_CreatesUserAndReturnsNewObject()
     {
         var service = new UserService();
-        var userToCreate = new DataLayer.Objects.User { Username = "Test" };
+        var userToCreate = new DataLayer.Objects.User 
+        { 
+            Username = "Test",
+            Password = "1234",
+            FirstName= "Ulla",
+            LastName ="Terkelsen",
+            Dob = "1979-10-10",
+            Email= "Ulla@terkelsen.dk"
+        };
 
-        service.CreateUser(userToCreate.Username);
+        service.CreateUser(userToCreate);
 
         Assert.NotNull(userToCreate); 
         Assert.Equal("Test", userToCreate.Username);
+        Assert.Equal("1979-10-10", userToCreate.Dob);
     }
 
     // Helpers
