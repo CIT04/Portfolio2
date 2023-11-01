@@ -70,6 +70,16 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.MediaGenre>()
            .Property(x => x.GenreId).HasColumnName("genre");
 
+      
+
+        modelBuilder.Entity<Objects.Country>().ToTable("country");
+        modelBuilder.Entity<Objects.Country>()
+        .ToTable("country")
+        .HasKey(x => new { x.Id });
+        modelBuilder.Entity<Objects.Country>()
+            .Property(x => x.Id).HasColumnName("country");
+
+
         modelBuilder.Entity<Objects.MediaCountry>().ToTable("mediacountry");
         modelBuilder.Entity<Objects.MediaCountry>().HasKey(x => new { x.MediaId, x.CountryId });
         modelBuilder.Entity<Objects.MediaCountry>()
@@ -78,20 +88,20 @@ public class Context : DbContext
            .Property(x => x.CountryId).HasColumnName("country");
 
 
-        modelBuilder.Entity<Objects.Country>().ToTable("country");
-        modelBuilder.Entity<Objects.Country>()
-        .ToTable("country")
-        .HasKey(x => new { x.country });
-        modelBuilder.Entity<Objects.Country>()
-            .Property(x => x.country).HasColumnName("country");
 
         modelBuilder.Entity<Objects.Language>().ToTable("language");
         modelBuilder.Entity<Objects.Language>()
         .ToTable("language")
-        .HasKey(x => new { x.language });
+        .HasKey(x => new { x.Id });
         modelBuilder.Entity<Objects.Language>()
-            .Property(x => x.language).HasColumnName("language");
+            .Property(x => x.Id).HasColumnName("language");
 
+        modelBuilder.Entity<Objects.MediaLanguage>().ToTable("medialanguage");
+        modelBuilder.Entity<Objects.MediaLanguage>().HasKey(x => new { x.MediaId, x.LanguageId });
+        modelBuilder.Entity<Objects.MediaLanguage>()
+            .Property(x => x.MediaId).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.MediaLanguage>()
+           .Property(x => x.LanguageId).HasColumnName("language");
 
         modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");
         modelBuilder.Entity<Objects.SeasonEpisode>()

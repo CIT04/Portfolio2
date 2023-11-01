@@ -29,15 +29,15 @@ namespace DataLayer
 
         public void CreateUser(string Username)
         {
-            using var db = new Context();
-            var IdCount = db.User.Max(x => x.Id) + 1;
+            //using var db = new Context();
+            //var IdCount = db.User.Max(x => x.Id) + 1;
 
-            var id = IdCount;
-            var username = Username;
+            //var id = IdCount;
+            //var username = Username;
 
-            db.Database.ExecuteSqlInterpolated($"select insert_user({id}, {username})");
+            //db.Database.ExecuteSqlInterpolated($"select insert_user({id}, {username})");
 
-            db.SaveChanges();
+            //db.SaveChanges();
         }
 
 

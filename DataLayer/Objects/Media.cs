@@ -32,6 +32,7 @@ namespace DataLayer.Objects
 
         public ICollection<MediaGenre> MediaGenres { get; set; }
         public ICollection<MediaCountry> MediaCountries { get; set; }
+        public ICollection<MediaLanguage> MediaLanguages { get; set; }
 
 
         //Magnler - Awards, Dvd,  Production,Website, Parrenttconst

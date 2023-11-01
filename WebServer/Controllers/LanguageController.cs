@@ -51,9 +51,9 @@ public class LanguageController : BaseController
     {
         return new LanguageModel
         {
-            Url = GetUrl(nameof(GetLanguages), new { language.language }),
+            Url = GetUrl(nameof(GetLanguages), new { language.Id }),
 
-            Language = (string)language.language
+            Language = (string)language.Id
 
         };
 
