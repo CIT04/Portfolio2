@@ -46,17 +46,31 @@ public class UserController : BaseController
     }
 
     [HttpPost]
-    public IActionResult CreateUser(CreateUserModel model)
+    public IActionResult CreateUser(CreateUserModel user)
     {
-        var user = new User
+        var xUser = new User
         {
-            Username = model.Username
+            Username = user.Username,
+            Password = user.Password,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            Dob = user.Dob
         };
 
-        _dataService.CreateUser(user.Username);
+        _dataService.CreateUser(xUser);
 
-        return Created($"api/user/{user.Id}", user);
+        return Created($"api/user/{xUser.Id}", xUser);
     }
+
+    //[HttpDelete("{id}")]
+    //public IActionResult DeleteUser(int id)
+    //{
+    //    _dataService.DeleteUser(id);
+
+      
+    //    return Delete(delete);
+    //}
 
     private UserModel CreateUserModel(User user)
     {
@@ -64,7 +78,12 @@ public class UserController : BaseController
         {
             Url = GetUrl(nameof(GetUsers), new { user.Id }),
             Username = user.Username,
-            Id = user.Id
+            Id = user.Id,
+            Password = user.Password,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            Dob = user.Dob
 
         };
 
