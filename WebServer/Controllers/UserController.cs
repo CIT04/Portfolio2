@@ -1,5 +1,6 @@
 ﻿using DataLayer;
 using DataLayer.Objects;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -62,6 +63,16 @@ public class UserController : BaseController
         _dataService.CreateUser(xUser);
 
         return Created($"api/user/{xUser.Id}", xUser);
+    }
+
+    [HttpPost("update")]
+    public IActionResult UpdateUser(User user)
+    {
+
+        var result=_dataService.UpdateUser(user);
+        if (result) 
+        { return Ok(user); }
+        return NotFound();
     }
 
     //[HttpDelete("{id}")]

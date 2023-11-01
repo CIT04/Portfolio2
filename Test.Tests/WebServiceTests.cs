@@ -70,6 +70,24 @@ public class UserTest
         Assert.Equal("1979-10-10", userToCreate.Dob);
     }
 
+    //[Fact]
+    //public void UpdateUser_NewNameAndDescription_UpdateWithNewValues()
+    //{
+    //    var service = new UserService();
+    //    var category = service.CreateUser("TestingUpdate", "UpdateUser_NewNameAndDescription_UpdateWithNewValues");
+
+    //    var result = service.UpdateCategory(category.Id, "UpdatedName", "UpdatedDescription");
+    //    Assert.True(result);
+
+    //    category = service.GetCategory(category.Id);
+
+    //    Assert.Equal("UpdatedName", category.Name);
+    //    Assert.Equal("UpdatedDescription", category.Description);
+
+    //    cleanup
+    //    service.DeleteCategory(category.Id);
+    //}
+
     // Helpers
 
     async Task<(JsonArray?, HttpStatusCode)> GetArray(string url)

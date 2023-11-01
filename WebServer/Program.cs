@@ -10,7 +10,8 @@ builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IActorService, ActorService>();
 builder.Services.AddSingleton<ILanguageService, LanguageService>();
 builder.Services.AddSingleton<IRatingService, RatingService>();
-
+builder.Services.AddSingleton<IBookmarkService, BookmarkService>();
+builder.Services.AddSingleton<IPersonService, PersonService>();
 
 var app = builder.Build();
 

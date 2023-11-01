@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,30 @@ namespace DataLayer
 
             db.SaveChanges();
         }
+
+        public bool UpdateUser(User user)
+        {
+             using var db = new Context();
+            var xUser = db.User.FirstOrDefault(u => u.Id == user.Id);
+
+            if (xUser != null) 
+            {
+                db.Database.ExecuteSqlInterpolated($"select update_user({user.Id}, {user.Username}, {user.Password},{user.FirstName},{user.LastName},{user.Dob},{user.Email})");
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        
+
+            
+          
+
+
+        }
+
+
+
+        
 
         public void DeleteUser(int u_id) 
         {

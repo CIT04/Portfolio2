@@ -12,7 +12,15 @@ namespace DataLayer.Objects
 
         public string Name { get; set; }
 
+        public string BirthYear { get; set; }
 
-        //Birthyear, Deathyear, Primaryprofession, Knownfortitles
+        public string DeathYear { get; set; }
+
+        public string PrimaryProfession { get; set; }
+
+        public string KnownForTitles { get; set; }
+
+        public string? NameRating { get; set; } 
+
     }
 }

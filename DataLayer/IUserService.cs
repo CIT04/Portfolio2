@@ -17,4 +17,5 @@ namespace DataLayer;
 
         void CreateUser(User user);
         void DeleteUser(int u_id);
+        bool UpdateUser(User user);
     }
