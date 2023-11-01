@@ -60,9 +60,11 @@ public class MediaController : BaseController
             IsAdult = media.IsAdult,
             EndYear = media.EndYear,
             Rated = media.Rated,
-            Awards= media.Awards,
-
+            Awards = media.Awards,
+            MediaGenres = media.MediaGenres.Select(x => x.GenreId).ToList()
         };
+
+        
     }
    
 

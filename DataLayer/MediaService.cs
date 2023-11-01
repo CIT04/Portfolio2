@@ -30,7 +30,9 @@ public class MediaService : IMediaService
     public Media? GetMedia(string id)
     {
         var db = new Context();
-        return db.Media.FirstOrDefault(x => x.Id == id);
+        var media = db.Media
+            .Include(m => m.MediaGenres).FirstOrDefault(x => x.Id == id);
+        return media;
     }
 
     /*--------User------------*/

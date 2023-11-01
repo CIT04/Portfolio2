@@ -30,7 +30,7 @@ namespace DataLayer.Objects
         public string Rated { get; set;}
         public string Awards { get; set;}
 
-
+        public ICollection<MediaGenre> MediaGenres { get; set; }
 
 
         //Magnler - Awards, Dvd,  Production,Website, Parrenttconst

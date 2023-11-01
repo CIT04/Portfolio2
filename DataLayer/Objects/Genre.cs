@@ -8,7 +8,7 @@ namespace DataLayer.Objects
 {
     public class Genre
     {
-        public string genre { get; set; }
+        public string Id { get; set; }
         
     }
 }

@@ -20,5 +20,6 @@ public class RatingService : IRatingService
             .Take(pageSize)
             .ToList();
         return (rating, db.Rating.Count());
+        
     }
 }
