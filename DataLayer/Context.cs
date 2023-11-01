@@ -140,6 +140,16 @@ public class Context : DbContext
             .Property(x => x.Id).HasColumnName("u_id");
         modelBuilder.Entity<Objects.User>()
             .Property(x => x.Username).HasColumnName("username");
+        modelBuilder.Entity<Objects.User>()
+            .Property(x => x.Password).HasColumnName("password");
+        modelBuilder.Entity<Objects.User>()
+            .Property(x => x.FirstName).HasColumnName("firstname");
+        modelBuilder.Entity<Objects.User>()
+            .Property(x => x.LastName).HasColumnName("lastname");
+        modelBuilder.Entity<Objects.User>()
+            .Property(x => x.Dob).HasColumnName("dob");
+        modelBuilder.Entity<Objects.User>()
+            .Property(x => x.Email).HasColumnName("email");
 
         //Rating
         modelBuilder.Entity<Objects.Rating>().ToTable("rating");
