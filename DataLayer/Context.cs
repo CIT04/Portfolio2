@@ -43,7 +43,7 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Title).HasColumnName("title");
         modelBuilder.Entity<Objects.Media>()
-        .Property(x => x.Plot).HasColumnName("plot");
+            .Property(x => x.Plot).HasColumnName("plot");
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Released).HasColumnName("released");
         modelBuilder.Entity<Objects.Media>()
@@ -71,7 +71,7 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.MediaGenre>()
             .Property(x => x.MediaId).HasColumnName("m_id");
         modelBuilder.Entity<Objects.MediaGenre>()
-           .Property(x => x.GenreId).HasColumnName("genre");
+            .Property(x => x.GenreId).HasColumnName("genre");
 
       
         //country
@@ -107,7 +107,7 @@ public class Context : DbContext
         //season episode 
         modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");
         modelBuilder.Entity<Objects.SeasonEpisode>()
-    .HasKey(x => x.M_id);
+        .HasKey(x => x.M_id);
 
         modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.M_id).HasColumnName("m_id");
@@ -118,13 +118,22 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.TotalSeasons).HasColumnName("totalseasons");
 
-
         //Person 
         modelBuilder.Entity<Objects.Person>().ToTable("person");
         modelBuilder.Entity<Objects.Person>()
-           .Property(x => x.Id).HasColumnName("p_id");
+            .Property(x => x.Id).HasColumnName("p_id");
         modelBuilder.Entity<Objects.Person>()
-          .Property(x => x.Name).HasColumnName("primaryname");
+            .Property(x => x.Name).HasColumnName("primaryname");
+        modelBuilder.Entity<Objects.Person>()
+            .Property(x => x.BirthYear).HasColumnName("birthyear");
+        modelBuilder.Entity<Objects.Person>()
+            .Property(x => x.DeathYear).HasColumnName("deathyear");
+        modelBuilder.Entity<Objects.Person>()
+            .Property(x => x.PrimaryProfession).HasColumnName("primaryprofession");
+        modelBuilder.Entity<Objects.Person>()
+            .Property(x => x.KnownForTitles).HasColumnName("knownfortitles");
+        modelBuilder.Entity<Objects.Person>()
+            .Property(x => x.NameRating).HasColumnName("name_rating");
 
         //Team
         modelBuilder.Entity<Objects.Team>().ToTable("team");
@@ -154,8 +163,8 @@ public class Context : DbContext
         //Rating
         modelBuilder.Entity<Objects.Rating>().ToTable("rating");
         modelBuilder.Entity<Objects.Rating>()
-    .ToTable("rating")
-    .HasKey(x => new { x.Ratings });
+        .ToTable("rating")
+        .HasKey(x => new { x.Ratings });
         modelBuilder.Entity<Objects.Rating>()
             .Property(x => x.M_id).HasColumnName("m_id");
         modelBuilder.Entity<Objects.Rating>()
