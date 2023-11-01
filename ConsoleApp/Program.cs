@@ -1,9 +1,14 @@
 ﻿
 
 using DataLayer;
-
 var ds = new MediaService();
+//var mediaList = ds.GetMediasByGenre(1,10,"Horror" );
 
-var m = ds.GetMedia("tt0098936");
+//foreach (var media in mediaList)
+//{
+//    Console.WriteLine(media.Title);
+//}
 
-Console.WriteLine($"{m.Title}, {string.Join(", ", m.MediaGenres.Select(x => x.GenreId))}");
+//var m = ds.GetMedia("tt0098936");
+
+//Console.WriteLine($"{m.Title}, {string.Join(", ", m.MediaGenres.Select(x => x.GenreId))}");

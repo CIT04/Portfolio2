@@ -29,6 +29,26 @@ public class MediaService : IMediaService
         var db = new Context();
         return db.Media.Where(x => x.Title.ToLower().Contains(search.ToLower())).ToList();
     }
+    public (IList<Media> products, int count) GetMediasByGenre(int page, int pageSize, string search)
+    {
+
+        using (var db = new Context())
+        {
+            var query = db.Media
+                .Include(m => m.MediaGenres)
+                .Include(c => c.MediaCountries)
+                .Include(l => l.MediaLanguages)
+                .Where(m => m.MediaGenres.Any(g => g.Genre.Id.ToLower().Contains(search.ToLower())));
+
+            var media = query
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return (media, query.Count());
+        }
+    }
+
 
     public Media? GetMedia(string id)
     {
@@ -63,10 +83,8 @@ public class MediaService : IMediaService
         return db.SeasonEpisode.FirstOrDefault(x => x.M_id == id);
 
     }
+
     
-
-
-   
 }
 
 

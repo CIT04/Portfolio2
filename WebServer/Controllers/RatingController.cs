@@ -29,9 +29,10 @@ public class RatingController : BaseController
 
         var items = ratings.Select(CreateRatingModel);
 
-        var result = Paging(items, total, page, pageSize, nameof(GetRatings));
+        //var result = Paging(items, total, page, pageSize, nameof(GetRatings));
 
-        return Ok(result);
+        //return Ok(result);
+        return BadRequest();
     }
 
     [HttpGet("{m_id}", Name = nameof(GetRating))]

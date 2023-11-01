@@ -29,9 +29,9 @@ public class LanguageController : BaseController
 
         var items = languages.Select(CreateLanguageModel);
 
-        var result = Paging(items, total, page, pageSize, nameof(GetLanguages));
-
-        return Ok(result);
+        //var result = Paging(items, total, page, pageSize, nameof(GetLanguages));
+        return BadRequest();
+        //return Ok(result);
     }
 
     [HttpGet("{language}", Name = nameof(GetLanguage))]

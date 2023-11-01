@@ -29,9 +29,10 @@ public class ActorController : BaseController
 
         var items = actors.Select(CreateActorModel);
 
-        var result = Paging(items, total, page, pageSize, nameof(GetActors));
+        //var result = Paging(items, total, page, pageSize, nameof(GetActors));
 
-        return Ok(result);
+        //return Ok(result);
+        return BadRequest();
     }
     [HttpGet("{m_id}", Name = nameof(GetMediaActors))]
     public IActionResult GetMediaActors(string m_id, int page = 0, int pageSize = 10)
@@ -47,10 +48,10 @@ public class ActorController : BaseController
             // You can map other properties as needed
         });
         
-        var result = Paging(actorModels, 0, page, pageSize, nameof(_mediadataService.GetMedias));
+        //var result = Paging(actorModels, 0, page, pageSize, nameof(_mediadataService.GetMedias));
 
-        return Ok(result);
-
+        //return Ok(result);
+        return BadRequest();    
     }
     private ActorModel CreateActorModel(Person actor)
     {

@@ -3,6 +3,7 @@ using DataLayer.Objects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using WebServer.Models;
 
@@ -22,13 +23,13 @@ public class MediaController : BaseController
     }
 
     [HttpGet(Name = nameof(GetMedias))]
-    public IActionResult GetMedias(int page = 0, int pageSize = 10)
+    public IActionResult GetMedias(SearchParams searchParams)
     {
-        (var medias, var total) = _dataService.GetMedias(page, pageSize);
+        (var medias, var total) = _dataService.GetMedias(searchParams.page, searchParams.pageSize);
 
         var items = medias.Select(CreateMediaModel);
 
-        var result = Paging(items, total, page, pageSize, nameof(GetMedias));
+        var result = PagingDelux(items, total, searchParams, nameof(GetMedias));
 
         return Ok(result);
     }
@@ -44,6 +45,22 @@ public class MediaController : BaseController
 
         return Ok(CreateMediaModel(media));
     }
+
+
+    [HttpGet("genre/{genre}", Name = nameof(GetMediasByGenre))]
+    public IActionResult GetMediasByGenre([FromQuery] SearchParams searchParams, [FromRoute]string genre = null)
+    {
+        searchParams.Genre = genre;
+        (var medias, var total) = _dataService.GetMediasByGenre(searchParams.page, searchParams.pageSize, searchParams.Genre);
+
+        var items = medias.Select(CreateMediaModel);
+
+        var result = PagingDelux(items, total, searchParams, nameof(GetMediasByGenre));
+
+        return Ok(result);
+    }
+
+
 
 
     private MediaModel CreateMediaModel(Media media)

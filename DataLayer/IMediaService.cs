@@ -11,11 +11,6 @@ namespace DataLayer
         Media? GetMedia(string id);
 
         IList<Media> GetMediasByTitle(string search);
-
-
-
-    
-
- 
+        (IList<Media> products, int count) GetMediasByGenre(int page, int pageSize, string search);
     }
 }

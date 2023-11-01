@@ -40,9 +40,10 @@ public class UserController : BaseController
 
         var items = users.Select(CreateUserModel);
 
-        var result = Paging(items, total, page, pageSize, nameof(GetUsers));
+        //var result = Paging(items, total, page, pageSize, nameof(GetUsers));
 
-        return Ok(result);
+        //return Ok(result);
+        return BadRequest();
     }
 
     [HttpPost]
@@ -68,7 +69,7 @@ public class UserController : BaseController
     //{
     //    _dataService.DeleteUser(id);
 
-      
+
     //    return Delete(delete);
     //}
 
