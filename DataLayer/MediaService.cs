@@ -18,6 +18,7 @@ public class MediaService : IMediaService
             db.Media
             .Include(m => m.MediaGenres)
             .Include(c => c.MediaCountries)
+            .Include(l => l.MediaLanguages)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();
@@ -35,6 +36,7 @@ public class MediaService : IMediaService
         var media = db.Media
             .Include(m => m.MediaGenres)
             .Include(c => c.MediaCountries)
+            .Include(l => l.MediaLanguages)
             .FirstOrDefault(x => x.Id == id);
         return media;
     }

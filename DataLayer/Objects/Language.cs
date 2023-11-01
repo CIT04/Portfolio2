@@ -8,6 +8,6 @@ namespace DataLayer.Objects
 {
     public class Language
     {
-        public string language { get; set; }
+        public string Id { get; set; }
     }
 }

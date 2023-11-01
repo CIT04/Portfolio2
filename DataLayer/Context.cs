@@ -74,7 +74,7 @@ public class Context : DbContext
            .Property(x => x.GenreId).HasColumnName("genre");
 
       
-
+        //country
         modelBuilder.Entity<Objects.Country>().ToTable("country");
         modelBuilder.Entity<Objects.Country>()
         .ToTable("country")
@@ -82,22 +82,12 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.Country>()
             .Property(x => x.Id).HasColumnName("country");
 
-
-        //country
         modelBuilder.Entity<Objects.MediaCountry>().ToTable("mediacountry");
         modelBuilder.Entity<Objects.MediaCountry>().HasKey(x => new { x.MediaId, x.CountryId });
         modelBuilder.Entity<Objects.MediaCountry>()
             .Property(x => x.MediaId).HasColumnName("m_id");
         modelBuilder.Entity<Objects.MediaCountry>()
            .Property(x => x.CountryId).HasColumnName("country");
-
-
-        modelBuilder.Entity<Objects.Country>().ToTable("country");
-        modelBuilder.Entity<Objects.Country>()
-        .ToTable("country")
-        .HasKey(x => new { x.country });
-        modelBuilder.Entity<Objects.Country>()
-            .Property(x => x.country).HasColumnName("country");
 
         //language 
         modelBuilder.Entity<Objects.Language>().ToTable("language");

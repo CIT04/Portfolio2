@@ -8,7 +8,7 @@ namespace DataLayer.Objects
 {
     public class Country
     {
-        public string country { get; set; }
+        public string Id { get; set; }
         
     }
 }

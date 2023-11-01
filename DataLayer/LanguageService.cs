@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace DataLayer;
 
-    public class LanguageService : ILanguageService
+    public class LanguageService :  ILanguageService
 {
 
     public Language? GetLanguage(string language)
     {
         var db = new Context();
-        return db.Language.FirstOrDefault(x => x.language == language);
+        return db.Language.FirstOrDefault(x => x.Id == language);
 
     }
 

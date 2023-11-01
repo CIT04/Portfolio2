@@ -29,5 +29,6 @@ public class MediaModel
 
     public List<String> MediaGenres { get; set; }
     public List<String> MediaCountries { get; set; }
+    public List<String> MediaLanguages { get; set; }
 
 }
