@@ -34,37 +34,32 @@ public class RatingController : BaseController
         return Ok(result);
     }
 
-    [HttpGet("{rating}", Name = nameof(GetRating))]
-    public IActionResult GetRating(string rating)
+    [HttpGet("{m_id}", Name = nameof(GetRating))]
+    public IActionResult GetRating(string m_id)
     {
-        var rating1 = _dataService.GetRating(rating);
-        if (rating1 == null)
+        var rating = _dataService.GetRatingByMId(m_id);
+
+        if (rating == null)
         {
             return NotFound();
         }
 
-        return Ok(CreateRatingModel(rating1));
-
+        return Ok(CreateRatingModel(rating));
     }
 
     public RatingModel CreateRatingModel(Rating rating)
     {
         return new RatingModel
         {
-            Url = GetUrl(nameof(GetRatings), new { rating.Ratings }),
+            Url = GetUrl(nameof(GetRating), new { m_id = rating.M_id }),
 
-            Rating = (string)rating.Ratings,
+            Rating = rating.Ratings,
             M_id = rating.M_id,
             ImdbRatings = rating.ImdbRatings,
             ImdbVotes = rating.ImdbVotes,
             AverageRating = rating.AverageRating,
             NumVotes = rating.NumVotes,
-
         };
-
-
-
-
     }
 }
 
