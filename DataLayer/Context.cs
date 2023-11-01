@@ -20,8 +20,11 @@ public class Context : DbContext
 
     public DbSet<Objects.Rating> Rating { get; set; }
 
+    public DbSet<Objects.Bookmark> Bookmarks { get; set; }
 
-    public DbSet<Objects.SeasonEpisode> SeasonEpisode { get; set; }
+    public DbSet<Objects.SeasonEpisode> SeasonEpisode{ get; set; }
+    //public object Bookmarks { get; internal set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
@@ -58,7 +61,7 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Awards).HasColumnName("awards");
 
-
+        //genre
         modelBuilder.Entity<Objects.Genre>().ToTable("genre");
         modelBuilder.Entity<Objects.Genre>()
             .Property(x => x.Id).HasColumnName("genre");
@@ -70,14 +73,14 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.MediaGenre>()
            .Property(x => x.GenreId).HasColumnName("genre");
 
+        //country
         modelBuilder.Entity<Objects.MediaCountry>().ToTable("mediacountry");
         modelBuilder.Entity<Objects.MediaCountry>().HasKey(x => new { x.MediaId, x.CountryId });
         modelBuilder.Entity<Objects.MediaCountry>()
             .Property(x => x.MediaId).HasColumnName("m_id");
         modelBuilder.Entity<Objects.MediaCountry>()
            .Property(x => x.CountryId).HasColumnName("country");
-
-
+ 
         modelBuilder.Entity<Objects.Country>().ToTable("country");
         modelBuilder.Entity<Objects.Country>()
         .ToTable("country")
@@ -85,6 +88,7 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.Country>()
             .Property(x => x.country).HasColumnName("country");
 
+        //language 
         modelBuilder.Entity<Objects.Language>().ToTable("language");
         modelBuilder.Entity<Objects.Language>()
         .ToTable("language")
@@ -93,10 +97,10 @@ public class Context : DbContext
             .Property(x => x.language).HasColumnName("language");
 
 
+        //season episode 
         modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");
         modelBuilder.Entity<Objects.SeasonEpisode>()
     .HasKey(x => x.M_id);
-
 
         modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.M_id).HasColumnName("m_id");
@@ -108,13 +112,14 @@ public class Context : DbContext
             .Property(x => x.TotalSeasons).HasColumnName("totalseasons");
 
 
-
+        //Person 
         modelBuilder.Entity<Objects.Person>().ToTable("person");
         modelBuilder.Entity<Objects.Person>()
            .Property(x => x.Id).HasColumnName("p_id");
         modelBuilder.Entity<Objects.Person>()
           .Property(x => x.Name).HasColumnName("primaryname");
 
+        //Team
         modelBuilder.Entity<Objects.Team>().ToTable("team");
         modelBuilder.Entity<Objects.Team>().HasKey(x => new { x.M_id, x.P_id });
         modelBuilder.Entity<Objects.Team>()
@@ -129,6 +134,7 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.User>()
             .Property(x => x.Username).HasColumnName("username");
 
+        //Rating
         modelBuilder.Entity<Objects.Rating>().ToTable("rating");
         modelBuilder.Entity<Objects.Rating>()
     .ToTable("rating")
@@ -146,7 +152,19 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.Rating>()
             .Property(x => x.NumVotes).HasColumnName("numvotes");
 
-
+        //Bookmarks
+        modelBuilder.Entity<Objects.Bookmark>().ToTable("bookmarks");
+        modelBuilder.Entity<Objects.Bookmark>()
+        .HasKey(x => new { x.M_id, x.U_id });
+        modelBuilder.Entity<Objects.Bookmark>()
+            .Property(x => x.M_id).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.Bookmark>()
+            .Property(x => x.U_id).HasColumnName("u_id");
+        modelBuilder.Entity<Objects.Bookmark>()
+            .Property(x => x.Time).HasColumnName("time");
+        modelBuilder.Entity<Objects.Bookmark>()
+            .Property(x => x.Annotation).HasColumnName("annotation");
+        modelBuilder.Entity<Objects.Bookmark>();
 
 
     }
