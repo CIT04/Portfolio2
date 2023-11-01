@@ -70,6 +70,12 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.MediaGenre>()
            .Property(x => x.GenreId).HasColumnName("genre");
 
+        modelBuilder.Entity<Objects.MediaCountry>().ToTable("mediacountry");
+        modelBuilder.Entity<Objects.MediaCountry>().HasKey(x => new { x.MediaId, x.CountryId });
+        modelBuilder.Entity<Objects.MediaCountry>()
+            .Property(x => x.MediaId).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.MediaCountry>()
+           .Property(x => x.CountryId).HasColumnName("country");
 
 
         modelBuilder.Entity<Objects.Country>().ToTable("country");

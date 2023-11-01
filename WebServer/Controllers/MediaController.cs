@@ -61,7 +61,9 @@ public class MediaController : BaseController
             EndYear = media.EndYear,
             Rated = media.Rated,
             Awards = media.Awards,
-            MediaGenres = media.MediaGenres.Select(x => x.GenreId).ToList()
+            MediaGenres = media.MediaGenres.Select(x => x.GenreId).ToList(),
+            MediaCountries = media.MediaCountries.Select(x => x.CountryId).ToList()
+
         };
 
         

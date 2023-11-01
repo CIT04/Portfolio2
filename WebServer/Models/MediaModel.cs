@@ -28,5 +28,6 @@ public class MediaModel
     public string Average { get; set; }
 
     public List<String> MediaGenres { get; set; }
+    public List<String> MediaCountries { get; set; }
 
 }

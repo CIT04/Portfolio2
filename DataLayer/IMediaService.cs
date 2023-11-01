@@ -13,8 +13,6 @@ namespace DataLayer
         IList<Media> GetMediasByTitle(string search);
 
 
-        (IList<Country> products, int count) GetCountries(int page, int pageSize);
-        Country? GetCountry(string country);
 
     
 

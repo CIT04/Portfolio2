@@ -16,6 +16,8 @@ public class MediaService : IMediaService
         var db = new Context();
         var media =
             db.Media
+            .Include(m => m.MediaGenres)
+            .Include(c => c.MediaCountries)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();
@@ -31,7 +33,9 @@ public class MediaService : IMediaService
     {
         var db = new Context();
         var media = db.Media
-            .Include(m => m.MediaGenres).FirstOrDefault(x => x.Id == id);
+            .Include(m => m.MediaGenres)
+            .Include(c => c.MediaCountries)
+            .FirstOrDefault(x => x.Id == id);
         return media;
     }
 
@@ -57,25 +61,7 @@ public class MediaService : IMediaService
         return db.SeasonEpisode.FirstOrDefault(x => x.M_id == id);
 
     }
-    /*------------Country--------------*/
-
-    public Country? GetCountry(string country)
-        {
-            var db = new Context();
-            return db.Country.FirstOrDefault(x => x.country == country);
-
-        }
-
-        public (IList<Country> products, int count) GetCountries(int page, int pageSize)
-        {
-            var db = new Context();
-            var country =
-                db.Country
-                .Skip(page * pageSize)
-                .Take(pageSize)
-                .ToList();
-            return (country, db.Country.Count());
-        }
+    
 
 
    
