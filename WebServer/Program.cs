@@ -13,6 +13,7 @@ builder.Services.AddSingleton<IRatingService, RatingService>();
 builder.Services.AddSingleton<IBookmarkService, BookmarkService>();
 builder.Services.AddSingleton<IPersonService, PersonService>();
 builder.Services.AddSingleton<IHistoryService, HistoryService>();
+builder.Services.AddSingleton<ILocalRatingService, LocalRatingService>();
 
 var app = builder.Build();
 
