@@ -59,6 +59,8 @@ public class Context : DbContext
             .Property(x => x.Rated).HasColumnName("rated");
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Awards).HasColumnName("awards");
+        modelBuilder.Entity<Objects.Media>()
+            .Property(x => x.Type).HasColumnName("type");
 
         //genre
         modelBuilder.Entity<Objects.Genre>().ToTable("genre");

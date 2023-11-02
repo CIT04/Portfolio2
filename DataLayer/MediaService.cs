@@ -6,6 +6,7 @@ using System.Xml.Linq;
 
 namespace DataLayer;
 using DataLayer.Objects;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
 public class MediaService : IMediaService
@@ -49,7 +50,22 @@ public class MediaService : IMediaService
             return (media, query.Count());
         }
     }
+    public (IList<Media> products, int count) GetMediasByType(int page, int pageSize, string search)
+    {
+        var db = new Context();
+        var media =
+            db.Media
+            .Include(m => m.MediaGenres)
+            .Include(c => c.MediaCountries)
+            .Include(l => l.MediaLanguages)
+            .Where(m => m.Type.ToLower().Contains(search.ToLower()));
+        var result = media
+            .Skip(page * pageSize)
+            .Take(pageSize)
 
+            .ToList();
+        return (result, media.Count());
+    }
 
     public MediaDTO? GetMedia(string id)
     {
@@ -90,7 +106,7 @@ public class MediaService : IMediaService
     }
 
     /*--------User------------*/
-
+    //Rykket til UserService
 
 
     /*------------SeasonEpisode--------------*/

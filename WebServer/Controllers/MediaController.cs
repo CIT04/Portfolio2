@@ -65,8 +65,20 @@ public class MediaController : BaseController
         return Ok(result);
     }
 
+    [HttpGet("type/{type}", Name = nameof(GetMediasByType))]
+    public IActionResult GetMediasByType([FromQuery] SearchParams searchParams, [FromRoute] string type = null)
+    {
+        UpdateSearchParamsFromQuery(searchParams);
+        searchParams.Type= type;
 
+        (var medias, var total) = _dataService.GetMediasByType(searchParams.page, searchParams.pageSize, searchParams.Type);
 
+        var items = medias.Select(CreateMediaModel);
+
+        var result = Paging(items, total, searchParams, nameof(GetMediasByType));
+
+        return Ok(result);
+    }
 
     private MediaModel CreateMediaModel(MediaDTO media)
     {
@@ -86,8 +98,8 @@ public class MediaController : BaseController
             MediaGenres = media.MediaGenres.Select(x => x.GenreId).ToList(),
             MediaCountries = media.MediaCountries.Select(x => x.CountryId).ToList(),
             MediaLanguages = media.MediaLanguages.Select(x => x.LanguageId).ToList(),
-            Rating = media.Rating
-            
+            Rating = media.Rating,
+            Type = media.Type
 
         };
 
@@ -111,7 +123,7 @@ public class MediaController : BaseController
             MediaGenres = media.MediaGenres.Select(x => x.GenreId).ToList(),
             MediaCountries = media.MediaCountries.Select(x => x.CountryId).ToList(),
             MediaLanguages = media.MediaLanguages.Select(x => x.LanguageId).ToList(),
-          
+            Type = media.Type
 
 
         };
