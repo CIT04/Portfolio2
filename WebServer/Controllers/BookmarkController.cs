@@ -23,13 +23,14 @@ public class BookmarkController : BaseController
 
     [HttpGet(Name = nameof(GetBookmarks))]
 
-    public IActionResult GetBookmarks(int page = 0, int pageSize = 10)
+    public IActionResult GetBookmarks([FromQuery] SearchParams searchParams)
     {
-        (var bookmarks, var total) = _dataService.GetBookmarks(page, pageSize);
+        UpdateSearchParamsFromQuery(searchParams);
+        (var bookmarks, var total) = _dataService.GetBookmarks(searchParams.page, searchParams.pageSize);
 
         var items = bookmarks.Select(CreateBookmarkModel);
 
-        var result = Paging(items, total, page, pageSize, nameof(GetBookmarks));
+        var result = Paging(items, total, searchParams, nameof(GetBookmarks));
 
         return Ok(result);
     }

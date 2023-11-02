@@ -23,16 +23,17 @@ public class RatingController : BaseController
 
     [HttpGet(Name = nameof(GetRatings))]
 
-    public IActionResult GetRatings(int page = 0, int pageSize = 10)
+    public IActionResult GetRatings([FromQuery] SearchParams searchParams)
     {
-        (var ratings, var total) = _dataService.GetRatings(page, pageSize);
+        UpdateSearchParamsFromQuery(searchParams);
+        (var ratings, var total) = _dataService.GetRatings(searchParams.page, searchParams.pageSize);
 
         var items = ratings.Select(CreateRatingModel);
 
-        //var result = Paging(items, total, page, pageSize, nameof(GetRatings));
+        var result = Paging(items, total, searchParams, nameof(GetRatings));
 
-        //return Ok(result);
-        return BadRequest();
+        return Ok(result);
+       
     }
 
     [HttpGet("{m_id}", Name = nameof(GetRating))]

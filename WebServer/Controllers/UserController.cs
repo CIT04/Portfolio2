@@ -35,16 +35,17 @@ public class UserController : BaseController
     }
 
     [HttpGet(Name = nameof(GetUsers))]
-    public IActionResult GetUsers(int page = 0, int pageSize = 10)
+    public IActionResult GetUsers([FromQuery] SearchParams searchParams)
     {
-        (var users, var total) = _dataService.GetUsers(page, pageSize);
+        UpdateSearchParamsFromQuery(searchParams);
+        (var users, var total) = _dataService.GetUsers(searchParams.page, searchParams.pageSize);
 
         var items = users.Select(CreateUserModel);
 
-        //var result = Paging(items, total, page, pageSize, nameof(GetUsers));
+        var result = Paging(items, total,searchParams, nameof(GetUsers));
 
-        //return Ok(result);
-        return BadRequest();
+        return Ok(result);
+        
     }
 
     [HttpPost]

@@ -22,17 +22,20 @@ public class MediaController : BaseController
 
     }
 
+    
     [HttpGet(Name = nameof(GetMedias))]
-    public IActionResult GetMedias(SearchParams searchParams)
+    public IActionResult GetMedias([FromQuery] SearchParams searchParams)
     {
+        UpdateSearchParamsFromQuery(searchParams);
         (var medias, var total) = _dataService.GetMedias(searchParams.page, searchParams.pageSize);
 
         var items = medias.Select(CreateMediaModel);
 
-        var result = PagingDelux(items, total, searchParams, nameof(GetMedias));
+        var result = Paging(items, total, searchParams, nameof(GetMedias));
 
         return Ok(result);
     }
+
 
     [HttpGet("{id}", Name = nameof(GetMedia))]
     public IActionResult GetMedia(string id)
@@ -50,12 +53,14 @@ public class MediaController : BaseController
     [HttpGet("genre/{genre}", Name = nameof(GetMediasByGenre))]
     public IActionResult GetMediasByGenre([FromQuery] SearchParams searchParams, [FromRoute]string genre = null)
     {
+        UpdateSearchParamsFromQuery(searchParams);
         searchParams.Genre = genre;
+
         (var medias, var total) = _dataService.GetMediasByGenre(searchParams.page, searchParams.pageSize, searchParams.Genre);
 
         var items = medias.Select(CreateMediaModel);
 
-        var result = PagingDelux(items, total, searchParams, nameof(GetMediasByGenre));
+        var result = Paging(items, total, searchParams, nameof(GetMediasByGenre));
 
         return Ok(result);
     }

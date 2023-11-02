@@ -23,15 +23,15 @@ public class LanguageController : BaseController
 
     [HttpGet(Name = nameof(GetLanguages))]
 
-    public IActionResult GetLanguages(int page = 0, int pageSize = 10)
+    public IActionResult GetLanguages([FromQuery] SearchParams searchParams)
     {
-        (var languages, var total) = _dataService.GetLanguages(page, pageSize);
+        UpdateSearchParamsFromQuery(searchParams);
+        (var languages, var total) = _dataService.GetLanguages(searchParams.page, searchParams.pageSize);
 
         var items = languages.Select(CreateLanguageModel);
 
-        //var result = Paging(items, total, page, pageSize, nameof(GetLanguages));
-        return BadRequest();
-        //return Ok(result);
+        var result = Paging(items, total, searchParams, nameof(GetLanguages));
+        return Ok(result);
     }
 
     [HttpGet("{language}", Name = nameof(GetLanguage))]

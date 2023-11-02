@@ -23,13 +23,14 @@ public class PersonController : BaseController
 
     [HttpGet(Name = nameof(GetPersons))]
 
-    public IActionResult GetPersons(int page = 0, int pageSize = 10)
+    public IActionResult GetPersons([FromQuery] SearchParams searchParams)
     {
-        (var persons, var total) = _dataService.GetPersons(page, pageSize);
+        UpdateSearchParamsFromQuery(searchParams);
+        (var persons, var total) = _dataService.GetPersons(searchParams.page, searchParams.pageSize);
 
         var items = persons.Select(CreatePersonModel);
 
-        var result = Paging(items, total, page, pageSize, nameof(GetPersons));
+        var result = Paging(items, total, searchParams, nameof(GetPersons));
 
         return Ok(result);
     }

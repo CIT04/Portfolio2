@@ -23,22 +23,23 @@ public class ActorController : BaseController
     }
    
     [HttpGet(Name = nameof(GetActors))]
-    public IActionResult GetActors(int page = 0, int pageSize = 10)
+    public IActionResult GetActors([FromQuery] SearchParams searchParams)
     {
-        (var actors, var total) = _actordataService.GetActors(page, pageSize);
+        UpdateSearchParamsFromQuery(searchParams);
+        (var actors, var total) = _actordataService.GetActors(searchParams.page, searchParams.pageSize);
 
         var items = actors.Select(CreateActorModel);
 
-        //var result = Paging(items, total, page, pageSize, nameof(GetActors));
+        var result = Paging(items, total, searchParams, nameof(GetActors));
 
-        //return Ok(result);
-        return BadRequest();
+        return Ok(result);
+       
     }
     [HttpGet("{m_id}", Name = nameof(GetMediaActors))]
-    public IActionResult GetMediaActors(string m_id, int page = 0, int pageSize = 10)
+    public IActionResult GetMediaActors(string m_id, [FromQuery] SearchParams searchParams)
     {
-
-        var actorsDTO = _actordataService.GetActorsForMedia(page, pageSize, m_id);
+        UpdateSearchParamsFromQuery(searchParams);
+        var actorsDTO = _actordataService.GetActorsForMedia(searchParams.page, searchParams.pageSize, m_id);
 
         var actorModels = actorsDTO.Select(dto => new ActorModel
         {
@@ -47,11 +48,11 @@ public class ActorController : BaseController
             Name = dto.Name,
             // You can map other properties as needed
         });
-        
-        //var result = Paging(actorModels, 0, page, pageSize, nameof(_mediadataService.GetMedias));
 
-        //return Ok(result);
-        return BadRequest();    
+        var result = Paging(actorModels, 0, searchParams, nameof(_mediadataService.GetMedias));
+
+        return Ok(result);
+          
     }
     private ActorModel CreateActorModel(Person actor)
     {
