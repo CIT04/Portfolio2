@@ -68,6 +68,31 @@ public class MediaController : BaseController
 
 
 
+    private MediaModel CreateMediaModel(MediaDTO media)
+    {
+        return new MediaModel
+        {
+            Url = GetUrl(nameof(GetMedias), new { media.Id }),
+            Title = media.Title,
+            Year = media.Year,
+            Plot = media.Plot,
+            Released = media.Released,
+            Poster = media.Poster,
+            Runtime = media.Runtime,
+            IsAdult = media.IsAdult,
+            EndYear = media.EndYear,
+            Rated = media.Rated,
+            Awards = media.Awards,
+            MediaGenres = media.MediaGenres.Select(x => x.GenreId).ToList(),
+            MediaCountries = media.MediaCountries.Select(x => x.CountryId).ToList(),
+            MediaLanguages = media.MediaLanguages.Select(x => x.LanguageId).ToList(),
+            Rating = media.Rating
+            
+
+        };
+
+        
+    }
     private MediaModel CreateMediaModel(Media media)
     {
         return new MediaModel
@@ -85,15 +110,17 @@ public class MediaController : BaseController
             Awards = media.Awards,
             MediaGenres = media.MediaGenres.Select(x => x.GenreId).ToList(),
             MediaCountries = media.MediaCountries.Select(x => x.CountryId).ToList(),
-            MediaLanguages = media.MediaLanguages.Select(x => x.LanguageId).ToList()
+            MediaLanguages = media.MediaLanguages.Select(x => x.LanguageId).ToList(),
+          
+
 
         };
 
-        
-    }
-   
 
-    
+    }
+
+
+
 
 
 

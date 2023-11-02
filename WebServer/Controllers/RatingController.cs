@@ -53,10 +53,10 @@ public class RatingController : BaseController
     {
         return new RatingModel
         {
-            Url = GetUrl(nameof(GetRating), new { m_id = rating.M_id }),
+            Url = GetUrl(nameof(GetRating), new { m_id = rating.Id }),
 
             Rating = rating.Ratings,
-            M_id = rating.M_id,
+            M_id = rating.Id,
             ImdbRatings = rating.ImdbRatings,
             ImdbVotes = rating.ImdbVotes,
             AverageRating = rating.AverageRating,

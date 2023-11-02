@@ -9,6 +9,9 @@ var ds = new MediaService();
 //    Console.WriteLine(media.Title);
 //}
 
-//var m = ds.GetMedia("tt0098936");
+var m = ds.GetMedia("tt0098936");
 
-//Console.WriteLine($"{m.Title}, {string.Join(", ", m.MediaGenres.Select(x => x.GenreId))}");
+Console.WriteLine($"{m.Title},{m.Rating.Ratings}"
+    //$"{string.Join(", ", m.MediaGenres.Select(x => x.GenreId))}," +, 
+   // $"{string.Join(", ", m.Rating.Ratings.Select(x => x.Id))}"
+    );

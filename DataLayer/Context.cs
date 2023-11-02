@@ -104,6 +104,9 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.MediaLanguage>()
            .Property(x => x.LanguageId).HasColumnName("language");
 
+       
+
+
         //season episode 
         modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");
         modelBuilder.Entity<Objects.SeasonEpisode>()
@@ -117,6 +120,8 @@ public class Context : DbContext
             .Property(x => x.SeasonNumber).HasColumnName("seasonnumber");
         modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.TotalSeasons).HasColumnName("totalseasons");
+
+
 
         //Person 
         modelBuilder.Entity<Objects.Person>().ToTable("person");
@@ -161,12 +166,11 @@ public class Context : DbContext
             .Property(x => x.Email).HasColumnName("email");
 
         //Rating
-        modelBuilder.Entity<Objects.Rating>().ToTable("rating");
+        modelBuilder.Entity<Objects.Rating>().ToTable("rating2");
+        modelBuilder.Entity<Objects.Rating>().HasKey(x => x.Id);
+       
         modelBuilder.Entity<Objects.Rating>()
-        .ToTable("rating")
-        .HasKey(x => new { x.Ratings });
-        modelBuilder.Entity<Objects.Rating>()
-            .Property(x => x.M_id).HasColumnName("m_id");
+            .Property(x => x.Id).HasColumnName("m_id");
         modelBuilder.Entity<Objects.Rating>()
             .Property(x => x.ImdbRatings).HasColumnName("imdbratings");
         modelBuilder.Entity<Objects.Rating>()
@@ -177,6 +181,8 @@ public class Context : DbContext
             .Property(x => x.AverageRating).HasColumnName("averagerating");
         modelBuilder.Entity<Objects.Rating>()
             .Property(x => x.NumVotes).HasColumnName("numvotes");
+
+
 
         //Bookmarks
         modelBuilder.Entity<Objects.Bookmark>().ToTable("bookmarks");

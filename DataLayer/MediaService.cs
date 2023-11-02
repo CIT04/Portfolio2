@@ -19,6 +19,7 @@ public class MediaService : IMediaService
             .Include(m => m.MediaGenres)
             .Include(c => c.MediaCountries)
             .Include(l => l.MediaLanguages)
+           // .Include(v => v.Rating)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();
@@ -50,15 +51,42 @@ public class MediaService : IMediaService
     }
 
 
-    public Media? GetMedia(string id)
+    public MediaDTO? GetMedia(string id)
     {
         var db = new Context();
         var media = db.Media
             .Include(m => m.MediaGenres)
             .Include(c => c.MediaCountries)
             .Include(l => l.MediaLanguages)
+            
             .FirstOrDefault(x => x.Id == id);
-        return media;
+
+       
+
+        //TODO: Fix mapping issues
+        if (media != null)
+        {
+
+            var dto = new MediaDTO
+            {
+                Title = media.Title,
+                Year = media.Year,
+                Plot = media.Plot,
+                Released = media.Released,
+                Poster = media.Poster,
+                Runtime = media.Runtime,
+                IsAdult = media.IsAdult,
+                EndYear = media.EndYear,
+                Rated = media.Rated,
+                Awards = media.Awards,
+                MediaGenres = media.MediaGenres,
+                MediaCountries = media.MediaCountries,
+                MediaLanguages = media.MediaLanguages
+    };
+            dto.Rating = db.Rating.FirstOrDefault(x => x.Id == id);
+            return dto;
+        }
+        return null;
     }
 
     /*--------User------------*/
@@ -84,7 +112,14 @@ public class MediaService : IMediaService
 
     }
 
-    
+    public Rating? getrating(string id)
+    {
+        var db = new Context();
+        return db.Rating.FirstOrDefault(x => x.Id == id);
+
+    }
+
+
 }
 
 

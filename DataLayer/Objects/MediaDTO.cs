@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DataLayer.Objects
 {
-    public class Media
+    public class MediaDTO
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -33,7 +33,8 @@ namespace DataLayer.Objects
         public ICollection<MediaGenre> MediaGenres { get; set; }
         public ICollection<MediaCountry> MediaCountries { get; set; }
         public ICollection<MediaLanguage> MediaLanguages { get; set; }
-      
+
+        public Rating Rating { get; set; }
 
 
         //Magnler - Awards, Dvd,  Production,Website, Parrenttconst
