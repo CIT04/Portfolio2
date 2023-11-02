@@ -63,17 +63,9 @@ namespace DataLayer
                 return true;
             }
             return false;
-        
-
-            
-          
-
 
         }
 
-
-
-        
 
         public void DeleteUser(int u_id) 
         {
