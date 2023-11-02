@@ -75,15 +75,17 @@ public class UserController : BaseController
         return NotFound();
     }
 
-    //[HttpDelete("{id}")]
-    //public IActionResult DeleteUser(int id)
-    //{
-    //    _dataService.DeleteUser(id);
-
-
-    //    return Delete(delete);
-    //}
-
+    [HttpDelete("{id}")]
+    public IActionResult DeleteUser(int id)
+    {
+        var user = _dataService.GetUser(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        _dataService.DeleteUser(id);
+        return Ok("User Deleted");
+    }
     private UserModel CreateUserModel(User user)
     {
         return new UserModel

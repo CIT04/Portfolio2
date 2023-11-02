@@ -21,18 +21,18 @@ public class PersonController : BaseController
 
     }
 
-    [HttpGet(Name = nameof(GetPersons))]
+    //[HttpGet(Name = nameof(GetPersons))]
 
-    public IActionResult GetPersons(int page = 0, int pageSize = 10)
-    {
-        (var persons, var total) = _dataService.GetPersons(page, pageSize);
+    //public IActionResult GetPersons(int page = 0, int pageSize = 10)
+    //{
+    //    (var persons, var total) = _dataService.GetPersons(page, pageSize);
 
-        var items = persons.Select(CreatePersonModel);
+    //    var items = persons.Select(CreatePersonModel);
 
-        var result = Paging(items, total, page, pageSize, nameof(GetPersons));
+    //    var result = Paging(items, total, page, pageSize, nameof(GetPersons));
 
-        return Ok(result);
-    }
+    //    return Ok(result);
+    //}
 
     [HttpGet("{Id}", Name = nameof(GetPerson))]
     public IActionResult GetPerson(string Id)
