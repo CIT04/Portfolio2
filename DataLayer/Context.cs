@@ -17,10 +17,9 @@ public class Context : DbContext
     public DbSet<Objects.Language> Language { get; set; }
     public DbSet<Objects.Genre> Genre { get; set; }
     public DbSet<Objects.MediaGenre> MediaGenre { get; set; }
-
     public DbSet<Objects.Rating> Rating { get; set; }
-
     public DbSet<Objects.Bookmark> Bookmarks { get; set; }
+    public DbSet<Objects.History> History { get; set; }
 
     public DbSet<Objects.SeasonEpisode> SeasonEpisode{ get; set; }
     //public object Bookmarks { get; internal set; }
@@ -197,6 +196,18 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.Bookmark>()
             .Property(x => x.Annotation).HasColumnName("annotation");
         modelBuilder.Entity<Objects.Bookmark>();
+
+        //History
+        modelBuilder.Entity<Objects.History>().ToTable("history");
+        modelBuilder.Entity<Objects.History>()
+        .HasKey(x => new { x.M_id, x.U_id });
+        modelBuilder.Entity<Objects.History>()
+            .Property(x => x.M_id).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.History>()
+            .Property(x => x.U_id).HasColumnName("u_id");
+        modelBuilder.Entity<Objects.History>()
+            .Property(x => x.Time).HasColumnName("time");
+        modelBuilder.Entity<Objects.History>();
 
 
     }
