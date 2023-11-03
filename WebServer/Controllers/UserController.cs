@@ -66,7 +66,7 @@ public class UserController : BaseController
         return Created($"api/user/{xUser.Id}", xUser);
     }
 
-    [HttpPost("update")]
+    [HttpPut("update")]
     public IActionResult UpdateUser(User user)
     {
 
