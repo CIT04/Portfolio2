@@ -21,7 +21,7 @@ public class Context : DbContext
     public DbSet<Objects.Bookmark> Bookmarks { get; set; }
     public DbSet<Objects.History> History { get; set; }
     public DbSet<Objects.LocalRating> LocalRating { get; set; }
-
+    public DbSet<Objects.SearchHistory> SearchHistory { get; set; }
     public DbSet<Objects.SeasonEpisode> SeasonEpisode{ get; set; }
     //public object Bookmarks { get; internal set; }
 
@@ -217,6 +217,17 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.History>()
             .Property(x => x.Time).HasColumnName("time");
         modelBuilder.Entity<Objects.History>();
+
+        //SearchHistory
+        modelBuilder.Entity<Objects.SearchHistory>().ToTable("search_history");
+        modelBuilder.Entity<Objects.SearchHistory>()
+        .HasKey(x => new { x.U_id });
+        modelBuilder.Entity<Objects.SearchHistory>()
+            .Property(x => x.Search_string).HasColumnName("search_string");
+        modelBuilder.Entity<Objects.SearchHistory>()
+            .Property(x => x.U_id).HasColumnName("u_id");
+        modelBuilder.Entity<Objects.SearchHistory>()
+            .Property(x => x.Time).HasColumnName("time");
 
 
         //LocalRating
