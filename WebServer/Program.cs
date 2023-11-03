@@ -14,6 +14,7 @@ builder.Services.AddSingleton<IBookmarkService, BookmarkService>();
 builder.Services.AddSingleton<IPersonService, PersonService>();
 builder.Services.AddSingleton<IHistoryService, HistoryService>();
 builder.Services.AddSingleton<ILocalRatingService, LocalRatingService>();
+builder.Services.AddSingleton<ITeamService, TeamService>();
 
 var app = builder.Build();
 

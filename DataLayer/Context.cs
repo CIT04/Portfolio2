@@ -142,11 +142,17 @@ public class Context : DbContext
 
         //Team
         modelBuilder.Entity<Objects.Team>().ToTable("team");
-        modelBuilder.Entity<Objects.Team>().HasKey(x => new { x.M_id, x.P_id });
+        modelBuilder.Entity<Objects.Team>().HasKey(x => new { x.MediaId, x.PersonId });
         modelBuilder.Entity<Objects.Team>()
-            .Property(x => x.M_id).HasColumnName("m_id");
+            .Property(x => x.MediaId).HasColumnName("m_id");
         modelBuilder.Entity<Objects.Team>()
-            .Property(x => x.P_id).HasColumnName("p_id");
+            .Property(x => x.PersonId).HasColumnName("p_id");
+        modelBuilder.Entity<Objects.Team>()
+            .Property(x => x.Role).HasColumnName("role");
+        modelBuilder.Entity<Objects.Team>()
+            .Property(x => x.Characters).HasColumnName("characters");
+        modelBuilder.Entity<Objects.Team>()
+            .Property(x => x.Job).HasColumnName("job");
 
 
         //user

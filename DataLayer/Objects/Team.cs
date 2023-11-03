@@ -8,8 +8,12 @@ namespace DataLayer.Objects
 {
     public class Team
     {
-        public string M_id { get; set; }  // Media ID
-        public string P_id { get; set; }  // Actor ID
+        public string MediaId { get; set; }  // Media ID
+        public string PersonId { get; set; }  // Actor ID
+
+        public string Role { get; set; }
+        public string Characters { get; set; }
+        public string Job { get; set; }
 
         public Person Person { get; set; }  // Navigation property to Actor
 
