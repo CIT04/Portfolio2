@@ -31,13 +31,15 @@ namespace DataLayer.Objects
         public string Awards { get; set; }
 
         public string Type { get; set; }
-
+        public String Episode { get; set; }
+        public String TotalSeasons { get; set; }
+       
         public ICollection<MediaGenre> MediaGenres { get; set; }
         public ICollection<MediaCountry> MediaCountries { get; set; }
         public ICollection<MediaLanguage> MediaLanguages { get; set; }
 
         public Rating Rating { get; set; }
-
+ 
 
         //Magnler - Awards, Dvd,  Production,Website, Parrenttconst
 

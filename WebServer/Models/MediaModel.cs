@@ -28,8 +28,14 @@ public class MediaModel
     public string Average { get; set; }
 
     public string Type { get; set; }
+    public string Episode { get; set; }
+
+    public string TotalSeasons { get; set; }
     public List<String> MediaGenres { get; set; }
     public List<String> MediaCountries { get; set; }
     public List<String> MediaLanguages { get; set; }
     public Rating Rating { get; internal set; }
+
+    
+    
 }

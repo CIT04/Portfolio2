@@ -97,10 +97,16 @@ public class MediaService : IMediaService
                 Awards = media.Awards,
                 MediaGenres = media.MediaGenres,
                 MediaCountries = media.MediaCountries,
-                MediaLanguages = media.MediaLanguages
+                MediaLanguages = media.MediaLanguages,
+                //SeasonEpisode = media.SeasonEpisode
+                
     };
             dto.Rating = db.Rating.FirstOrDefault(x => x.Id == id);
+            dto.TotalSeasons = db.SeasonEpisode.FirstOrDefault(x => x.Id == id).TotalSeasons;
+            dto.Episode = db.SeasonEpisode.FirstOrDefault(x => x.Id == id).Episode;
+            
             return dto;
+
         }
         return null;
     }
@@ -124,7 +130,7 @@ public class MediaService : IMediaService
     public SeasonEpisode? GetSeasonEpisode(string id)
     {
         var db = new Context();
-        return db.SeasonEpisode.FirstOrDefault(x => x.M_id == id);
+        return db.SeasonEpisode.FirstOrDefault(x => x.Id == id);
 
     }
 

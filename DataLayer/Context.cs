@@ -112,14 +112,12 @@ public class Context : DbContext
         //season episode 
         modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");
         modelBuilder.Entity<Objects.SeasonEpisode>()
-        .HasKey(x => x.M_id);
+        .HasKey(x => x.Id);
 
         modelBuilder.Entity<Objects.SeasonEpisode>()
-            .Property(x => x.M_id).HasColumnName("m_id");
+            .Property(x => x.Id).HasColumnName("m_id");
         modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.Episode).HasColumnName("episode");
-        modelBuilder.Entity<Objects.SeasonEpisode>()
-            .Property(x => x.SeasonNumber).HasColumnName("seasonnumber");
         modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.TotalSeasons).HasColumnName("totalseasons");
 
