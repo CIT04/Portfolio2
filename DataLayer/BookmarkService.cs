@@ -53,7 +53,7 @@ public class BookmarkService : IBookmarkService
     public bool UpdateBookmark(Bookmark bookmark)
     {
         using var db = new Context();
-        var xBookmark = db.Bookmarks.FirstOrDefault(x => x.M_id == bookmark.M_id);
+        var xBookmark = db.Bookmarks.FirstOrDefault(x => x.M_id == bookmark.M_id && x.U_id == bookmark.U_id);
 
         if (xBookmark != null) 
         {
