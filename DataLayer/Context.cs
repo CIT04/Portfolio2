@@ -9,6 +9,7 @@ namespace DataLayer;
 
 public class Context : DbContext
 {
+    
     public DbSet<Objects.Person> Person { get; set; }
     public DbSet<Objects.Media> Media { get; set; }
     public DbSet<Objects.Team> Team { get; set; }
@@ -24,6 +25,8 @@ public class Context : DbContext
     public DbSet<Objects.SearchHistory> SearchHistory { get; set; }
     public DbSet<Objects.SeasonEpisode> SeasonEpisode{ get; set; }
     //public object Bookmarks { get; internal set; }
+    public DbSet<Objects.SearchResult> SearchResult { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -244,7 +247,10 @@ public class Context : DbContext
             .Property(x => x.LocalScore).HasColumnName("localscore");
         modelBuilder.Entity<Objects.LocalRating>();
 
-
+        modelBuilder.Entity<Objects.SearchResult>().HasKey(x => x.Id);
+        modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Id).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Rank).HasColumnName("rank");
+        modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Title).HasColumnName("title");
     }
 }
 

@@ -73,6 +73,28 @@ public class MediaService : IMediaService
         }
     }
 
+    public (IList<Media> products, int count) GetMediasBySearch(int page, int pageSize, string[] search)
+    {
+        using (var db = new Context())
+        {
+            search = new[] { "peter", "parker", "spider" };
+            var searchResult = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media({(search)})");
+
+            var query = GetMediaWithIncludes(db)
+              .Where(media => searchResult.Any(sr => sr.Id == media.Id))
+              .OrderBy(media => searchResult.First(sr => sr.Id == media.Id).Rank);
+
+            var result = query
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+            
+            
+            return (result, query.Count());
+            
+        }
+    }
+
 
 
 
@@ -106,13 +128,16 @@ public class MediaService : IMediaService
 
     public (IList<Media> products, int count) Search(int page, int pageSize, string search, string type, string genre)
     {
+
         search = search.ToLower();
+
 
         using (var db = new Context())
         {
             var query = GetMediaWithIncludes(db)
                 .Where(m => m.Title.ToLower().Contains(search));
 
+            db.Database.ExecuteSqlInterpolated($"SELECT * FROM search_media(ARRAY['harry','arnold','emma','blue','red','yellow'])");
             if (!string.IsNullOrEmpty(type))
             {
                 type = type.ToLower();
