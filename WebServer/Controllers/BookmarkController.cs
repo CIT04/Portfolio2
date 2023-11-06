@@ -36,9 +36,9 @@ public class BookmarkController : BaseController
     }
 
     [HttpGet("{bookmark}", Name = nameof(GetBookmark))]
-    public IActionResult GetBookmark(string bookmark)
+    public IActionResult GetBookmark(string bookmark, int U_id)
     {
-        var bookmark1 = _dataService.GetBookmark(bookmark);
+        var bookmark1 = _dataService.GetBookmark(bookmark, U_id);
         Console.WriteLine("bookmark1");
         if (bookmark1 == null)
         {
@@ -48,6 +48,48 @@ public class BookmarkController : BaseController
         return Ok(CreateBookmarkModel(bookmark1));
 
     }
+
+    //CRUD Create 
+    [HttpPost]
+    public IActionResult CreateBookmark(CreateBookmarkModel bookmark)
+    {
+        var xBookmark = new Bookmark
+        {
+            M_id = bookmark.M_id,
+            U_id = bookmark.U_id,
+            Time = bookmark.Time,
+            Annotation = bookmark.Annotation
+        };
+
+        _dataService.CreateBookmark(xBookmark);
+
+        return Created($"api/bookmark/{xBookmark.M_id}", xBookmark);
+    }
+
+    //CRUD Update
+    [HttpPut("update")]
+    public IActionResult UpdateBookmark(Bookmark bookmark)
+    {
+
+        var result=_dataService.UpdateBookmark(bookmark);
+        if (result) 
+        { return Ok(bookmark); }
+        return NotFound();
+    }
+
+    //CRUD Delete
+    [HttpDelete("{M_id, U_id}")]
+    public IActionResult DeleteBookmark(string M_id, int U_id)
+    {
+        var bookmark = _dataService.GetBookmark(M_id, U_id);
+        if (bookmark == null)
+        {
+            return NotFound();
+        }
+        _dataService.DeleteBookmark(M_id, U_id);
+        return Ok("Bookmark Deleted");
+    }
+
 
     public BookmarkModel CreateBookmarkModel(Bookmark bookmark)
     {
@@ -62,10 +104,7 @@ public class BookmarkController : BaseController
             Annotation = bookmark.Annotation,
 
         };
-
-
-
-
     }
+    
 }
 

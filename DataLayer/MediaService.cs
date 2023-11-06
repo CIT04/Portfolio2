@@ -91,11 +91,11 @@ public class MediaService : IMediaService
     }
 
     public SeasonEpisode? GetSeasonEpisode(string id)
-    {
-        var db = new Context();
-        return db.SeasonEpisode.FirstOrDefault(x => x.Id == id);
+     {
+         var db = new Context();
+         return db.SeasonEpisode.FirstOrDefault(x => x.Id == id);
 
-    }
+     }
 
     public Rating? getrating(string id)
     {
