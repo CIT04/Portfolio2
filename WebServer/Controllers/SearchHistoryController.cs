@@ -60,5 +60,19 @@ public class SearchHistoryController : BaseController
 
         };
     }
+    [HttpPost]
+    public IActionResult AddSearchHistory( SearchHistoryModel SearchHistoryModel)
+    {
+        
+            var searchHistory = new SearchHistory
+            {
+                U_id = SearchHistoryModel.U_id,
+                Search_string = SearchHistoryModel.Search_string,
+                Time = SearchHistoryModel.Time
+            };
+        _dataService.AddSearchHistory(searchHistory);
+            return Created($"api/searchhistory/{searchHistory.U_id}", searchHistory);
+        }
+      
 }
 
