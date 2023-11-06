@@ -35,7 +35,7 @@ public class LocalRatingController : BaseController
         return Ok(result);
     }
 
-    [HttpGet("{Id}", Name = nameof(GetLocalRating))]
+    [HttpGet("{localrating}", Name = nameof(GetLocalRating))]
     public IActionResult GetLocalRating(string Id)
     {
         var localrating1 = _dataService.GetLocalRating(Id);
@@ -46,6 +46,22 @@ public class LocalRatingController : BaseController
 
         return Ok(CreateLocalRatingModel(localrating1));
 
+    }
+
+    //CRUD Create 
+    [HttpPost]
+    public IActionResult CreateLocal(CreateLocalRatingModel localrating)
+    {
+        var xLocalRating = new LocalRating
+        {
+            M_id = localrating.m_id,
+            U_id = localrating.u_id,
+            LocalScore = localrating.localscore
+        };
+
+        _dataService.CreateLocalRating(xLocalRating);
+
+        return Created($"api/localrating/{xLocalRating.M_id}", xLocalRating);
     }
 
     public LocalRatingModel CreateLocalRatingModel(LocalRating localrating)

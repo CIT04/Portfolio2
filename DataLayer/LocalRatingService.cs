@@ -1,4 +1,5 @@
 using DataLayer.Objects;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer;
 
@@ -20,5 +21,22 @@ public class LocalRatingService : ILocalRatingService
             .Take(pageSize)
             .ToList();
         return (localrating, db.LocalRating.Count());
+    }
+
+    public void CreateLocalRating(LocalRating localRating)
+    {
+        using var db = new Context();
+        var xLocalRating = new LocalRating
+        {
+            M_id = localRating.M_id,
+            U_id = localRating.U_id,
+            LocalScore = localRating.LocalScore
+        };
+
+
+
+        db.Database.ExecuteSqlInterpolated($"select insert_localrating({xLocalRating.M_id}, {xLocalRating.U_id}, {xLocalRating.LocalScore})");
+
+        db.SaveChanges();
     }
 }

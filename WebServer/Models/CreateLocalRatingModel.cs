@@ -2,6 +2,8 @@ namespace WebServer.Models
 {
     public class CreateLocalRatingModel
     {
-        public string LocalRating { get; set; } = string.Empty;
+        public int localscore { get; set; } 
+        public string m_id { get; set; }
+        public int u_id { get; set; }
     }
 }
