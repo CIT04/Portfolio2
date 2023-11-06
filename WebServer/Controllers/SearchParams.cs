@@ -5,5 +5,5 @@ public class SearchParams
     public int pageSize = 10;
     public string Genre ="";
     public string Type = "";
-    public string Search = "";
+    public string [] Search = new string[] {""};
 }

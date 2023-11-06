@@ -20,13 +20,13 @@ public class BaseController : ControllerBase
 
         var numPages = (int)Math.Ceiling(total / (double)searchParams.pageSize);
         var next = searchParams.page < numPages - 1
-            ? GetUrl(endpointName, new { page = searchParams.page + 1, searchParams.pageSize, searchParams.Genre, searchParams.Type  })
+            ? GetUrl(endpointName, new { page = searchParams.page + 1, searchParams.pageSize, searchParams.Genre, searchParams.Type, searchParams.Search })
         : null;
         var prev = searchParams.page > 0
-            ? GetUrl(endpointName, new { page = searchParams.page - 1, searchParams.pageSize, searchParams.Genre, searchParams.Type })
+            ? GetUrl(endpointName, new { page = searchParams.page - 1, searchParams.pageSize, searchParams.Genre, searchParams.Type, searchParams.Search })
         : null;
 
-        var cur = GetUrl(endpointName, new { searchParams.page, searchParams.pageSize, searchParams.Genre, searchParams.Type });
+        var cur = GetUrl(endpointName, new { searchParams.page, searchParams.pageSize, searchParams.Genre, searchParams.Type, searchParams.Search });
 
 
 

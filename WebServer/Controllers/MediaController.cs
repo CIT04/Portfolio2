@@ -80,24 +80,39 @@ public class MediaController : BaseController
         return Ok(result);
     }
 
-    [HttpGet("search", Name = nameof(Search))]
-    public IActionResult Search([FromQuery] SearchParams searchParams, [FromRoute] string type = null, [FromRoute] string genre = null, [FromRoute] string search = null)
+    [HttpGet("search", Name = nameof(GetMediasBySearch))]
+    public IActionResult GetMediasBySearch([FromQuery] SearchParams searchParams, [FromRoute] string []search = null) 
     { 
         UpdateSearchParamsFromQuery(searchParams);
-        searchParams.Type = type;
-        searchParams.Genre = genre;
         searchParams.Search = search;
 
-        (var medias, var total) = _dataService.Search(searchParams.page, searchParams.pageSize, searchParams.Search ,searchParams.Type, searchParams.Genre);
+        (var medias, var total) = _dataService.GetMediasBySearch(searchParams.page, searchParams.pageSize, searchParams.Search);
 
         var items = medias.Select(CreateMediaModel);
 
-       //  var result = Paging(items, total, searchParams, nameof(GetMediasByType));
+        var result = Paging(items, total, searchParams, nameof(GetMediasBySearch));
 
-         //return Ok(result);
-        return Ok(items);
-
+        return Ok(result);
     }
+
+    
+    //public IActionResult Search([FromQuery] SearchParams searchParams, [FromRoute] string type = null, [FromRoute] string genre = null, [FromRoute] string [] search = null)
+    //{ 
+    //    UpdateSearchParamsFromQuery(searchParams);
+    //    searchParams.Type = type;
+    //    searchParams.Genre = genre;
+    //    searchParams.Search = search;
+
+    //    (var medias, var total) = _dataService.Search(searchParams.page, searchParams.pageSize, searchParams.Search ,searchParams.Type, searchParams.Genre);
+
+    //    var items = medias.Select(CreateMediaModel);
+
+    //   //  var result = Paging(items, total, searchParams, nameof(GetMediasByType));
+
+    //     //return Ok(result);
+    //    return Ok(items);
+
+    //}
     private MediaModel CreateMediaModel(MediaDTO media)
     {
         return new MediaModel

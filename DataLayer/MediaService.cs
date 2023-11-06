@@ -77,7 +77,7 @@ public class MediaService : IMediaService
     {
         using (var db = new Context())
         {
-            search = new[] { "peter", "parker", "spider" };
+            search = new[] { "spider-man" };
             var searchResult = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media({(search)})");
 
             var query = GetMediaWithIncludes(db)
