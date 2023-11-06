@@ -78,15 +78,10 @@ public class BookmarkController : BaseController
     }
 
     //CRUD Delete
-    [HttpDelete("{M_id, U_id}")]
-    public IActionResult DeleteBookmark(string M_id, int U_id)
+    [HttpDelete("{u_id}/{m_id}")]
+    public IActionResult DeleteBookmark(int u_id, string m_id)
     {
-        var bookmark = _dataService.GetBookmark(M_id, U_id);
-        if (bookmark == null)
-        {
-            return NotFound();
-        }
-        _dataService.DeleteBookmark(M_id, U_id);
+    _dataService.DeleteBookmark(u_id, m_id);
         return Ok("Bookmark Deleted");
     }
 

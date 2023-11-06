@@ -16,6 +16,6 @@ public interface IBookmarkService
     (IList<Bookmark> products, int count) GetBookmarks(int page, int pageSize);
 
         void CreateBookmark(Bookmark bookmark);
-        void DeleteBookmark(string m_id, int u_id);
+        void DeleteBookmark(int u_id, string m_id);
         bool UpdateBookmark(Bookmark bookmark);
 }
