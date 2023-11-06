@@ -36,4 +36,11 @@ public class SearchHistoryService : ISearchHistoryService
         db.Database.ExecuteSqlInterpolated($"select insert_search_history({xSearchHistory.U_id},{xSearchHistory.Search_string}, {xSearchHistory.Time} )");
         db.SaveChanges();
     }
+
+    public void DeleteSearchHistory(int u_id)
+    {
+        using var db = new Context();
+        db.Database.ExecuteSqlInterpolated($"select delete_search_history_by_uid({u_id})");
+        db.SaveChanges();
+    }
 }

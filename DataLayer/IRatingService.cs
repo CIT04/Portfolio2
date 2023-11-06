@@ -14,5 +14,9 @@ public interface IRatingService
     Rating? GetRating(string id);
     //Rating? GetRatingById(string id);
     Rating? GetRatingByMId(string m_id);
+
+
     (IList<Rating> products, int count) GetRatings(int page, int pageSize);
+    
+
 }

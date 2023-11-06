@@ -52,7 +52,7 @@ public class SearchHistoryController : BaseController
     {
         return new SearchHistoryModel
         {
-            Url = GetUrl(nameof(GetSearchHistories), new {  searchhistory.U_id }),
+            Url = GetUrl(nameof(GetSearchHistories), new { searchhistory.U_id }),
 
             Search_string = searchhistory.Search_string,
             U_id = searchhistory.U_id,
@@ -61,18 +61,27 @@ public class SearchHistoryController : BaseController
         };
     }
     [HttpPost]
-    public IActionResult AddSearchHistory( SearchHistoryModel SearchHistoryModel)
+    public IActionResult AddSearchHistory(SearchHistoryModel SearchHistoryModel)
     {
-        
-            var searchHistory = new SearchHistory
-            {
-                U_id = SearchHistoryModel.U_id,
-                Search_string = SearchHistoryModel.Search_string,
-                Time = SearchHistoryModel.Time
-            };
+
+        var searchHistory = new SearchHistory
+        {
+            U_id = SearchHistoryModel.U_id,
+            Search_string = SearchHistoryModel.Search_string,
+            Time = SearchHistoryModel.Time
+        };
         _dataService.AddSearchHistory(searchHistory);
-            return Created($"api/searchhistory/{searchHistory.U_id}", searchHistory);
-        }
+        return Created($"api/searchhistory/{searchHistory.U_id}", searchHistory);
+    }
+
+    [HttpDelete("{Id}")]
+
+    public IActionResult DeleteSearchHistory(int Id)
+    {
+        _dataService.DeleteSearchHistory(Id);
+        return Ok("Slettet");
+        
+    }
       
 }
 
