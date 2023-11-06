@@ -15,7 +15,7 @@ public class MediaService : IMediaService
     public (IList<Media> products, int count) GetMedias(int page, int pageSize)
     {
         var db = new Context();
-        var media =  GetMediaWithIncludes(db)
+        var media = GetMediaWithIncludes(db)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();
@@ -73,13 +73,9 @@ public class MediaService : IMediaService
         }
     }
 
-    
-
-  
 
 
-    /*--------User------------*/
-    //Rykket til UserService
+
 
 
     /*------------SeasonEpisode--------------*/
@@ -97,7 +93,7 @@ public class MediaService : IMediaService
     public SeasonEpisode? GetSeasonEpisode(string id)
     {
         var db = new Context();
-        return db.SeasonEpisode.FirstOrDefault(x => x.M_id == id);
+        return db.SeasonEpisode.FirstOrDefault(x => x.Id == id);
 
     }
 
@@ -112,36 +108,31 @@ public class MediaService : IMediaService
     {
         search = search.ToLower();
 
-        var db = new Context();
-        //TODO: Brug vores SQL functioni stedet. 
-        //        db.Database.ExecuteSqlInterpolated($"");
-
-        var query = db.Media
-            .Include(m => m.MediaGenres)
-            .Include(c => c.MediaCountries)
-            .Include(l => l.MediaLanguages)
-            .Where(m => m.Title.ToLower().Contains(search));
-
-        if (!string.IsNullOrEmpty(type))
+        using (var db = new Context())
         {
-            type = type.ToLower();
-            query = query.Where(m => m.Type.ToLower().Contains(type));
+            var query = GetMediaWithIncludes(db)
+                .Where(m => m.Title.ToLower().Contains(search));
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                type = type.ToLower();
+                query = query.Where(m => m.Type.ToLower().Contains(type));
+            }
+
+            if (!string.IsNullOrEmpty(genre))
+            {
+                genre = genre.ToLower();
+                query = query.Where(m => m.MediaGenres.Any(g => g.Genre.Id.ToLower().Contains(genre)));
+            }
+
+            var result = query
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return (result, result.Count);
         }
-
-        if (!string.IsNullOrEmpty(genre))
-        {
-            genre = genre.ToLower();
-            query = query.Where(m => m.MediaGenres.Any(g => g.Genre.Id.ToLower().Contains(genre)));
-        }
-
-        var result = query
-            .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToList();
-
-        return (result, result.Count);
     }
-
     private Media GetMediaWithIncludes(Context db, string id)
     {
         return db.Media
@@ -180,5 +171,4 @@ public class MediaService : IMediaService
         return dto;
     }
 }
-
 
