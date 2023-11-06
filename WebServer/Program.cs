@@ -13,6 +13,11 @@ builder.Services.AddSingleton<IRatingService, RatingService>();
 builder.Services.AddSingleton<IBookmarkService, BookmarkService>();
 builder.Services.AddSingleton<IPersonService, PersonService>();
 builder.Services.AddSingleton<IHistoryService, HistoryService>();
+builder.Services.AddSingleton<ILocalRatingService, LocalRatingService>();
+builder.Services.AddSingleton<ITeamService, TeamService>();
+
+builder.Services.AddSingleton<ISearchHistoryService, SearchHistoryService>();
+
 
 var app = builder.Build();
 

@@ -9,10 +9,10 @@ namespace DataLayer.Objects
 {
     public class SeasonEpisode
     {
-        public string M_id { get; set; } = string.Empty;
+        public string Id { get; set; } = string.Empty;
         public string Episode { get; set; }
 
-        public string SeasonNumber { get; set; }
+       // public string SeasonNumber { get; set; }
 
         public string TotalSeasons { get; set;}
     }

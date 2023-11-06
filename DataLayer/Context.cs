@@ -20,7 +20,8 @@ public class Context : DbContext
     public DbSet<Objects.Rating> Rating { get; set; }
     public DbSet<Objects.Bookmark> Bookmarks { get; set; }
     public DbSet<Objects.History> History { get; set; }
-
+    public DbSet<Objects.LocalRating> LocalRating { get; set; }
+    public DbSet<Objects.SearchHistory> SearchHistory { get; set; }
     public DbSet<Objects.SeasonEpisode> SeasonEpisode{ get; set; }
     //public object Bookmarks { get; internal set; }
 
@@ -64,6 +65,7 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Type).HasColumnName("type");
 
+
         //genre
         modelBuilder.Entity<Objects.Genre>().ToTable("genre");
         modelBuilder.Entity<Objects.Genre>()
@@ -92,6 +94,7 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.MediaCountry>()
            .Property(x => x.CountryId).HasColumnName("country");
 
+
         //language 
         modelBuilder.Entity<Objects.Language>().ToTable("language");
         modelBuilder.Entity<Objects.Language>()
@@ -107,23 +110,18 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.MediaLanguage>()
            .Property(x => x.LanguageId).HasColumnName("language");
 
-       
-
 
         //season episode 
         modelBuilder.Entity<Objects.SeasonEpisode>().ToTable("seasonepisode");
         modelBuilder.Entity<Objects.SeasonEpisode>()
-        .HasKey(x => x.M_id);
+        .HasKey(x => x.Id);
 
         modelBuilder.Entity<Objects.SeasonEpisode>()
-            .Property(x => x.M_id).HasColumnName("m_id");
+            .Property(x => x.Id).HasColumnName("m_id");
         modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.Episode).HasColumnName("episode");
         modelBuilder.Entity<Objects.SeasonEpisode>()
-            .Property(x => x.SeasonNumber).HasColumnName("seasonnumber");
-        modelBuilder.Entity<Objects.SeasonEpisode>()
             .Property(x => x.TotalSeasons).HasColumnName("totalseasons");
-
 
 
         //Person 
@@ -143,13 +141,21 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.Person>()
             .Property(x => x.NameRating).HasColumnName("name_rating");
 
+
         //Team
         modelBuilder.Entity<Objects.Team>().ToTable("team");
-        modelBuilder.Entity<Objects.Team>().HasKey(x => new { x.M_id, x.P_id });
+        modelBuilder.Entity<Objects.Team>().HasKey(x => new { x.MediaId, x.PersonId });
         modelBuilder.Entity<Objects.Team>()
-            .Property(x => x.M_id).HasColumnName("m_id");
+            .Property(x => x.MediaId).HasColumnName("m_id");
         modelBuilder.Entity<Objects.Team>()
-            .Property(x => x.P_id).HasColumnName("p_id");
+            .Property(x => x.PersonId).HasColumnName("p_id");
+        modelBuilder.Entity<Objects.Team>()
+            .Property(x => x.Role).HasColumnName("role");
+        modelBuilder.Entity<Objects.Team>()
+            .Property(x => x.Characters).HasColumnName("characters");
+        modelBuilder.Entity<Objects.Team>()
+            .Property(x => x.Job).HasColumnName("job");
+
 
         //user
         modelBuilder.Entity<Objects.User>().ToTable("user");
@@ -167,6 +173,7 @@ public class Context : DbContext
             .Property(x => x.Dob).HasColumnName("dob");
         modelBuilder.Entity<Objects.User>()
             .Property(x => x.Email).HasColumnName("email");
+
 
         //Rating
         modelBuilder.Entity<Objects.Rating>().ToTable("rating2");
@@ -186,7 +193,6 @@ public class Context : DbContext
             .Property(x => x.NumVotes).HasColumnName("numvotes");
 
 
-
         //Bookmarks
         modelBuilder.Entity<Objects.Bookmark>().ToTable("bookmarks");
         modelBuilder.Entity<Objects.Bookmark>()
@@ -201,6 +207,7 @@ public class Context : DbContext
             .Property(x => x.Annotation).HasColumnName("annotation");
         modelBuilder.Entity<Objects.Bookmark>();
 
+
         //History
         modelBuilder.Entity<Objects.History>().ToTable("history");
         modelBuilder.Entity<Objects.History>()
@@ -212,6 +219,30 @@ public class Context : DbContext
         modelBuilder.Entity<Objects.History>()
             .Property(x => x.Time).HasColumnName("time");
         modelBuilder.Entity<Objects.History>();
+
+        //SearchHistory
+        modelBuilder.Entity<Objects.SearchHistory>().ToTable("search_history");
+        modelBuilder.Entity<Objects.SearchHistory>()
+        .HasKey(x => new { x.U_id });
+        modelBuilder.Entity<Objects.SearchHistory>()
+            .Property(x => x.Search_string).HasColumnName("search_string");
+        modelBuilder.Entity<Objects.SearchHistory>()
+            .Property(x => x.U_id).HasColumnName("u_id");
+        modelBuilder.Entity<Objects.SearchHistory>()
+            .Property(x => x.Time).HasColumnName("time");
+
+
+        //LocalRating
+        modelBuilder.Entity<Objects.LocalRating>().ToTable("localrating");
+        modelBuilder.Entity<Objects.LocalRating>()
+        .HasKey(x => new { x.M_id, x.U_id });
+        modelBuilder.Entity<Objects.LocalRating>()
+            .Property(x => x.M_id).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.LocalRating>()
+            .Property(x => x.U_id).HasColumnName("u_id");
+        modelBuilder.Entity<Objects.LocalRating>()
+            .Property(x => x.LocalScore).HasColumnName("localscore");
+        modelBuilder.Entity<Objects.LocalRating>();
 
 
     }

@@ -117,7 +117,10 @@ public class MediaController : BaseController
             MediaCountries = media.MediaCountries.Select(x => x.CountryId).ToList(),
             MediaLanguages = media.MediaLanguages.Select(x => x.LanguageId).ToList(),
             Rating = media.Rating,
-            Type = media.Type
+            Type = media.Type, 
+            Episode = media.Episode,
+            TotalSeasons = media.TotalSeasons,
+            
 
         };
 
@@ -141,7 +144,9 @@ public class MediaController : BaseController
             MediaGenres = media.MediaGenres.Select(x => x.GenreId).ToList(),
             MediaCountries = media.MediaCountries.Select(x => x.CountryId).ToList(),
             MediaLanguages = media.MediaLanguages.Select(x => x.LanguageId).ToList(),
-            Type = media.Type
+            Type = media.Type,
+            
+
 
 
         };
