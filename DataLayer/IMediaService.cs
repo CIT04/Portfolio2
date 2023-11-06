@@ -11,8 +11,9 @@ namespace DataLayer
         MediaDTO? GetMedia(string id);
 
         IList<Media> GetMediasByTitle(string search);
-        (IList<Media> products, int count) GetMediasByGenre(int page, int pageSize, string search);
-        (IList<Media> products, int count) GetMediasByType(int page, int pageSize, string search);
+        (IList<Media> products, int count) GetMediasByGenre(int page, int pageSize, string genre);
+        (IList<Media> products, int count) GetMediasByType(int page, int pageSize, string types);
+        (IList<Media> products, int count) Search(int page, int pageSize, string search, string types, string genre);
 
     }
 }

@@ -30,6 +30,8 @@ public class Context : DbContext
         optionsBuilder
             .LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
         optionsBuilder.UseNpgsql("host=cit.ruc.dk;db=cit04;uid=cit04;pwd=xbSNeklDajCG");
+        optionsBuilder.EnableSensitiveDataLogging();
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

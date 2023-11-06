@@ -15,12 +15,7 @@ public class MediaService : IMediaService
     public (IList<Media> products, int count) GetMedias(int page, int pageSize)
     {
         var db = new Context();
-        var media =
-            db.Media
-            .Include(m => m.MediaGenres)
-            .Include(c => c.MediaCountries)
-            .Include(l => l.MediaLanguages)
-           // .Include(v => v.Rating)
+        var media =  GetMediaWithIncludes(db)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();
@@ -36,10 +31,7 @@ public class MediaService : IMediaService
 
         using (var db = new Context())
         {
-            var query = db.Media
-                .Include(m => m.MediaGenres)
-                .Include(c => c.MediaCountries)
-                .Include(l => l.MediaLanguages)
+            var query = GetMediaWithIncludes(db)
                 .Where(m => m.MediaGenres.Any(g => g.Genre.Id.ToLower().Contains(search.ToLower())));
 
             var media = query
@@ -52,58 +44,39 @@ public class MediaService : IMediaService
     }
     public (IList<Media> products, int count) GetMediasByType(int page, int pageSize, string search)
     {
-        var db = new Context();
-        var media =
-            db.Media
-            .Include(m => m.MediaGenres)
-            .Include(c => c.MediaCountries)
-            .Include(l => l.MediaLanguages)
-            .Where(m => m.Type.ToLower().Contains(search.ToLower()));
-        var result = media
-            .Skip(page * pageSize)
-            .Take(pageSize)
+        using (var db = new Context())
+        {
+            var query = GetMediaWithIncludes(db)
+                .Where(m => m.Type.ToLower().Contains(search.ToLower()));
 
-            .ToList();
-        return (result, media.Count());
+            var result = query
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return (result, query.Count());
+        }
     }
 
     public MediaDTO? GetMedia(string id)
     {
-        var db = new Context();
-        var media = db.Media
-            .Include(m => m.MediaGenres)
-            .Include(c => c.MediaCountries)
-            .Include(l => l.MediaLanguages)
-            
-            .FirstOrDefault(x => x.Id == id);
-
-       
-
-        //TODO: Fix mapping issues
-        if (media != null)
+        using (var db = new Context())
         {
+            var media = GetMediaWithIncludes(db, id);
 
-            var dto = new MediaDTO
+            if (media != null)
             {
-                Title = media.Title,
-                Year = media.Year,
-                Plot = media.Plot,
-                Released = media.Released,
-                Poster = media.Poster,
-                Runtime = media.Runtime,
-                IsAdult = media.IsAdult,
-                EndYear = media.EndYear,
-                Rated = media.Rated,
-                Awards = media.Awards,
-                MediaGenres = media.MediaGenres,
-                MediaCountries = media.MediaCountries,
-                MediaLanguages = media.MediaLanguages
-    };
-            dto.Rating = db.Rating.FirstOrDefault(x => x.Id == id);
-            return dto;
+                return MapToMediaDTO(media, db);
+            }
+
+            return null;
         }
-        return null;
     }
+
+    
+
+  
+
 
     /*--------User------------*/
     //Rykket til UserService
@@ -135,7 +108,77 @@ public class MediaService : IMediaService
 
     }
 
+    public (IList<Media> products, int count) Search(int page, int pageSize, string search, string type, string genre)
+    {
+        search = search.ToLower();
 
+        var db = new Context();
+        //TODO: Brug vores SQL functioni stedet. 
+        //        db.Database.ExecuteSqlInterpolated($"");
+
+        var query = db.Media
+            .Include(m => m.MediaGenres)
+            .Include(c => c.MediaCountries)
+            .Include(l => l.MediaLanguages)
+            .Where(m => m.Title.ToLower().Contains(search));
+
+        if (!string.IsNullOrEmpty(type))
+        {
+            type = type.ToLower();
+            query = query.Where(m => m.Type.ToLower().Contains(type));
+        }
+
+        if (!string.IsNullOrEmpty(genre))
+        {
+            genre = genre.ToLower();
+            query = query.Where(m => m.MediaGenres.Any(g => g.Genre.Id.ToLower().Contains(genre)));
+        }
+
+        var result = query
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        return (result, result.Count);
+    }
+
+    private Media GetMediaWithIncludes(Context db, string id)
+    {
+        return db.Media
+            .Include(m => m.MediaGenres)
+            .Include(c => c.MediaCountries)
+            .Include(l => l.MediaLanguages)
+            .FirstOrDefault(x => x.Id == id);
+    }
+    private IQueryable<Media> GetMediaWithIncludes(Context db)
+    {
+        return db.Media
+            .Include(m => m.MediaGenres)
+            .Include(c => c.MediaCountries)
+            .Include(l => l.MediaLanguages);
+    }
+    private MediaDTO MapToMediaDTO(Media media, Context db)
+    {
+        var dto = new MediaDTO
+        {
+            Title = media.Title,
+            Year = media.Year,
+            Plot = media.Plot,
+            Released = media.Released,
+            Poster = media.Poster,
+            Runtime = media.Runtime,
+            IsAdult = media.IsAdult,
+            EndYear = media.EndYear,
+            Rated = media.Rated,
+            Awards = media.Awards,
+            MediaGenres = media.MediaGenres,
+            MediaCountries = media.MediaCountries,
+            MediaLanguages = media.MediaLanguages,
+            Rating = db.Rating.FirstOrDefault(x => x.Id == media.Id)
+        };
+
+        return dto;
+    }
 }
 
 
