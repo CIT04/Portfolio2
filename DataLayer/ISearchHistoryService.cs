@@ -14,6 +14,9 @@ public interface ISearchHistoryService
     (IList<SearchHistory> products, int count) GetSearchHistories(int page, int pageSize);
 
     void AddSearchHistory(SearchHistory searchHistory);
+
+    void DeleteSearchHistory(int u_id);
+
 }
 
 
