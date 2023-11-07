@@ -10,16 +10,26 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
 public class MediaService : IMediaService
-{
+{   
+   
 
-    public (IList<Media> products, int count) GetMedias(int page, int pageSize)
+    public (IList<Media> products, int count) GetMedias(int userid,int page, int pageSize)
     {
+
         var db = new Context();
+        var user = db.User.FirstOrDefault(x => x.Id == userid);
+
+        if (user == null)
+        {
+            throw new ArgumentException("User not found");
+        }
+
         var media = GetMediaWithIncludes(db)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();
-        return (media, db.Media.Count());
+            return (media, db.Media.Count());
+       
     }
     public IList<Media> GetMediasByTitle(string search)
     {

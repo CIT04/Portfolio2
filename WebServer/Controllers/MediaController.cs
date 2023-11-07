@@ -27,14 +27,20 @@ public class MediaController : BaseController
     [HttpGet(Name = nameof(GetMedias))]
     public IActionResult GetMedias([FromQuery] SearchParams searchParams)
     {
-        UpdateSearchParamsFromQuery(searchParams);
-        (var medias, var total) = _dataService.GetMedias(searchParams.page, searchParams.pageSize);
+        try
+        {
+            int userid =11;
 
-        var items = medias.Select(CreateMediaModel);
+            UpdateSearchParamsFromQuery(searchParams);
+            (var medias, var total) = _dataService.GetMedias(userid,searchParams.page, searchParams.pageSize);
 
-        var result = Paging(items, total, searchParams, nameof(GetMedias));
+            var items = medias.Select(CreateMediaModel);
 
-        return Ok(result);
+            var result = Paging(items, total, searchParams, nameof(GetMedias));
+
+            return Ok(result);
+        }
+        catch { return Unauthorized(); }
     }
 
 

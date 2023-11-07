@@ -6,7 +6,7 @@ namespace DataLayer
 {
     public interface IMediaService
     {
-        (IList<Media> products, int count) GetMedias(int page, int pageSize);
+        (IList<Media> products, int count) GetMedias(int userid,int page, int pageSize);
         
         MediaDTO? GetMedia(string id);
 

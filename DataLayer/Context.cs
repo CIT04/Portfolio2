@@ -67,6 +67,7 @@ public class Context : DbContext
             .Property(x => x.Awards).HasColumnName("awards");
         modelBuilder.Entity<Objects.Media>()
             .Property(x => x.Type).HasColumnName("type");
+        
 
 
         //genre
@@ -176,7 +177,8 @@ public class Context : DbContext
             .Property(x => x.Dob).HasColumnName("dob");
         modelBuilder.Entity<Objects.User>()
             .Property(x => x.Email).HasColumnName("email");
-
+        modelBuilder.Entity<Objects.User>()
+            .Property(x => x.Salt).HasColumnName("salt");
 
         //Rating
         modelBuilder.Entity<Objects.Rating>().ToTable("rating2");
