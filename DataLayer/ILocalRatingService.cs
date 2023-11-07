@@ -13,4 +13,8 @@ public interface ILocalRatingService
     LocalRating? GetLocalRating(string Id);
 
     (IList<LocalRating> products, int count) GetLocalRatings(int page, int pageSize);
+
+    void CreateLocalRating(LocalRating localRating);
+    void DeleteLocalRating(int u_id, string m_id);
+    bool UpdateLocalRating(LocalRating localrating);
 }
