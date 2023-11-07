@@ -81,12 +81,13 @@ public class MediaController : BaseController
     }
 
     [HttpGet("search", Name = nameof(GetMediasBySearch))]
-    public IActionResult GetMediasBySearch([FromQuery] SearchParams searchParams, [FromRoute] string []search = null) 
-    { 
+    public IActionResult GetMediasBySearch([FromQuery] SearchParams searchParams, [FromQuery] string search = null) 
+    {
+       // search = "Harry potter";
         UpdateSearchParamsFromQuery(searchParams);
-        searchParams.Search = search;
+        searchParams.search = search;
 
-        (var medias, var total) = _dataService.GetMediasBySearch(searchParams.page, searchParams.pageSize, searchParams.Search);
+        (var medias, var total) = _dataService.GetMediasBySearch(searchParams.page, searchParams.pageSize, searchParams.search);
 
         var items = medias.Select(CreateMediaModel);
 

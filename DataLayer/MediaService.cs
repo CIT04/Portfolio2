@@ -73,12 +73,22 @@ public class MediaService : IMediaService
         }
     }
 
-    public (IList<Media> products, int count) GetMediasBySearch(int page, int pageSize, string[] search)
+    public (IList<Media> products, int count) GetMediasBySearch(int page, int pageSize, string search)
     {
+       
+        if  (search == null)
+        {
+            return (null, 0);
+        }
+        else
+        {
+
+            string[] words = search.ToLower().Split(' ');
+     
         using (var db = new Context())
         {
-            search = new[] { "spider-man" };
-            var searchResult = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media({(search)})");
+            
+            var searchResult = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media({(words)})");
 
             var query = GetMediaWithIncludes(db)
               .Where(media => searchResult.Any(sr => sr.Id == media.Id))
@@ -91,7 +101,7 @@ public class MediaService : IMediaService
             
             
             return (result, query.Count());
-            
+            }
         }
     }
 
