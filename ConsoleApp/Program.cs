@@ -11,13 +11,13 @@ using DataLayer;
 var ds = new MediaService();
 
 string [] search = new[] { "peter", "parker", "spider" };
-var results=ds.GetMediasBySearch(0, 10, search);
-Console.WriteLine(results);
+//var results=ds.GetMediasBySearch(0, 10, search);
+//Console.WriteLine(results);
 
-foreach (var result in results.products)
-{
-    Console.WriteLine($"{result.Id},{result.Title}");
-}
+//foreach (var result in results.products)
+//{
+//    Console.WriteLine($"{result.Id},{result.Title}");
+//}
 
 //var mediaList = ds.GetMediasByGenre(1,10,"Horror" );
 //var db = new Context(); // Replace "YourContext" with your actual context class name

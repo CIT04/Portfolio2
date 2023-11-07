@@ -73,37 +73,49 @@ public class MediaService : IMediaService
         }
     }
 
-    public (IList<Media> products, int count) GetMediasBySearch(int page, int pageSize, string search)
+    public (IList<Media> products, int count) GetMediasBySearch(int page, int pageSize, string search, string type, string genre)
     {
-       
-        if  (search == null)
+        if (search == null)
         {
             return (null, 0);
         }
         else
         {
-
             string[] words = search.ToLower().Split(' ');
-     
-        using (var db = new Context())
-        {
-            
-            var searchResult = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media({(words)})");
 
-            var query = GetMediaWithIncludes(db)
-              .Where(media => searchResult.Any(sr => sr.Id == media.Id))
-              .OrderBy(media => searchResult.First(sr => sr.Id == media.Id).Rank);
+            using (var db = new Context())
+            {
+                var searchResult = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media({(words)})");
+                IQueryable<Media> query = GetMediaWithIncludes(db)
+    .Where(media => searchResult.Any(sr => sr.Id == media.Id));
 
-            var result = query
-                .Skip(page * pageSize)
-                .Take(pageSize)
-                .ToList();
-            
-            
-            return (result, query.Count());
+                if (!string.IsNullOrEmpty(type))
+                {
+                    type = type.ToLower();
+                    query = query.Where(m => m.Type.ToLower().Contains(type));
+                }
+
+                if (!string.IsNullOrEmpty(genre))
+                {
+                    genre = genre.ToLower();
+                    query = query.Where(m => m.MediaGenres.Any(g => g.Genre.Id.ToLower().Contains(genre)));
+                }
+
+                // Apply the ordering when needed
+                query = query.OrderBy(media => searchResult.First(sr => sr.Id == media.Id).Rank);
+
+                // Continue with other operations
+                var result = query
+                    .Skip(page * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                return (result, query.Count());
+
             }
         }
     }
+
 
 
 
