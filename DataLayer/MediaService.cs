@@ -217,5 +217,23 @@ public class MediaService : IMediaService
 
         return dto;
     }
+
+    public (IList<Team> actors, IList<Team> writersanddirectors, IList<Team> crew) GetActorsForMedia(string m_id)
+    {
+
+        using (var db = new Context())
+        {
+            var team = db.Team
+            .Include(m => m.Person)
+            .Where(x => x.MediaId == m_id);
+
+            var actors = team.Where(z => z.Role == "actor" || z.Role == "actress" || z.Role == "self").ToList();
+            var directors = team.Where(z => z.Role == "director" || z.Role == "writer").ToList();
+            var crew = team.Where(z => z.Role != "actor" && z.Role != "actress" && z.Role != "self" && z.Role != "director" && z.Role != "writer").ToList();
+
+
+            return (actors,directors,crew);
+        }
+    }
 }
 

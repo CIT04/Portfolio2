@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 using System.Linq;
 using WebServer.Models;
 
@@ -16,13 +17,13 @@ public class MediaController : BaseController
     private readonly IMediaService _dataService;
 
     public MediaController(IMediaService dataService, LinkGenerator linkGenerator)
-        :base(linkGenerator)
+        : base(linkGenerator)
     {
         _dataService = dataService;
 
     }
 
-    
+
     [HttpGet(Name = nameof(GetMedias))]
     public IActionResult GetMedias([FromQuery] SearchParams searchParams)
     {
@@ -51,7 +52,7 @@ public class MediaController : BaseController
 
 
     [HttpGet("genre/{genre}", Name = nameof(GetMediasByGenre))]
-    public IActionResult GetMediasByGenre([FromQuery] SearchParams searchParams, [FromRoute]string genre = null)
+    public IActionResult GetMediasByGenre([FromQuery] SearchParams searchParams, [FromRoute] string genre = null)
     {
         UpdateSearchParamsFromQuery(searchParams);
         searchParams.Genre = genre;
@@ -69,7 +70,7 @@ public class MediaController : BaseController
     public IActionResult GetMediasByType([FromQuery] SearchParams searchParams, [FromRoute] string type = null)
     {
         UpdateSearchParamsFromQuery(searchParams);
-        searchParams.Type= type;
+        searchParams.Type = type;
 
         (var medias, var total) = _dataService.GetMediasByType(searchParams.page, searchParams.pageSize, searchParams.Type);
 
@@ -81,12 +82,12 @@ public class MediaController : BaseController
     }
 
     [HttpGet("search", Name = nameof(GetMediasBySearch))]
-    public IActionResult GetMediasBySearch([FromQuery] SearchParams searchParams, [FromQuery] string search = null, [FromQuery] string type = null, [FromQuery] string genre = null) 
+    public IActionResult GetMediasBySearch([FromQuery] SearchParams searchParams, [FromQuery] string search = null, [FromQuery] string type = null, [FromQuery] string genre = null)
     {
-       // search = "Harry potter";
+        // search = "Harry potter";
         UpdateSearchParamsFromQuery(searchParams);
         searchParams.search = search;
-        searchParams.Type =type;
+        searchParams.Type = type;
         searchParams.Genre = genre;
 
 
@@ -99,24 +100,34 @@ public class MediaController : BaseController
         return Ok(result);
     }
 
-    
-    //public IActionResult Search([FromQuery] SearchParams searchParams, [FromRoute] string type = null, [FromRoute] string genre = null, [FromRoute] string [] search = null)
-    //{ 
-    //    UpdateSearchParamsFromQuery(searchParams);
-    //    searchParams.Type = type;
-    //    searchParams.Genre = genre;
-    //    searchParams.Search = search;
+    [HttpGet("team/{m_id}", Name = nameof(GetTeamForMedia))]
+    public IActionResult GetTeamForMedia(string m_id)
+    {
+        var teams = _dataService.GetActorsForMedia(m_id);
+        IList<Team> actors = teams.actors;
+        IList<Team> directors = teams.writersanddirectors;
+        IList<Team> crew = teams.crew;
 
-    //    (var medias, var total) = _dataService.Search(searchParams.page, searchParams.pageSize, searchParams.Search ,searchParams.Type, searchParams.Genre);
+        var teamModel = CreateTeamForMediaModel(actors, directors, crew);
 
-    //    var items = medias.Select(CreateMediaModel);
+        return Ok(teamModel);
+    }
 
-    //   //  var result = Paging(items, total, searchParams, nameof(GetMediasByType));
+    internal TeamForMediaModel CreateTeamForMediaModel(IList<Team> actor, IList<Team> writersanddirector, IList<Team> crew)
+    {
+        return new TeamForMediaModel
+        {
+            Actor = actor,
+            WritersAndDirectors = writersanddirector,
+            Crew = crew
+        };
 
-    //     //return Ok(result);
-    //    return Ok(items);
 
-    //}
+    }
+
+
+
+
     private MediaModel CreateMediaModel(MediaDTO media)
     {
         return new MediaModel
