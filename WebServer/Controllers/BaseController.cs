@@ -18,7 +18,7 @@ public class BaseController : ControllerBase
     {
         string[] words = !string.IsNullOrWhiteSpace(searchParams.search)
             ? searchParams.search.ToLower().Split(' ')
-            : new string[0]; // Empty array if searchParams.search is null or empty
+            : new string[0];
 
         var numPages = (int)Math.Ceiling(total / (double)searchParams.pageSize);
         var next = searchParams.page < numPages - 1
@@ -55,7 +55,6 @@ public class BaseController : ControllerBase
     }
     protected string GetUrl(string name, object values, string[] words)
     {
-        // Join the words together into a single string
         string searchWords = string.Join(" ", words);
 
         // Add the search parameter properly

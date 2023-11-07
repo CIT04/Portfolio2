@@ -86,8 +86,7 @@ public class MediaController : BaseController
        // search = "Harry potter";
         UpdateSearchParamsFromQuery(searchParams);
         searchParams.search = search;
-        searchParams.Type = "movie";
-            //type;
+        searchParams.Type =type;
         searchParams.Genre = genre;
 
 
