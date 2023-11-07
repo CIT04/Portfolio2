@@ -39,4 +39,31 @@ public class LocalRatingService : ILocalRatingService
 
         db.SaveChanges();
     }
+
+    //CRUD Update
+    public bool UpdateLocalRating(LocalRating localrating)
+    {
+        using var db = new Context();
+        var xLocalRating = db.LocalRating.FirstOrDefault(u => u.M_id == localrating.M_id);
+
+        if (xLocalRating != null) 
+        {
+            db.Database.ExecuteSqlInterpolated($"select update_LocalRating({localrating.M_id}, {localrating.U_id}, {localrating.LocalScore})");
+            db.SaveChanges();
+            return true;
+        }
+        return false;
+
+    }
+
+    //CRUD Delete
+    public void DeleteLocalRating(int u_id, string m_id) 
+    {
+        using var db = new Context();
+        db.Database.ExecuteSqlInterpolated($"select delete_localrating_by_mid({u_id}, {m_id})");
+        db.SaveChanges();
+    }
+
+    
+
 }

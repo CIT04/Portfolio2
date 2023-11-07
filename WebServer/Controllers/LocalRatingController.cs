@@ -64,6 +64,30 @@ public class LocalRatingController : BaseController
         return Created($"api/localrating/{xLocalRating.M_id}", xLocalRating);
     }
 
+    //CRUD Update
+    [HttpPut("update")]
+    public IActionResult UpdateLocalRating(LocalRating localrating)
+    {
+
+        var result=_dataService.UpdateLocalRating(localrating);
+        if (result) 
+        { return Ok(localrating); }
+        return NotFound();
+    }
+
+    //CRUD Delete
+    [HttpDelete("{u_id}/{m_id}")]
+    public IActionResult DeleteLocalRating(int u_id, string m_id)
+    {
+        var localrating = _dataService.GetLocalRating(m_id);
+        if (localrating == null)
+        {
+            return NotFound();
+        }
+        _dataService.DeleteLocalRating(u_id, m_id);
+        return Ok("LocalRating Deleted");
+    }
+
     public LocalRatingModel CreateLocalRatingModel(LocalRating localrating)
     {
         return new LocalRatingModel
