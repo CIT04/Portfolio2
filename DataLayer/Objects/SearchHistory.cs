@@ -13,8 +13,9 @@ namespace DataLayer.Objects
            [Key]
             public int U_id { get; set; }
             public string Search_string { get; set; }
-            public string Time { get; set; }
-        
+            public string? Time { get; set; }
+
+       
     }
 
 }

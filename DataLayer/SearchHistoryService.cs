@@ -30,7 +30,7 @@ public class SearchHistoryService : ISearchHistoryService
         {
             U_id = searchHistory.U_id,
             Search_string = searchHistory.Search_string,
-            Time = searchHistory.Time
+            Time = searchHistory.Time,
         };
 
         db.Database.ExecuteSqlInterpolated($"select insert_search_history({xSearchHistory.U_id},{xSearchHistory.Search_string}, {xSearchHistory.Time} )");

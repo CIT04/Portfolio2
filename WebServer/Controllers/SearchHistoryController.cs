@@ -63,12 +63,13 @@ public class SearchHistoryController : BaseController
     [HttpPost]
     public IActionResult AddSearchHistory(SearchHistoryModel SearchHistoryModel)
     {
+        DateTime dateTime = DateTime.Now;
 
         var searchHistory = new SearchHistory
         {
             U_id = SearchHistoryModel.U_id,
             Search_string = SearchHistoryModel.Search_string,
-            Time = SearchHistoryModel.Time
+            Time = dateTime.ToString(),
         };
         _dataService.AddSearchHistory(searchHistory);
         return Created($"api/searchhistory/{searchHistory.U_id}", searchHistory);
