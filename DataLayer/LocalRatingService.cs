@@ -25,19 +25,28 @@ public class LocalRatingService : ILocalRatingService
 
     public void CreateLocalRating(LocalRating localRating)
     {
-        using var db = new Context();
-        var xLocalRating = new LocalRating
+        try
         {
-            M_id = localRating.M_id,
-            U_id = localRating.U_id,
-            LocalScore = localRating.LocalScore
-        };
+            using var db = new Context();
+            var xLocalRating = new LocalRating
+            {
+                M_id = localRating.M_id,
+                U_id = localRating.U_id,
+                LocalScore = localRating.LocalScore
+            };
 
+            db.Database.ExecuteSqlInterpolated($"SELECT rate({xLocalRating.M_id}, {xLocalRating.U_id}, {xLocalRating.LocalScore})");
 
-
-        db.Database.ExecuteSqlInterpolated($"select insert_localrating({xLocalRating.M_id}, {xLocalRating.U_id}, {xLocalRating.LocalScore})");
-
-        db.SaveChanges();
+            db.SaveChanges();
+        }
+        catch (Npgsql.PostgresException ex)
+        {
+            if (ex.SqlState == "P0001") // Custom exception SQL state
+            {
+                // Handle the custom exception message here
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
     }
 
     //CRUD Update
