@@ -36,6 +36,8 @@ public class MediaService : IMediaService
         var db = new Context();
         return db.Media.Where(x => x.Title.ToLower().Contains(search.ToLower())).ToList();
     }
+
+    //TODO: Try/Catch exception, and write tests for page, pagesize, and invalid input
     public (IList<Media> products, int count) GetMediasByGenre(int page, int pageSize, string search)
     {
 
@@ -110,6 +112,8 @@ public class MediaService : IMediaService
                     genre = genre.ToLower();
                     query = query.Where(m => m.MediaGenres.Any(g => g.Genre.Id.ToLower().Contains(genre)));
                 }
+
+                //TODO: Fix the ordering of media query object so the ranking stays the same as when running the sql function
 
                 // Apply the ordering when needed
                 query = query.OrderBy(media => searchResult.First(sr => sr.Id == media.Id).Rank);

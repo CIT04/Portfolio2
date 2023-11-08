@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer;
 
+//TODO: Try/Catch exception, and write tests for invalid input for ALL methods
 public class LocalRatingService : ILocalRatingService
 {
     public LocalRating? GetLocalRating(string localrating)
@@ -38,13 +39,18 @@ public class LocalRatingService : ILocalRatingService
             db.Database.ExecuteSqlInterpolated($"SELECT rate({xLocalRating.M_id}, {xLocalRating.U_id}, {xLocalRating.LocalScore})");
 
             db.SaveChanges();
+
+          
         }
+
+        //TODO: Fix this part of the code, technically the code works and it wont let the user rate a movie they have already rated, but for some reason we are not catching the exception thrown in SQL
         catch (Npgsql.PostgresException ex)
         {
             if (ex.SqlState == "P0001") // Custom exception SQL state
             {
                 // Handle the custom exception message here
                 Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("TESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTEST");
             }
         }
     }

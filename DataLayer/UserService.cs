@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//TODO: Try/Catch exception, and write tests for invalid input for ALL methods
+
 namespace DataLayer
 {
     public class UserService : IUserService
@@ -73,7 +75,7 @@ namespace DataLayer
 
         }
 
-
+        //TODO: Add "User not found" on invalid input //Test it
         public void DeleteUser(int u_id) 
         {
             using var db = new Context();

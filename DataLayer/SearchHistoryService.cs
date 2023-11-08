@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer;
 
+//TODO: Try/Catch exception, and write tests for invalid input for ALL methods
+
 public class SearchHistoryService : ISearchHistoryService
 {
     public SearchHistory? GetSearchHistory(int u_id)
