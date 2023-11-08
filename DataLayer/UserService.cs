@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//TODO: Try/Catch exception, and write tests for invalid input for ALL methods
+
 namespace DataLayer
 {
     public class UserService : IUserService

@@ -2,6 +2,8 @@
 
 namespace DataLayer;
 
+//TODO: Try/Catch exception, and write tests for invalid input for ALL methods
+
 public class RatingService : IRatingService
 {
     public Rating? GetRating(string rating)
