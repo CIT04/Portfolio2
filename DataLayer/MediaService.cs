@@ -70,10 +70,16 @@ public class MediaService : IMediaService
         }
     }
 
-    public MediaDTO? GetMedia(string id)
+    public MediaDTO? GetMedia(int userid,string id)
     {
         using (var db = new Context())
         {
+            var user = db.User.FirstOrDefault(x => x.Id == userid);
+
+            if (user == null)
+            {
+                throw new ArgumentException("User not found");
+            }
             var media = GetMediaWithIncludes(db, id);
 
             if (media != null)

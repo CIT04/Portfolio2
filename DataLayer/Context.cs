@@ -179,6 +179,8 @@ public class Context : DbContext
             .Property(x => x.Email).HasColumnName("email");
         modelBuilder.Entity<Objects.User>()
             .Property(x => x.Salt).HasColumnName("salt");
+        modelBuilder.Entity<Objects.User>()
+            .Property(x => x.Role).HasColumnName("role");
 
         //Rating
         modelBuilder.Entity<Objects.Rating>().ToTable("rating2");

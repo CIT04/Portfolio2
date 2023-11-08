@@ -7,14 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//TODO: Try/Catch exception, and write tests for invalid input for ALL methods
-
 namespace DataLayer
 {
     public class UserService : IUserService
     {
 
-        public User? GetUserByUsername (string username)
+        public User GetUserByUsername (string username)
         { 
             var db = new Context();
             return db.User.FirstOrDefault(x => x.Username == username); 
@@ -51,11 +49,14 @@ namespace DataLayer
                 LastName = user.LastName,
                 Dob = user.Dob,
                 Email = user.Email,
+                Salt = user.Salt,
+                Role = user.Role
+
             };
             
             
 
-            db.Database.ExecuteSqlInterpolated($"select insert_user({xUser.Id}, {xUser.Username}, {xUser.Password},{xUser.FirstName},{xUser.LastName},{xUser.Dob},{xUser.Email})");
+            db.Database.ExecuteSqlInterpolated($"select insert_user({xUser.Id}, {xUser.Username}, {xUser.Password},{xUser.FirstName},{xUser.LastName},{xUser.Dob},{xUser.Email},{xUser.Salt}, {xUser.Role})");
 
             db.SaveChanges();
         }
@@ -67,7 +68,7 @@ namespace DataLayer
 
             if (xUser != null) 
             {
-                db.Database.ExecuteSqlInterpolated($"select update_user({user.Id}, {user.Username}, {user.Password},{user.FirstName},{user.LastName},{user.Dob},{user.Email})");
+                db.Database.ExecuteSqlInterpolated($"select update_user({user.Id}, {user.Username}, {user.Password},{user.FirstName},{user.LastName},{user.Dob},{user.Email},{xUser.Salt}, {xUser.Role})");
                 db.SaveChanges();
                 return true;
             }
@@ -75,7 +76,7 @@ namespace DataLayer
 
         }
 
-        //TODO: Add "User not found" on invalid input //Test it
+
         public void DeleteUser(int u_id) 
         {
             using var db = new Context();
@@ -83,6 +84,57 @@ namespace DataLayer
             db.SaveChanges();
         }
 
+        public User? GetUserByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateUserFromStrings(string username, string password, string firstname, string lastname, string email, string dob, string salt, string role)
+        {
+            using var db = new Context();
+            var IdCount = db.User.Max(x => x.Id) + 1;
+            var xUser = new User
+            {
+                Id = IdCount,
+                Username = username,
+                Password = password,
+                FirstName = firstname,
+                LastName = lastname,
+                Dob = dob,
+                Email = email,
+                Salt = salt,
+                Role = role
+            };
+
+
+
+            db.Database.ExecuteSqlInterpolated($"select insert_user({xUser.Id}, {xUser.Username}, {xUser.Password},{xUser.FirstName},{xUser.LastName},{xUser.Dob},{xUser.Email},{xUser.Salt}, {xUser.Role})");
+
+            db.SaveChanges();
+        }
+
+        //public void CreateUser(string username, string password, string firstname, string lastname, string email, string dob, string salt)
+        //{
+        //    using var db = new Context();
+        //    var IdCount = db.User.Max(x => x.Id) + 1;
+        //    var xUser = new User
+        //    {
+        //        Id = IdCount,
+        //        Username = username,
+        //        Password = password,
+        //        FirstName = firstname,
+        //        LastName = lastname,
+        //        Dob = dob,
+        //        Email = email,
+        //        Salt = salt,
+        //    };
+
+
+
+        //    db.Database.ExecuteSqlInterpolated($"select insert_user({xUser.Id}, {xUser.Username}, {xUser.Password},{xUser.FirstName},{xUser.LastName},{xUser.Dob},{xUser.Email},{xUser.Salt})");
+
+        //    db.SaveChanges();
+        //}
     }
 
 }

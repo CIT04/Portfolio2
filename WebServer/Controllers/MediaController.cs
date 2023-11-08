@@ -1,5 +1,6 @@
 ﻿using DataLayer;
 using DataLayer.Objects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,24 +16,32 @@ namespace WebServer.Controllers;
 public class MediaController : BaseController
 {
     private readonly IMediaService _dataService;
+    private readonly IUserService _userService;
+    private readonly IConfiguration _configuration;
 
-    public MediaController(IMediaService dataService, LinkGenerator linkGenerator)
+    public MediaController(IMediaService dataService, IUserService userService, LinkGenerator linkGenerator, IConfiguration configuration)
         : base(linkGenerator)
     {
         _dataService = dataService;
-
+        _userService = userService;
+        _configuration = configuration;
     }
 
 
     [HttpGet(Name = nameof(GetMedias))]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetMedias([FromQuery] SearchParams searchParams)
-    {
+    {   
         try
         {
-            int userid =11;
 
+            //Authentication
+            var userName = HttpContext.User.Identity.Name;
+            var user = _userService.GetUserByUsername(userName);
+         
             UpdateSearchParamsFromQuery(searchParams);
-            (var medias, var total) = _dataService.GetMedias(userid,searchParams.page, searchParams.pageSize);
+
+            (var medias, var total) = _dataService.GetMedias(user.Id, searchParams.page, searchParams.pageSize);
 
             var items = medias.Select(CreateMediaModel);
 
@@ -43,11 +52,14 @@ public class MediaController : BaseController
         catch { return Unauthorized(); }
     }
 
+ 
 
     [HttpGet("{id}", Name = nameof(GetMedia))]
     public IActionResult GetMedia(string id)
     {
-        var media = _dataService.GetMedia(id);
+        
+        
+        var media = _dataService.GetMedia(1, id);
         if (media == null)
         {
             return NotFound();
@@ -60,6 +72,7 @@ public class MediaController : BaseController
     [HttpGet("genre/{genre}", Name = nameof(GetMediasByGenre))]
     public IActionResult GetMediasByGenre([FromQuery] SearchParams searchParams, [FromRoute] string genre = null)
     {
+
         UpdateSearchParamsFromQuery(searchParams);
         searchParams.Genre = genre;
 
@@ -134,6 +147,7 @@ public class MediaController : BaseController
 
 
 
+
     private MediaModel CreateMediaModel(MediaDTO media)
     {
         return new MediaModel
@@ -186,7 +200,7 @@ public class MediaController : BaseController
 
 
         };
-
+          
 
     }
 
