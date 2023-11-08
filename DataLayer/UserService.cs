@@ -11,6 +11,13 @@ namespace DataLayer
 {
     public class UserService : IUserService
     {
+
+        public User? GetUserByUsername (string username)
+        { 
+            var db = new Context();
+            return db.User.FirstOrDefault(x => x.Username == username); 
+        }
+
         public (IList<User> products, int count) GetUsers(int page, int pageSize)
         {
             var db = new Context();

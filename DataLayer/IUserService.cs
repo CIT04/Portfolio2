@@ -10,7 +10,9 @@ namespace DataLayer;
 
     public interface IUserService
 
-{ 
+{
+        User GetUserByUsername(string username);
+
         User? GetUser(int id);
 
         (IList<User> products, int count) GetUsers(int page, int pageSize);

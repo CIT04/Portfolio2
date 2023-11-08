@@ -12,7 +12,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 public class MediaService : IMediaService
 {   
    
-
+    //TODO: Add exeptions 
     public (IList<Media> products, int count) GetMedias(int userid,int page, int pageSize)
     {
 
