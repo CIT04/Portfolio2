@@ -32,6 +32,8 @@ namespace DataLayer.Objects
         public string? Rated { get; set; }
         public string? Awards { get; set; } 
         public string? Type { get; set;}
+
+        //public int Rank { get; set; }
         
 
         
@@ -43,7 +45,7 @@ namespace DataLayer.Objects
         public ICollection<MediaGenre> MediaGenres { get; set; }
         public ICollection<MediaCountry> MediaCountries { get; set; }
         public ICollection<MediaLanguage> MediaLanguages { get; set; }
-        public ICollection<SearchResult> SearchResults { get; set; }
+       // public ICollection<SearchResult> SearchResults { get; set; }
 
         
        

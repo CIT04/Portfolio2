@@ -36,7 +36,7 @@ namespace DataLayer
         }
 
 
-        public void CreateUser(User user)
+        public int CreateUser(User user)
         {
             using var db = new Context();
             var IdCount = db.User.Max(x => x.Id) + 1;
@@ -56,7 +56,11 @@ namespace DataLayer
             
             
 
+
             db.Database.ExecuteSqlInterpolated($"select insert_user({xUser.Id}, {xUser.Username}, {xUser.Password},{xUser.FirstName},{xUser.LastName},{xUser.Dob},{xUser.Email},{xUser.Salt}, {xUser.Role})");
+
+
+            return xUser.Id;
 
             db.SaveChanges();
         }
@@ -76,11 +80,12 @@ namespace DataLayer
 
         }
 
+        //TODO: Add "User not found" on invalid input //Test it
+        public void DeleteUser(int Id) 
 
-        public void DeleteUser(int u_id) 
         {
             using var db = new Context();
-            db.Database.ExecuteSqlInterpolated($"select delete_user_by_id({u_id})");
+            db.Database.ExecuteSqlInterpolated($"select delete_user_by_id({Id})");
             db.SaveChanges();
         }
 
