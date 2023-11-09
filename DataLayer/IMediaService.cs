@@ -8,7 +8,7 @@ namespace DataLayer
     {
         (IList<Media> products, int count) GetMedias(int userid,int page, int pageSize);
         
-        MediaDTO? GetMedia(string id);
+        MediaDTO? GetMedia(int userid, string id);
 
         IList<Media> GetMediasByTitle(string search);
         (IList<Media> products, int count) GetMediasByGenre(int page, int pageSize, string genre);

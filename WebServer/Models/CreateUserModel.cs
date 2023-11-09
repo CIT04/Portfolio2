@@ -10,6 +10,6 @@
         public string LastName { get; set; }
         public string Dob { get; set; } //Date of Birth
         public string Email { get; set; }
-
+        public string Role { get; set; } = "User";
     }
 }

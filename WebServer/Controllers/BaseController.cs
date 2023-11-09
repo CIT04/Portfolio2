@@ -57,10 +57,8 @@ public class BaseController : ControllerBase
     {
         string searchWords = string.Join(" ", words);
 
-        // Add the search parameter properly
         string searchParam = !string.IsNullOrWhiteSpace(searchWords) ? $"&search={searchWords.Replace(" ", "+")}" : "";
 
-        // Add the search parameter to the URL
         var url = _linkGenerator.GetUriByName(HttpContext, name, values) + searchParam;
 
         if (url != null)

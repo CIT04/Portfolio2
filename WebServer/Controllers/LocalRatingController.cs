@@ -3,6 +3,7 @@ using DataLayer.Objects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using WebServer.Models;
 
@@ -48,21 +49,39 @@ public class LocalRatingController : BaseController
 
     }
 
-    //CRUD Create 
+    
     [HttpPost]
-    public IActionResult CreateLocal(CreateLocalRatingModel localrating)
+    public IActionResult CreateLocalRating(LocalRating localRating)
     {
-        var xLocalRating = new LocalRating
+        try
         {
-            M_id = localrating.m_id,
-            U_id = localrating.u_id,
-            LocalScore = localrating.localscore
-        };
+            using var db = new Context();
+            var xLocalRating = new LocalRating
+            {
+                M_id = localRating.M_id,
+                U_id = localRating.U_id,
+                LocalScore = localRating.LocalScore
+            };
 
-        _dataService.CreateLocalRating(xLocalRating);
 
-        return Created($"api/localrating/{xLocalRating.M_id}", xLocalRating);
+            // Return ok msg when created sucessfully
+            return Ok("Rating Created");
+        }
+        catch (Npgsql.PostgresException ex)
+        {
+            if (ex.SqlState == "P0001") // take the exception raised in sql function
+            {
+                
+                return BadRequest("Error: " + ex.Message);
+            }
+            // if the m_id/u_id does not exist return this error
+            return StatusCode(500, "User or movie does not exist, please check your input and try again.");
+        }
     }
+
+
+
+    //TODO: Update path? 
 
     //CRUD Update
     [HttpPut("update")]
@@ -74,6 +93,8 @@ public class LocalRatingController : BaseController
         { return Ok(localrating); }
         return NotFound();
     }
+
+    //TODO: u_id/m_id path does not look good in url, needs fix
 
     //CRUD Delete
     [HttpDelete("{u_id}/{m_id}")]

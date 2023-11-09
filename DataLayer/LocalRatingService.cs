@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer;
 
+//TODO: Try/Catch exception, and write tests for invalid input for ALL methods
 public class LocalRatingService : ILocalRatingService
 {
     public LocalRating? GetLocalRating(string localrating)
@@ -25,7 +26,7 @@ public class LocalRatingService : ILocalRatingService
 
     public void CreateLocalRating(LocalRating localRating)
     {
-        try
+
         {
             using var db = new Context();
             var xLocalRating = new LocalRating
@@ -38,14 +39,7 @@ public class LocalRatingService : ILocalRatingService
             db.Database.ExecuteSqlInterpolated($"SELECT rate({xLocalRating.M_id}, {xLocalRating.U_id}, {xLocalRating.LocalScore})");
 
             db.SaveChanges();
-        }
-        catch (Npgsql.PostgresException ex)
-        {
-            if (ex.SqlState == "P0001") // Custom exception SQL state
-            {
-                // Handle the custom exception message here
-                Console.WriteLine("Error: " + ex.Message);
-            }
+
         }
     }
 

@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataLayer;
-
-    public class LanguageService :  ILanguageService
+//TODO: Try/Catch exception, and write tests for invalid input for ALL methods
+public class LanguageService :  ILanguageService
 {
 
     public Language? GetLanguage(string language)

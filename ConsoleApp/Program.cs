@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataLayer;
+using Microsoft.Extensions.Configuration;
+var ds = new UserService();
+var user = ds.GetUserByUsername("Lars2");
+Console.WriteLine("userid:"+user.Id);
 
-var ds = new MediaService();
 
-//string [] search = new[] { "peter", "parker", "spider" };
-string search = "peter, parker, spider";
-
-var results = ds.GetMediasBySearch(0, 10, search,"","");
-Console.WriteLine(results);
+//var results=ds.GetMediasBySearch(0, 10, search);
+//Console.WriteLine(results);
 
 //foreach (var result in results.products)
 //{
