@@ -29,27 +29,23 @@ public class MediaController : BaseController
 
 
     [HttpGet(Name = nameof(GetMedias))]
-    [Authorize(Roles = "Admin")]
     public IActionResult GetMedias([FromQuery] SearchParams searchParams)
     {   
-        try
-        {
+        
 
-            //Authentication
-            var userName = HttpContext.User.Identity.Name;
-            var user = _userService.GetUserByUsername(userName);
+         
          
             UpdateSearchParamsFromQuery(searchParams);
 
-            (var medias, var total) = _dataService.GetMedias(user.Id, searchParams.page, searchParams.pageSize);
+            (var medias, var total) = _dataService.GetMedias( searchParams.page, searchParams.pageSize);
 
             var items = medias.Select(CreateMediaModel);
 
             var result = Paging(items, total, searchParams, nameof(GetMedias));
 
             return Ok(result);
-        }
-        catch { return Unauthorized(); }
+        
+       
     }
 
  

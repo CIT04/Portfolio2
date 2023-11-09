@@ -13,16 +13,11 @@ public class MediaService : IMediaService
 {   
    
     //TODO: Add exeptions 
-    public (IList<Media> products, int count) GetMedias(int userid,int page, int pageSize)
+    public (IList<Media> products, int count) GetMedias(int page, int pageSize)
     {
 
         var db = new Context();
-        var user = db.User.FirstOrDefault(x => x.Id == userid);
-
-        if (user == null)
-        {
-            throw new ArgumentException("User not found");
-        }
+       
 
         var media = GetMediaWithIncludes(db)
             .Skip(page * pageSize)

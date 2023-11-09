@@ -1,5 +1,6 @@
 ﻿using DataLayer;
 using DataLayer.Objects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -30,96 +31,122 @@ public class UserController : BaseController
         _configuration = configuration;
     }
 
-    [HttpGet("{id}", Name = nameof(GetUser))]
+    [HttpGet("{id:int}", Name = nameof(GetUser))]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetUser(int id)
     {
-        var user = _dataService.GetUser(id);
-        if (user == null)
+        try
         {
-            return NotFound();
-        }
+            var userName = HttpContext.User.Identity.Name;
+            var user = _dataService.GetUserByUsername(userName);
+            var userToGet = _dataService.GetUser(id);
+            if (userToGet == null)
+            {
+                return NotFound();
+            }
 
-        return Ok(CreateUserModel(user));
+            return Ok(CreateUserModel(userToGet));
+        }
+        catch
+        {
+            return Unauthorized();
+        }
     }
 
-    [HttpGet("{id}", Name = nameof(GetUser))]
+    [HttpGet("{username}", Name = nameof(GetUserByUsername))]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetUserByUsername(string username)
     {
-        var user = _dataService.GetUserByUsername(username);
-        
-        if(user == null){
+        try { 
+        var userName = HttpContext.User.Identity.Name;
+        var user = _dataService.GetUserByUsername(userName);
+        var userToGet = _dataService.GetUserByUsername(username);
+
+        if (userToGet == null) {
             return NotFound();
         }
 
-        return Ok(CreateUserModel(user));
+        return Ok(CreateUserModel(userToGet));
+    }
+        catch { return Unauthorized();
+}
     }
 
     [HttpGet(Name = nameof(GetUsers))]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetUsers([FromQuery] SearchParams searchParams)
     {
+        try
+        {
+        var userName = HttpContext.User.Identity.Name;
+        var user = _dataService.GetUserByUsername(userName);
         UpdateSearchParamsFromQuery(searchParams);
         (var users, var total) = _dataService.GetUsers(searchParams.page, searchParams.pageSize);
 
         var items = users.Select(CreateUserModel);
 
-        var result = Paging(items, total,searchParams, nameof(GetUsers));
+        var result = Paging(items, total, searchParams, nameof(GetUsers));
 
         return Ok(result);
-        
+        }
+        catch { return Unauthorized(); }
+
     }
 
     [HttpPost]
-    public IActionResult CreateUser(CreateUserModel user)
+    [Authorize(Roles = "Admin")]
+
+    public IActionResult CreateUser(CreateUserModel userToCreate)
     {
-        var xUser = new User
+        try
         {
-            Username = user.Username,
-            Password = user.Password,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Email = user.Email,
-            Dob = user.Dob,
-            Role = user.Role
+            var userName = HttpContext.User.Identity.Name;
+            var user = _dataService.GetUserByUsername(userName);
+
+            var xUser = new User
+        {
+            Username = userToCreate.Username,
+            Password = userToCreate.Password,
+            FirstName = userToCreate.FirstName,
+            LastName = userToCreate.LastName,
+            Email = userToCreate.Email,
+            Dob = userToCreate.Dob,
+            Role = userToCreate.Role
         };
 
         _dataService.CreateUser(xUser);
 
         return Created($"api/user/{xUser.Id}", xUser);
+        }
+        catch { return Unauthorized(); }
     }
-    //[HttpPost]
-    //public IActionResult CreateUser(string username, string password, string firstname, string lastname,string email, string dob, string salt)
-    //{
-    //    var xUser = new User
-    //    {
-    //        Username = username,
-    //        Password = password,
-    //        FirstName = firstname,
-    //        LastName = lastname,
-    //        Email = email,
-    //        Dob = dob,
-    //        Salt = salt
-    //    };
-
-    //    _dataService.CreateUser(xUser);
-
-    //    return Created($"api/user/{xUser.Id}", xUser);
-    //}
-
+   
+    //TODO: Authorise the user to update themselves
     [HttpPut("update")]
-    public IActionResult UpdateUser(User user)
+    [Authorize(Roles = "Admin")]
+    public IActionResult UpdateUser(User userToUdate)
     {
+        try {
+            var userName = HttpContext.User.Identity.Name;
+            var user = _dataService.GetUserByUsername(userName);
 
-        var result=_dataService.UpdateUser(user);
-        if (result) 
-        { return Ok(user); }
+            var result = _dataService.UpdateUser(userToUdate);
+        if (result)
+        { return Ok(userToUdate); }
         return NotFound();
+          }
+        catch { return Unauthorized(); }
     }
 
+    //TODO: Authorize users to delete their own accounts
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult DeleteUser(int id)
     {
-        var user = _dataService.GetUser(id);
-        if (user == null)
+        var userName = HttpContext.User.Identity.Name;
+        var user = _dataService.GetUserByUsername(userName);
+        var userForDelete = _dataService.GetUser(id);
+        if (userForDelete == null)
         {
             return NotFound();
         }
@@ -194,7 +221,7 @@ public class UserController : BaseController
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
         var token = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddSeconds(45),
+            expires: DateTime.Now.AddDays(4),
             signingCredentials: creds
 
             );
