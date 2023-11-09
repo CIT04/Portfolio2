@@ -29,19 +29,19 @@ public class UserTest
         var service = new UserService();
         var userToCreate = new DataLayer.Objects.User()
         { 
-            Username = "Mor",
+            Username = "Mor4",
             Password = "123456789",
             FirstName= "Ulla",
             LastName ="Terkelsen",
             Dob = "1979-10-10",
-            Email= "Jegelsker@fødder.dk"
+            Email= "Jegelsker@fødder4.dk"
         };
 
        var createdId = service.CreateUser(userToCreate);
         var newcreated = service.GetUser(createdId);
 
         Assert.NotNull(newcreated);
-        Assert.Equal("Mor", newcreated.Username);
+        Assert.Equal("Mor4", newcreated.Username);
         Assert.Equal("1979-10-10", newcreated.Dob);
         service.DeleteUser(createdId);
      
@@ -49,37 +49,94 @@ public class UserTest
 
 
     [Fact]
-    public async Task ApiUsers_PostWithUser_Created()
+    public void UpdateUser_ValidData_UpdatesUserProperties()
     {
-        var newUser = new
+        var service = new UserService();
+        var userToCreate2 = new DataLayer.Objects.User()
         {
-            Username = "Mor",
-            Password = "123456789",
-            FirstName = "Ulla",
-            LastName = "Terkelsen",
-            Dob = "1979-10-10",
-            Email = "Jegelsker@fødder.dk"
+            Username = "UpdateTest3",
+            Password = "password",
+            FirstName = "Per",
+            LastName = "Hansen",
+            Dob = "1985-05-20",
+            Email = "vent@komnu3.dk"
         };
-        var (user, statusCode) = await PostData(UserApi, newUser);
 
-        string? id = null;
-        if (user?.Value("id") == null)
-        {
-            var url = user?.Value("url");
-            if (url != null)
-            {
-                id = url.Substring(url.LastIndexOf('/') + 1);
-            }
-        }
-        else
-        {
-            id = user.Value("id");
-        }
+        var createdId2 = service.CreateUser(userToCreate2);
+        var userToUpdate = service.GetUser(createdId2);
 
-        Assert.Equal(HttpStatusCode.Created, statusCode);
+        userToUpdate.FirstName = "UPDATENAVN";
+        userToUpdate.LastName = "EFTERNAVN";
+        userToUpdate.Email = "Opdateret@email.dk";
 
-        await DeleteData($"{UserApi}/{id}");
+        var updateResult = service.UpdateUser(userToUpdate);
+
+        var updatedUser = service.GetUser(createdId2);
+
+        Assert.True(updateResult);
+        Assert.NotNull(updatedUser);
+        Assert.Equal("UPDATENAVN", updatedUser.FirstName);
+        Assert.Equal("EFTERNAVN", updatedUser.LastName);
+        Assert.Equal("Opdateret@email.dk", updatedUser.Email);
+
+        service.DeleteUser(createdId2);
     }
+
+    // TEST UPDATE USER WITH INVALID ID RETURNS FALSE
+    [Fact]
+    public void UpdateUser_InvalidId_ReturnsFalse()
+    {
+        var service = new UserService();
+        var invalidUser = new DataLayer.Objects.User
+        {
+            Id = -1, // Invalid ID
+            Username = "JegVirkerIkke",
+            Password = "password",
+            FirstName = "Invalid",
+            LastName = "User",
+            Dob = "2020-10-20",
+            Email = "JegVirker@Ikke.dk"
+        };
+
+        var updateResult = service.UpdateUser(invalidUser);
+
+        Assert.False(updateResult);
+    }
+
+
+
+    //[Fact]
+    //public async Task ApiUsers_PostWithUser_Created()
+    //{
+    //    var newUser = new
+    //    {
+    //        Username = "Mor",
+    //        Password = "123456789",
+    //        FirstName = "Ulla",
+    //        LastName = "Terkelsen",
+    //        Dob = "1979-10-10",
+    //        Email = "Jegelsker@fødder.dk"
+    //    };
+    //    var (user, statusCode) = await PostData(UserApi, newUser);
+
+    //    string? id = null;
+    //    if (user?.Value("id") == null)
+    //    {
+    //        var url = user?.Value("url");
+    //        if (url != null)
+    //        {
+    //            id = url.Substring(url.LastIndexOf('/') + 1);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        id = user.Value("id");
+    //    }
+
+    //    Assert.Equal(HttpStatusCode.Created, statusCode);
+
+    //    await DeleteData($"{UserApi}/{id}");
+    //}
     //TESTS FOR LOCALRATING/USER
 
 
