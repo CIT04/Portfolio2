@@ -65,16 +65,13 @@ public class MediaService : IMediaService
         }
     }
 
-    public MediaDTO? GetMedia(int userid,string id)
+
+    public MediaDTO? GetMedia(string id)
+
     {
         using (var db = new Context())
         {
-            var user = db.User.FirstOrDefault(x => x.Id == userid);
-
-            if (user == null)
-            {
-                throw new ArgumentException("User not found");
-            }
+    
             var media = GetMediaWithIncludes(db, id);
 
             if (media != null)
@@ -86,55 +83,26 @@ public class MediaService : IMediaService
         }
     }
 
-    public (IList<Media> products, int count) GetMediasBySearch(int page, int pageSize, string search, string type, string genre)
+    public (IList<SearchResult> products, int count) GetMediasBySearch(int page, int pageSize, string search, string type, string genre)
     {
-        if (search == null)
+        string[] words = search.ToLower().Split(' ');
+        using (var db = new Context())
         {
-            return (null, 0);
-        }
-        else
-        {
-            string[] words = search.ToLower().Split(' ');
+                
+            //TODO: The function should return all genres from the media result, and not just the one from the input
+            var query = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media({(words)},{(genre)},{(type)})").ToList();
 
-            using (var db = new Context())
-            {
-                var searchResult = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media({(words)})");
-                IQueryable<Media> query = GetMediaWithIncludes(db)
-    .Where(media => searchResult.Any(sr => sr.Id == media.Id));
+            int count = query.Count();
 
-                if (!string.IsNullOrEmpty(type))
-                {
-                    type = type.ToLower();
-                    query = query.Where(m => m.Type.ToLower().Contains(type));
-                }
+            var result = query
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
 
-                if (!string.IsNullOrEmpty(genre))
-                {
-                    genre = genre.ToLower();
-                    query = query.Where(m => m.MediaGenres.Any(g => g.Genre.Id.ToLower().Contains(genre)));
-                }
+            return (result, count);
 
-                //TODO: Fix the ordering of media query object so the ranking stays the same as when running the sql function
-
-                // Apply the ordering when needed
-                query = query.OrderBy(media => searchResult.First(sr => sr.Id == media.Id).Rank);
-
-                // Continue with other operations
-                var result = query
-                    .Skip(page * pageSize)
-                    .Take(pageSize)
-                    .ToList();
-
-                return (result, query.Count());
-
-            }
         }
     }
-
-
-
-
-
 
 
     /*------------SeasonEpisode--------------*/
@@ -161,39 +129,6 @@ public class MediaService : IMediaService
         var db = new Context();
         return db.Rating.FirstOrDefault(x => x.Id == id);
 
-    }
-
-    public (IList<Media> products, int count) Search(int page, int pageSize, string search, string type, string genre)
-    {
-
-        search = search.ToLower();
-
-
-        using (var db = new Context())
-        {
-            var query = GetMediaWithIncludes(db)
-                .Where(m => m.Title.ToLower().Contains(search));
-
-            db.Database.ExecuteSqlInterpolated($"SELECT * FROM search_media(ARRAY['harry','arnold','emma','blue','red','yellow'])");
-            if (!string.IsNullOrEmpty(type))
-            {
-                type = type.ToLower();
-                query = query.Where(m => m.Type.ToLower().Contains(type));
-            }
-
-            if (!string.IsNullOrEmpty(genre))
-            {
-                genre = genre.ToLower();
-                query = query.Where(m => m.MediaGenres.Any(g => g.Genre.Id.ToLower().Contains(genre)));
-            }
-
-            var result = query
-                .Skip(page * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            return (result, result.Count);
-        }
     }
     private Media GetMediaWithIncludes(Context db, string id)
     {

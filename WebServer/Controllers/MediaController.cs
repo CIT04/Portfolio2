@@ -55,7 +55,7 @@ public class MediaController : BaseController
     {
         
         
-        var media = _dataService.GetMedia(1, id);
+        var media = _dataService.GetMedia(id);
         if (media == null)
         {
             return NotFound();
@@ -108,9 +108,7 @@ public class MediaController : BaseController
 
         (var medias, var total) = _dataService.GetMediasBySearch(searchParams.page, searchParams.pageSize, searchParams.search, searchParams.Type, searchParams.Genre);
 
-        var items = medias.Select(CreateMediaModel);
-
-        var result = Paging(items, total, searchParams, nameof(GetMediasBySearch));
+        var result = Paging(medias, total, searchParams, nameof(GetMediasBySearch));
 
         return Ok(result);
     }
