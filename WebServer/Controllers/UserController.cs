@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using WebServer.Models;
 using WebServiceToken.Services;
 
@@ -71,20 +72,38 @@ public class UserController : BaseController
     [HttpPost]
     public IActionResult CreateUser(CreateUserModel user)
     {
-        var xUser = new User
+
+        try
         {
-            Username = user.Username,
-            Password = user.Password,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Email = user.Email,
-            Dob = user.Dob,
-            Role = user.Role
-        };
 
-        _dataService.CreateUser(xUser);
+            var xUser = new User
 
-        return Created($"api/user/{xUser.Id}", xUser);
+            {
+
+                Username = user.Username,
+                Password = user.Password,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Dob = user.Dob,
+                Role = user.Role
+            };
+
+        
+            _dataService.CreateUser(xUser);
+
+            return Ok("User Created");
+        }
+        catch (Npgsql.PostgresException ex)
+        {
+            if (ex.SqlState == "P0001") // take the exception raised in sql function
+            {
+
+                return BadRequest("Error: " + ex.Message);
+            }
+            // if the m_id/u_id does not exist return this error
+            return StatusCode(500, "test");
+        }
     }
     //[HttpPost]
     //public IActionResult CreateUser(string username, string password, string firstname, string lastname,string email, string dob, string salt)
@@ -104,6 +123,9 @@ public class UserController : BaseController
 
     //    return Created($"api/user/{xUser.Id}", xUser);
     //}
+
+
+
 
     [HttpPut("update")]
     public IActionResult UpdateUser(User user)
