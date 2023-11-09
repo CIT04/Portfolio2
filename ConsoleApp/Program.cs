@@ -10,9 +10,11 @@ using DataLayer;
 
 var ds = new MediaService();
 
-string [] search = new[] { "peter", "parker", "spider" };
-//var results=ds.GetMediasBySearch(0, 10, search);
-//Console.WriteLine(results);
+//string [] search = new[] { "peter", "parker", "spider" };
+string search = "peter, parker, spider";
+
+var results = ds.GetMediasBySearch(0, 10, search,"","");
+Console.WriteLine(results);
 
 //foreach (var result in results.products)
 //{
