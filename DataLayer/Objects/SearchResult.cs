@@ -11,6 +11,8 @@ namespace DataLayer.Objects
         public string Id { get; set; }
         public int Rank { get; set; }
         public string Title { get; set; }
+        public string Type { get; set; }
+        public string Genre { get; set; }
 
         public override string ToString()
         {
