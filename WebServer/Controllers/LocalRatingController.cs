@@ -63,6 +63,9 @@ public class LocalRatingController : BaseController
                 LocalScore = localRating.LocalScore
             };
 
+            db.Database.ExecuteSqlInterpolated($"SELECT rate({xLocalRating.M_id}, {xLocalRating.U_id}, {xLocalRating.LocalScore})");
+
+            db.SaveChanges();
 
             // Return ok msg when created sucessfully
             return Ok("Rating Created");
