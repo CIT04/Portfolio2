@@ -106,9 +106,11 @@ public class MediaController : BaseController
         searchParams.Genre = genre;
 
 
-        (var medias, var total) = _dataService.GetMediasBySearch(searchParams.page, searchParams.pageSize, searchParams.search, searchParams.Type, searchParams.Genre);
+        (var searchResults, var total) = _dataService.GetMediasBySearch(searchParams.page, searchParams.pageSize, searchParams.search, searchParams.Type, searchParams.Genre);
 
-        var result = Paging(medias, total, searchParams, nameof(GetMediasBySearch));
+        var items = CreateSearchResultModel(searchResults);
+
+        var result = Paging(items, total, searchParams, nameof(GetMediasBySearch));
 
         return Ok(result);
     }
@@ -140,6 +142,16 @@ public class MediaController : BaseController
 
 
 
+    private IList<SearchResultModel> CreateSearchResultModel(IList<SearchResult> searchResults)
+    {
+        return searchResults.Select(searchResult => new SearchResultModel
+        {
+            Id = searchResult.Id,
+            Rank = searchResult.Rank,
+            Title = searchResult.Title,
+            Path = GetUrl(nameof(GetMedias), new { searchResult.Id })
+        }).ToList();
+    }
 
 
     private MediaModel CreateMediaModel(MediaDTO media)

@@ -53,6 +53,15 @@ public class BaseController : ControllerBase
         }
         return url ?? "Not specified";
     }
+    protected string GetUrl(string name)
+    {
+        var url = _linkGenerator.GetUriByName(HttpContext, name);
+        if (url != null)
+        {
+            url = url.Replace("%20", "");
+        }
+        return url ?? "Not specified";
+    }
     protected string GetUrl(string name, object values, string[] words)
     {
         string searchWords = string.Join(" ", words);
