@@ -19,8 +19,8 @@ namespace DataLayer;
 
         (IList<User> products, int count) GetUsers(int page, int pageSize);
 
-        void CreateUser(User user);
+        int CreateUser(User user);
        void CreateUserFromStrings(string username, string password, string firstname, string lastname, string email, string dob, string salt, string role);
-        void DeleteUser(int u_id);
+        bool DeleteUser(int u_id);
         bool UpdateUser(User user);
     }

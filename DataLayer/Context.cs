@@ -251,10 +251,11 @@ public class Context : DbContext
             .Property(x => x.LocalScore).HasColumnName("localscore");
         modelBuilder.Entity<Objects.LocalRating>();
 
-        modelBuilder.Entity<Objects.SearchResult>().HasKey(x => x.Id);
+        modelBuilder.Entity<Objects.SearchResult>().HasNoKey();
         modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Id).HasColumnName("m_id");
         modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Rank).HasColumnName("rank");
         modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Title).HasColumnName("title");
+        
     }
 }
 

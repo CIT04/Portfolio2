@@ -20,7 +20,7 @@ public class BookmarkController : BaseController
         _dataService = dataService;
 
     }
-
+    //TODO: Add authorization for - Administrators 
     [HttpGet(Name = nameof(GetBookmarks))]
 
     public IActionResult GetBookmarks([FromQuery] SearchParams searchParams)
@@ -34,7 +34,7 @@ public class BookmarkController : BaseController
 
         return Ok(result);
     }
-
+    //TODO: Add authorization for - Administrators AND for the requesting users Id
     [HttpGet("{bookmark}", Name = nameof(GetBookmark))]
     public IActionResult GetBookmark(string bookmark, int U_id)
     {
@@ -50,6 +50,7 @@ public class BookmarkController : BaseController
     }
 
     //CRUD Create 
+    //TODO: Add authorization for - Administrators AND for the requesting users Id
     [HttpPost]
     public IActionResult CreateBookmark(CreateBookmarkModel bookmark)
     {
@@ -67,6 +68,7 @@ public class BookmarkController : BaseController
     }
 
     //CRUD Update
+    //TODO: Add authorization for - Administrators AND for the requesting users Id
     [HttpPut("update")]
     public IActionResult UpdateBookmark(Bookmark bookmark)
     {
@@ -78,6 +80,7 @@ public class BookmarkController : BaseController
     }
 
     //CRUD Delete
+    //TODO: Add authorization for - Administrators AND for the requesting users Id
     [HttpDelete("{u_id}/{m_id}")]
     public IActionResult DeleteBookmark(int u_id, string m_id)
     {

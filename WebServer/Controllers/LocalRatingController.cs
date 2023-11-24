@@ -22,8 +22,8 @@ public class LocalRatingController : BaseController
 
     }
 
+    //TODO: Add authorization for - Administrators 
     [HttpGet(Name = nameof(GetLocalRatings))]
-
     public IActionResult GetLocalRatings([FromQuery] SearchParams searchParams)
     {
         UpdateSearchParamsFromQuery(searchParams);
@@ -36,6 +36,7 @@ public class LocalRatingController : BaseController
         return Ok(result);
     }
 
+    //TODO: Add authorization for - Administrators AND for the requesting users Id
     [HttpGet("{localrating}", Name = nameof(GetLocalRating))]
     public IActionResult GetLocalRating(string Id)
     {
@@ -49,7 +50,7 @@ public class LocalRatingController : BaseController
 
     }
 
-    
+    //TODO: Add authorization for - Administrators AND for the requesting users Id
     [HttpPost]
     public IActionResult CreateLocalRating(LocalRating localRating)
     {
@@ -85,7 +86,7 @@ public class LocalRatingController : BaseController
 
 
     //TODO: Update path? 
-
+    //TODO: Add authorization for - Administrators AND for the requesting users Id
     //CRUD Update
     [HttpPut("update")]
     public IActionResult UpdateLocalRating(LocalRating localrating)
@@ -97,8 +98,8 @@ public class LocalRatingController : BaseController
         return NotFound();
     }
 
+    //TODO: Add authorization for - Administrators AND for the requesting users Id
     //TODO: u_id/m_id path does not look good in url, needs fix
-
     //CRUD Delete
     [HttpDelete("{u_id}/{m_id}")]
     public IActionResult DeleteLocalRating(int u_id, string m_id)

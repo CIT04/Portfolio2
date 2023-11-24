@@ -20,7 +20,7 @@ public class HistoryController : BaseController
         _dataService = dataService;
 
     }
-
+    //TODO: Add authorization for - Administrators
     [HttpGet(Name = nameof(GetHistories))]
 
     public IActionResult GetHistories([FromQuery] SearchParams searchParams)
@@ -34,7 +34,7 @@ public class HistoryController : BaseController
 
         return Ok(result);
     }
-
+    //TODO: Add authorization for - Administrators AND for the requesting users Id
     [HttpGet("{Id}", Name = nameof(GetHistory))]
     public IActionResult GetHistory(string Id)
     {
