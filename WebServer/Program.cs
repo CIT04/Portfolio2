@@ -47,6 +47,10 @@ var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors(
+  options => options.WithOrigins("*").AllowAnyMethod().AllowAnyHeader()
+);
+
 
 app.MapControllers();
 
