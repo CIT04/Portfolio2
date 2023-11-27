@@ -42,5 +42,29 @@ namespace DataLayer
             return actorsForMedia;
 
         }
+        public IList<ActorsForMediaDTO> GetActorsObject(int page, int pageSize, string p_id)
+        {
+            var db = new Context();
+
+            // Use LINQ to query the database
+            var actorsForMedia = (from person in db.Person
+                                  where person.Id == p_id
+                                  join team in db.Team on person.Id equals team.PersonId
+                                  select new ActorsForMediaDTO
+                                  {
+                                      Id = person.Id,
+                                      Name = person.Name,
+                                      Birthyear = person.BirthYear,
+                                      KnownForTitles = person.KnownForTitles
+                                      
+                                  })
+                                    .Skip(page * pageSize)
+                                    .Take(pageSize)
+                                    .ToList();
+
+            return actorsForMedia;
+
+        }
+
     }
 }

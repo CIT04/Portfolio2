@@ -12,6 +12,9 @@ namespace DataLayer
     {
         (IList<Person> products, int count) GetActors(int page, int pageSize);
 
-        IList<ActorsForMediaDTO> GetActorsForMedia(int page, int pageSize, string m_id);
+     //   IList<ActorsForMediaDTO> GetActorsForMedia(int page, int pageSize, string m_id);
+
+        IList<ActorsForMediaDTO> GetActorsObject(int page, int pageSize, string p_id);
+
     }
 }

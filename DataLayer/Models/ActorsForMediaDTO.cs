@@ -12,6 +12,10 @@ namespace DataLayer.Models
         public string Id { get;  set; }
         public string Name { get;  set; }
 
+        public string Birthyear { get; set; }
+
+        public string KnownForTitles { get; set; }
+
         //public Person Person { get; set; }
     }
 }
