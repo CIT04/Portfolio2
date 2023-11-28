@@ -149,6 +149,8 @@ public class MediaController : BaseController
             Rank = searchResult.Rank,
             Title = searchResult.Title,
             Poster=searchResult.Poster,
+            Rating=searchResult.Rating,
+            Year=searchResult.Year,
             Path = GetUrl(nameof(GetMedias), new { searchResult.Id })
         }).ToList();
     }
