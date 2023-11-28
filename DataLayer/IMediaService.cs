@@ -12,7 +12,7 @@ namespace DataLayer
 
         IList<Media> GetMediasByTitle(string search);
         (IList<Media> products, int count) GetMediasByGenre(int page, int pageSize, string genre);
-        (IList<SearchResult> products, int count) GetMediasBySearch(int page, int pageSize, string  search, string type, string genre);
+        (IList<SearchResult> products, int count) GetMediasBySearch(int page, int pageSize, string  search, string type);
         (IList<Media> products, int count) GetMediasByType(int page, int pageSize, string types);
         (IList<Team> actors, IList<Team> writersanddirectors, IList<Team> crew) GetActorsForMedia(string m_id);
     }

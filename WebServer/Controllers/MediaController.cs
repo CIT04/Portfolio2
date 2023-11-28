@@ -103,10 +103,9 @@ public class MediaController : BaseController
         UpdateSearchParamsFromQuery(searchParams);
         searchParams.search = search;
         searchParams.Type = type;
-        searchParams.Genre = genre;
 
 
-        (var searchResults, var total) = _dataService.GetMediasBySearch(searchParams.page, searchParams.pageSize, searchParams.search, searchParams.Type, searchParams.Genre);
+        (var searchResults, var total) = _dataService.GetMediasBySearch(searchParams.page, searchParams.pageSize, searchParams.search, searchParams.Type);
 
         var items = CreateSearchResultModel(searchResults);
 
@@ -149,6 +148,7 @@ public class MediaController : BaseController
             Id = searchResult.Id,
             Rank = searchResult.Rank,
             Title = searchResult.Title,
+            Poster=searchResult.Poster,
             Path = GetUrl(nameof(GetMedias), new { searchResult.Id })
         }).ToList();
     }

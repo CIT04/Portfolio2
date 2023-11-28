@@ -83,14 +83,16 @@ public class MediaService : IMediaService
         }
     }
 
-    public (IList<SearchResult> products, int count) GetMediasBySearch(int page, int pageSize, string search, string type, string genre)
+    public (IList<SearchResult> products, int count) GetMediasBySearch(int page, int pageSize, string search, string type)
     {
         string[] words = search.ToLower().Split(' ');
+        string[] types = type.ToLower().Split(' ');
+
         using (var db = new Context())
         {
                 
             //TODO: The function should return all genres from the media result, and not just the one from the input
-            var query = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media({(words)},{(genre)},{(type)})").ToList();
+            var query = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media_test({(words)},{(types)})").ToList();
 
             int count = query.Count();
 

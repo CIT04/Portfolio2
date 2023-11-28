@@ -253,6 +253,7 @@ public class Context : DbContext
 
         modelBuilder.Entity<Objects.SearchResult>().HasNoKey();
         modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Id).HasColumnName("m_id");
+        modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Poster).HasColumnName("poster");
         modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Rank).HasColumnName("rank");
         modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Title).HasColumnName("title");
         
