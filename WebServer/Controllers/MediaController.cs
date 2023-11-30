@@ -189,6 +189,7 @@ public class MediaController : BaseController
     {
         return new MediaModel
         {
+            Id = media.Id,
             Url = GetUrl(nameof(GetMedias), new { media.Id }),
             Title = media.Title,
             Year = media.Year,
