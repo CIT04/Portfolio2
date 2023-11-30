@@ -151,6 +151,7 @@ public class MediaService : IMediaService
     {
         var dto = new MediaDTO
         {
+            Id= media.Id,
             Title = media.Title,
             Year = media.Year,
             Plot = media.Plot,
