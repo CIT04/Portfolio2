@@ -37,7 +37,7 @@ public class WEBSERVERTESTS
                 Role = "Admin"
             };
 
-            var result = controller.SignIn(userModel) as ObjectResult;
+            var result = controller.SignUp(userModel) as ObjectResult;
 
 
             var createdUser = Service.GetUser(userModel.Id);

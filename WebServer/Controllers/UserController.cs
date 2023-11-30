@@ -172,8 +172,8 @@ public class UserController : BaseController
 
     }
 
-    [HttpPost("signin")]
-    public IActionResult SignIn(User model)
+    [HttpPost("signup")]
+    public IActionResult SignUp(User model)
     {
         if (_dataService.GetUser(model.Id) != null) 
         { 
