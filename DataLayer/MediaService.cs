@@ -165,6 +165,7 @@ public class MediaService : IMediaService
             MediaGenres = media.MediaGenres,
             MediaCountries = media.MediaCountries,
             MediaLanguages = media.MediaLanguages,
+            Type=media.Type,
             Rating = db.Rating.FirstOrDefault(x => x.Id == media.Id)
         };
 
