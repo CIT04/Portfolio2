@@ -11,7 +11,7 @@ namespace DataLayer;
 public interface IBookmarkService
 
 {
-    Bookmark? GetBookmark(int U_id);
+    IEnumerable<Bookmark>? GetBookmarks(int U_id);
 
     (IList<Bookmark> products, int count) GetBookmarks(int page, int pageSize);
 

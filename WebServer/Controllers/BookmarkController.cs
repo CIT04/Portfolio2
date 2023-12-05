@@ -38,14 +38,14 @@ public class BookmarkController : BaseController
     [HttpGet("{u_id}", Name = nameof(GetBookmark))]
     public IActionResult GetBookmark(int U_id)
     {
-        var bookmark1 = _dataService.GetBookmark(U_id);
+        var bookmarks = _dataService.GetBookmarks(U_id);
         Console.WriteLine("bookmark1");
-        if (bookmark1 == null)
+        if (bookmarks == null)
         {
             return NotFound();
         }
-
-        return Ok(CreateBookmarkModel(bookmark1));
+        var bookmarkModels = bookmarks.Select(CreateBookmarkModel);
+        return Ok(bookmarkModels);
 
     }
 

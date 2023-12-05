@@ -12,12 +12,12 @@ namespace DataLayer;
 
 public class BookmarkService : IBookmarkService
 {
-    public Bookmark? GetBookmark( int U_id)
+    public IEnumerable<Bookmark> GetBookmarks(int U_id)
     {
         var db = new Context();
-        return db.Bookmarks.FirstOrDefault(x => x.U_id == U_id);
-
+        return db.Bookmarks.Where(x => x.U_id == U_id).ToList();
     }
+
 
     public (IList<Bookmark> products, int count) GetBookmarks(int page, int pageSize)
     {
