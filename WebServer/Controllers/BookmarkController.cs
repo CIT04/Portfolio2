@@ -35,10 +35,10 @@ public class BookmarkController : BaseController
         return Ok(result);
     }
     //TODO: Add authorization for - Administrators AND for the requesting users Id
-    [HttpGet("{bookmark}", Name = nameof(GetBookmark))]
-    public IActionResult GetBookmark(string bookmark, int U_id)
+    [HttpGet("{u_id}", Name = nameof(GetBookmark))]
+    public IActionResult GetBookmark(int U_id)
     {
-        var bookmark1 = _dataService.GetBookmark(bookmark, U_id);
+        var bookmark1 = _dataService.GetBookmark(U_id);
         Console.WriteLine("bookmark1");
         if (bookmark1 == null)
         {

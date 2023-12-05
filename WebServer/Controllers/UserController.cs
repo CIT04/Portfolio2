@@ -229,7 +229,7 @@ public class UserController : BaseController
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
         
-        return Ok(new {user.Username, token = jwt});
+        return Ok(new {user.Id, user.Username, token = jwt});
     }
 
 }
