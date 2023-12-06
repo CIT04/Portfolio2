@@ -1,4 +1,4 @@
-﻿using DataLayer;
+﻿ using DataLayer;
 using DataLayer.Objects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -118,7 +118,7 @@ public class MediaController : BaseController
     public IActionResult GetTeamForMedia(string m_id)
     {
         var teams = _dataService.GetActorsForMedia(m_id);
-        IList<Team> actors = teams.actors;
+        IList<Team> actors = teams.actors;  
         IList<Team> directors = teams.writersanddirectors;
         IList<Team> crew = teams.crew;
 

@@ -51,7 +51,7 @@ public class BookmarkController : BaseController
 
     //CRUD Create 
     //TODO: Add authorization for - Administrators AND for the requesting users Id
-    [HttpPost]
+    [HttpPost("create")]
     public IActionResult CreateBookmark(CreateBookmarkModel bookmark)
     {
         var xBookmark = new Bookmark
