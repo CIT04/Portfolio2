@@ -40,11 +40,11 @@ public class BookmarkService : IBookmarkService
         { 
             M_id = bookmark.M_id,
             U_id = bookmark.U_id,
-            Time = bookmark.Time,
-            Annotation = bookmark.Annotation,
+            Time = bookmark.Time
+           
         };
 
-        db.Database.ExecuteSqlInterpolated($"select insert_bookmark({xBookmark.M_id}, {xBookmark.U_id}, {xBookmark.Time},{xBookmark.Annotation})");
+        db.Database.ExecuteSqlInterpolated($"select insert_bookmark({xBookmark.M_id}, {xBookmark.U_id})");
 
         db.SaveChanges();
     }
@@ -58,7 +58,7 @@ public class BookmarkService : IBookmarkService
 
         if (xBookmark != null) 
         {
-            db.Database.ExecuteSqlInterpolated($"select update_bookmark({bookmark.M_id}, {bookmark.U_id}, {bookmark.Time},{bookmark.Annotation})");
+            db.Database.ExecuteSqlInterpolated($"select update_bookmark({bookmark.M_id}, {bookmark.U_id})");
             db.SaveChanges();
             return true;
         }

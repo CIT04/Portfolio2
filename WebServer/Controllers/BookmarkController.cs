@@ -57,9 +57,7 @@ public class BookmarkController : BaseController
         var xBookmark = new Bookmark
         {
             M_id = bookmark.M_id,
-            U_id = bookmark.U_id,
-            Time = bookmark.Time,
-            Annotation = bookmark.Annotation
+            U_id = bookmark.U_id
         };
 
         _dataService.CreateBookmark(xBookmark);
@@ -99,7 +97,7 @@ public class BookmarkController : BaseController
             M_id = bookmark.M_id,
             U_id = bookmark.U_id,
             Time = bookmark.Time,
-            Annotation = bookmark.Annotation,
+           
 
         };
     }

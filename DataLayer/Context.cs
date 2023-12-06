@@ -210,9 +210,7 @@ public class Context : DbContext
             .Property(x => x.U_id).HasColumnName("u_id");
         modelBuilder.Entity<Objects.Bookmark>()
             .Property(x => x.Time).HasColumnName("time");
-        modelBuilder.Entity<Objects.Bookmark>()
-            .Property(x => x.Annotation).HasColumnName("annotation");
-        modelBuilder.Entity<Objects.Bookmark>();
+    
 
 
         //History

@@ -11,8 +11,8 @@ namespace DataLayer.Objects
      
         public string M_id { get; set; }
         public int U_id { get; set;}
-        public string Time { get; set;}
-        public string Annotation { get; set;}
+        public DateTime Time { get; set;}
+        
         
     }
 }
