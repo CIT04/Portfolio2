@@ -52,7 +52,7 @@ public class BookmarkController : BaseController
     //CRUD Create 
     //TODO: Add authorization for - Administrators AND for the requesting users Id
     [HttpPost("create")]
-    public IActionResult CreateBookmark(CreateBookmarkModel bookmark)
+    public IActionResult CreateBookmark(BookmarkModel bookmark)
     {
         var xBookmark = new Bookmark
         {
@@ -62,7 +62,7 @@ public class BookmarkController : BaseController
 
         _dataService.CreateBookmark(xBookmark);
 
-        return Created($"api/bookmark/{xBookmark.M_id}", xBookmark);
+        return Created($"api/bookmark/create/{xBookmark.M_id}", xBookmark);
     }
 
     //CRUD Update
@@ -79,10 +79,10 @@ public class BookmarkController : BaseController
 
     //CRUD Delete
     //TODO: Add authorization for - Administrators AND for the requesting users Id
-    [HttpDelete("{u_id}/{m_id}")]
-    public IActionResult DeleteBookmark(int u_id, string m_id)
+    [HttpDelete("delete")]
+    public IActionResult DeleteBookmark(Bookmark bookmark)
     {
-    _dataService.DeleteBookmark(u_id, m_id);
+    _dataService.DeleteBookmark(bookmark);
         return Ok("Bookmark Deleted");
     }
 

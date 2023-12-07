@@ -67,10 +67,10 @@ public class BookmarkService : IBookmarkService
 
 
     //CRUD Delete 
-    public void DeleteBookmark(int u_id, string m_id) 
+    public void DeleteBookmark(Bookmark bookmark) 
         {
             using var db = new Context();
-            db.Database.ExecuteSqlInterpolated($"select delete_bookmark_by_mid({u_id}, {m_id})");
+            db.Database.ExecuteSqlInterpolated($"select delete_bookmark_by_mid({bookmark.M_id},{bookmark.U_id})");
             db.SaveChanges();
         }
 
