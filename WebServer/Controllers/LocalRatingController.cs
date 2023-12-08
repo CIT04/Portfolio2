@@ -37,7 +37,7 @@ public class LocalRatingController : BaseController
     }
 
     //TODO: Add authorization for - Administrators AND for the requesting users Id
-    [HttpGet("{localrating}", Name = nameof(GetLocalRating))]
+    [HttpGet("mid/{m_id}", Name = nameof(GetLocalRating))]
     public IActionResult GetLocalRating(string Id)
     {
         var localrating1 = _dataService.GetLocalRating(Id);
@@ -48,6 +48,22 @@ public class LocalRatingController : BaseController
 
         return Ok(CreateLocalRatingModel(localrating1));
 
+    }
+    //TODO: Add authorization for - Administrators AND for the requesting users Id
+  
+    [HttpGet("{u_id}", Name = nameof(GetLocalRatingByUid))]
+    public IActionResult GetLocalRatingByUid(int u_id)
+    {
+        var localratings = _dataService.GetLocalRatingByUid(u_id);
+
+        if (localratings == null || !localratings.Any())
+        {
+            return NotFound();
+        }
+
+        var localRatingModels = localratings.Select(CreateLocalRatingModel);
+
+        return Ok(localRatingModels);
     }
 
     //TODO: Add authorization for - Administrators AND for the requesting users Id

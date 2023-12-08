@@ -11,6 +11,7 @@ public interface ILocalRatingService
 
 {
     LocalRating? GetLocalRating(string Id);
+    IEnumerable<LocalRating> GetLocalRatingByUid(int U_id);
 
     (IList<LocalRating> products, int count) GetLocalRatings(int page, int pageSize);
 
