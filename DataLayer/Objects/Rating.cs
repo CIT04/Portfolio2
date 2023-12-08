@@ -17,6 +17,8 @@ namespace DataLayer.Objects
         public double AverageRating { get; set;}
         public int NumVotes { get; set;}
 
+        public double ?LocalRating { get; set;}
+
 
     }
 }

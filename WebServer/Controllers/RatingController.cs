@@ -61,6 +61,7 @@ public class RatingController : BaseController
             ImdbVotes = rating.ImdbVotes,
             AverageRating = rating.AverageRating,
             NumVotes = rating.NumVotes,
+            LocalRating=rating.LocalRating,
         };
     }
 }

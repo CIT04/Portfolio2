@@ -198,6 +198,8 @@ public class Context : DbContext
             .Property(x => x.AverageRating).HasColumnName("averagerating");
         modelBuilder.Entity<Objects.Rating>()
             .Property(x => x.NumVotes).HasColumnName("numvotes");
+        modelBuilder.Entity<Objects.Rating>()
+            .Property(x => x.LocalRating).HasColumnName("local_rating");
 
 
         //Bookmarks
@@ -247,7 +249,7 @@ public class Context : DbContext
             .Property(x => x.U_id).HasColumnName("u_id");
         modelBuilder.Entity<Objects.LocalRating>()
             .Property(x => x.LocalScore).HasColumnName("localscore");
-        modelBuilder.Entity<Objects.LocalRating>();
+  
 
         modelBuilder.Entity<Objects.SearchResult>().HasNoKey();
         modelBuilder.Entity<Objects.SearchResult>().Property(x => x.Id).HasColumnName("m_id");
