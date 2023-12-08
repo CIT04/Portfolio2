@@ -67,7 +67,7 @@ public class LocalRatingController : BaseController
     }
 
     //TODO: Add authorization for - Administrators AND for the requesting users Id
-    [HttpPost]
+    [HttpPost("create")]
     public IActionResult CreateLocalRating(LocalRating localRating)
     {
         try
@@ -117,15 +117,15 @@ public class LocalRatingController : BaseController
     //TODO: Add authorization for - Administrators AND for the requesting users Id
     //TODO: u_id/m_id path does not look good in url, needs fix
     //CRUD Delete
-    [HttpDelete("{u_id}/{m_id}")]
-    public IActionResult DeleteLocalRating(int u_id, string m_id)
+    [HttpDelete("delete")]
+    public IActionResult DeleteLocalRating(LocalRating localrating)
     {
-        var localrating = _dataService.GetLocalRating(m_id);
+        
         if (localrating == null)
         {
             return NotFound();
         }
-        _dataService.DeleteLocalRating(u_id, m_id);
+        _dataService.DeleteLocalRating(localrating);
         return Ok("LocalRating Deleted");
     }
 

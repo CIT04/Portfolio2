@@ -78,10 +78,10 @@ public class LocalRatingService : ILocalRatingService
     }
 
     //CRUD Delete
-    public void DeleteLocalRating(int u_id, string m_id) 
+    public void DeleteLocalRating(LocalRating localrating) 
     {
         using var db = new Context();
-        db.Database.ExecuteSqlInterpolated($"select delete_localrating_by_mid({u_id}, {m_id})");
+        db.Database.ExecuteSqlInterpolated($"select delete_localrating_by_mid({localrating.M_id}, {localrating.U_id})");
         db.SaveChanges();
     }
 
