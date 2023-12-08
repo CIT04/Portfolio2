@@ -12,6 +12,12 @@ public class LocalRatingService : ILocalRatingService
         return db.LocalRating.FirstOrDefault(x => x.M_id == localrating);
 
     }
+    public IEnumerable<LocalRating> GetLocalRatingByUid(int U_id)
+    {
+        var db = new Context();
+        return db.LocalRating.Where(x => x.U_id == U_id).ToList();
+    }
+
 
     public (IList<LocalRating> products, int count) GetLocalRatings(int page, int pageSize)
     {

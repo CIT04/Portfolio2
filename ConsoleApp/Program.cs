@@ -8,18 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLayer;
 using Microsoft.Extensions.Configuration;
-var ds = new UserService();
-var user = ds.GetUserByUsername("Lars2");
-Console.WriteLine("userid:"+user.Id);
+var ds = new LocalRatingService();
+var locals = ds.GetLocalRatingByUid(1);
 
 
-//var results=ds.GetMediasBySearch(0, 10, search);
 //Console.WriteLine(results);
 
-//foreach (var result in results.products)
-//{
-//    Console.WriteLine($"{result.Id},{result.Title}");
-//}
+foreach (var local in locals)
+{
+    Console.WriteLine(local.U_id + "-" + "+" + local.M_id + "-" + local.LocalScore);
+}
 
 //var mediaList = ds.GetMediasByGenre(1,10,"Horror" );
 //var db = new Context(); // Replace "YourContext" with your actual context class name
