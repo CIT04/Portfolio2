@@ -9,7 +9,7 @@ namespace DataLayer;
 
 public interface ISearchHistoryService
 {
-    SearchHistory? GetSearchHistory(int Id);
+    IEnumerable<SearchHistory> GetSearchHistory(int u_id);
 
     (IList<SearchHistory> products, int count) GetSearchHistories(int page, int pageSize);
 

@@ -39,14 +39,15 @@ public class SearchHistoryController : BaseController
     public IActionResult GetSearchHistory(int Id)
     {
         var shistory = _dataService.GetSearchHistory(Id);
-        if (shistory == null)
+
+        if (shistory == null || !shistory.Any())
         {
             return NotFound();
         }
 
-        return Ok(CreateSearchHistoryModel(shistory));
-
+        return Ok(shistory.Select(CreateSearchHistoryModel));
     }
+
 
     public SearchHistoryModel CreateSearchHistoryModel(SearchHistory searchhistory)
     {
