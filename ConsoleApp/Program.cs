@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLayer;
 using Microsoft.Extensions.Configuration;
-var ds = new LocalRatingService();
-var locals = ds.GetLocalRatingByUid(1);
+var ds = new SearchHistoryService();
+var locals = ds.GetSearchHistory(70);
 
 
 //Console.WriteLine(results);
 
 foreach (var local in locals)
 {
-    Console.WriteLine(local.U_id + "-" + "+" + local.M_id + "-" + local.LocalScore);
+    Console.WriteLine(local.U_id + "-" + "+" + local.Search_string + "-" + local.Time);
 }
 
 //var mediaList = ds.GetMediasByGenre(1,10,"Horror" );

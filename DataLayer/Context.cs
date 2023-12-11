@@ -230,7 +230,7 @@ public class Context : DbContext
         //SearchHistory
         modelBuilder.Entity<Objects.SearchHistory>().ToTable("search_history");
         modelBuilder.Entity<Objects.SearchHistory>()
-        .HasKey(x => new { x.U_id });
+        .HasKey(x => new { x.U_id, x.Time});
         modelBuilder.Entity<Objects.SearchHistory>()
             .Property(x => x.Search_string).HasColumnName("search_string");
         modelBuilder.Entity<Objects.SearchHistory>()

@@ -16,6 +16,7 @@ public class BookmarkService : IBookmarkService
     {
         var db = new Context();
         return db.Bookmarks.Where(x => x.U_id == U_id).ToList();
+
     }
 
 
