@@ -36,21 +36,25 @@ public class LocalRatingController : BaseController
         return Ok(result);
     }
 
-    //TODO: Add authorization for - Administrators AND for the requesting users Id
-    [HttpGet("mid/{m_id}", Name = nameof(GetLocalRating))]
-    public IActionResult GetLocalRating(string Id)
+    [HttpGet("{m_id}/{u_id}", Name = nameof(GetLocalRating))]
+    public IActionResult GetLocalRating(string m_id, int u_id)
     {
-        var localrating1 = _dataService.GetLocalRating(Id);
-        if (localrating1 == null)
+        var localRatings = _dataService.GetLocalRating(u_id, m_id);
+
+        if (localRatings == null || !localRatings.Any())
         {
             return NotFound();
         }
 
-        return Ok(CreateLocalRatingModel(localrating1));
+      
+        var localRatingModels = localRatings.Select(CreateLocalRatingModel);
 
+        return Ok(localRatingModels);
     }
+
+
     //TODO: Add authorization for - Administrators AND for the requesting users Id
-  
+
     [HttpGet("{u_id}", Name = nameof(GetLocalRatingByUid))]
     public IActionResult GetLocalRatingByUid(int u_id)
     {
