@@ -10,7 +10,9 @@ public class SearchHistoryService : ISearchHistoryService
     public IEnumerable<SearchHistory> GetSearchHistory(int u_id)
     {
         var db = new Context();
-        return db.SearchHistory.Where(x => x.U_id == u_id).ToList();
+        return db.SearchHistory.Where(x => x.U_id == u_id)
+             .OrderByDescending(x => x.Time)
+            .ToList();
     }
 
     public (IList<SearchHistory> products, int count) GetSearchHistories(int page, int pageSize)
