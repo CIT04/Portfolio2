@@ -6,4 +6,5 @@ public class SearchParams
     public string Genre ="";
     public string Type = "";
     public string search = "";
+    public int? u_id;
 }
