@@ -36,20 +36,19 @@ public class LocalRatingController : BaseController
         return Ok(result);
     }
 
-    [HttpGet("{m_id}/{u_id}", Name = nameof(GetLocalRating))]
+    [HttpGet("{u_id}/{m_id}", Name = nameof(GetLocalRating))]
     public IActionResult GetLocalRating(string m_id, int u_id)
     {
-        var localRatings = _dataService.GetLocalRating(u_id, m_id);
+        double localRating = _dataService.GetLocalRating(u_id, m_id);
 
-        if (localRatings == null || !localRatings.Any())
+        if (localRating == null)
         {
             return NotFound();
         }
 
-      
-        var localRatingModels = localRatings.Select(CreateLocalRatingModel);
+ 
 
-        return Ok(localRatingModels);
+        return Ok(localRating);
     }
 
 
