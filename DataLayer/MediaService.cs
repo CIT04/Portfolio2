@@ -93,7 +93,7 @@ public class MediaService : IMediaService
         {
                 
             //TODO: The function should return all genres from the media result, and not just the one from the input
-            var query = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media_test1({(words)},{(types)}{(u_id)})").ToList();
+            var query = db.SearchResult.FromSqlInterpolated($"SELECT * FROM search_media_test1({(words)},{(types)},{(u_id)})").ToList();
 
             int count = query.Count();
 
