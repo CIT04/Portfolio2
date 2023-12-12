@@ -104,17 +104,27 @@ public class LocalRatingController : BaseController
 
 
 
-    //TODO: Update path? 
-    //TODO: Add authorization for - Administrators AND for the requesting users Id
-    //CRUD Update
-    [HttpPut("update")]
-    public IActionResult UpdateLocalRating(LocalRating localrating)
-    {
 
-        var result=_dataService.UpdateLocalRating(localrating);
-        if (result) 
-        { return Ok(localrating); }
-        return NotFound();
+    [HttpPut("update")]
+    public IActionResult UpdateLocalRating(LocalRating localRating)
+    {
+     
+        {
+            if (localRating == null || string.IsNullOrWhiteSpace(localRating.M_id) || localRating.U_id <= 0 || localRating.LocalScore < 0)
+            {
+                return BadRequest("Invalid request: Missing or invalid data in the request body");
+            }
+
+            var result = _dataService.UpdateLocalRating(localRating);
+
+            if (result)
+            {
+                return Ok(localRating);
+            }
+
+            return NotFound();
+        }
+      
     }
 
     //TODO: Add authorization for - Administrators AND for the requesting users Id

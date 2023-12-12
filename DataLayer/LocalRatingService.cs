@@ -76,21 +76,22 @@ public class LocalRatingService : ILocalRatingService
             }
         }
     }
-
-    //CRUD Update
-    public bool UpdateLocalRating(LocalRating localrating)
+    public bool UpdateLocalRating(LocalRating localRating)
     {
         using var db = new Context();
-        var xLocalRating = db.LocalRating.FirstOrDefault(u => u.M_id == localrating.M_id);
+        var xLocalRating = db.LocalRating.FirstOrDefault(x => x.M_id == localRating.M_id && x.U_id == localRating.U_id);
 
-        if (xLocalRating != null) 
+        if (xLocalRating != null)
         {
-            db.Database.ExecuteSqlInterpolated($"select update_LocalRating({localrating.M_id}, {localrating.U_id}, {localrating.LocalScore})");
+            // Update the properties of xLocalRating with the values from localRating
+            xLocalRating.LocalScore = localRating.LocalScore;
+
             db.SaveChanges();
+
+     
             return true;
         }
         return false;
-
     }
 
     //CRUD Delete
