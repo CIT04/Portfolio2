@@ -8,11 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLayer;
 using Microsoft.Extensions.Configuration;
-var ds = new MediaService();
-var locals = ds.GetMediasBySearch(1,10,"Harry Potter","movie", 1 );
+var ds = new LocalRatingService();
+var localrating = new LocalRating();
+localrating.M_id = "tt0439217 ";
+localrating.U_id = 64;
+localrating.LocalScore = 2;
+var locals = ds.UpdateLocalRating(localrating);
 
 //(int page, int pageSize, string search, string type, int? u_id)
 Console.WriteLine(locals);
+
+
 
 
 
