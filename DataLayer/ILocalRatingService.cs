@@ -10,7 +10,7 @@ namespace DataLayer;
 public interface ILocalRatingService
 
 {
-    LocalRating? GetLocalRating(string Id);
+    
     IEnumerable<LocalRating> GetLocalRatingByUid(int U_id);
     IEnumerable<LocalRating> GetLocalRating(int u_id, string m_id);
     (IList<LocalRating> products, int count) GetLocalRatings(int page, int pageSize);
