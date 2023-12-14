@@ -177,12 +177,22 @@ public class UserController : BaseController
     {
         if (_dataService.GetUser(model.Id) != null) 
         { 
-            return BadRequest();
+            return BadRequest("User already exists.");
         }
 
         if (string.IsNullOrEmpty(model.Password))
         {
-            return BadRequest();
+            return BadRequest("Password cannot be empty.");
+        }
+
+        if (model.Password.Length < 8 || model.Password.Length > 16)
+        {
+            return BadRequest("Password must be between 8 and 16 characters.");
+        }
+
+        if (!model.Password.Any(char.IsUpper))
+        {
+            return BadRequest("Password must contain at least one uppercase character.");
         }
 
         (var hashedPwd, var salt) = _hashing.Hash(model.Password);
