@@ -102,6 +102,11 @@ public class LocalRatingService : ILocalRatingService
         db.SaveChanges();
     }
 
-    
+    public IEnumerable<LocalRating> GetLocalRatingByMid(string m_id)
+    {
+        var db = new Context();
+        return db.LocalRating.Where(x => x.M_id == m_id).ToList();
+    }
 
+   
 }

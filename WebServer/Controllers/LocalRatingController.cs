@@ -50,6 +50,20 @@ public class LocalRatingController : BaseController
 
         return Ok(localRating);
     }
+    [HttpGet("bymid/{m_id}", Name = nameof(GetLocalRatingByMid))]
+    public IActionResult GetLocalRatingByMid(string m_id)
+    {
+        var localratings = _dataService.GetLocalRatingByMid(m_id);
+
+        if (localratings == null || !localratings.Any())
+        {
+            return NotFound();
+        }
+
+        var localRatingModels = localratings.Select(CreateLocalRatingModel);
+
+        return Ok(localRatingModels);
+    }
 
 
     //TODO: Add authorization for - Administrators AND for the requesting users Id
