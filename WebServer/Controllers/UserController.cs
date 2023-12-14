@@ -177,12 +177,29 @@ public class UserController : BaseController
     {
         if (_dataService.GetUser(model.Id) != null) 
         { 
-            return BadRequest("User already exists.");
+            return BadRequest("Username already exists.");
+        }
+        if (model.Username == null)
+        {
+            return BadRequest("Username cannot be empty.");
+        }
+        if (model.Username.Length < 4 || model.Username.Length > 16 )
+        {
+            return BadRequest("Username must be between 4 and 16 characters.");
         }
 
-        if (string.IsNullOrEmpty(model.Password))
+        if (_dataService.IsEmailAlreadyRegistered(model.Email))
         {
-            return BadRequest("Password cannot be empty.");
+            return BadRequest("Email already registered. Want to login?");
+        }
+        if (!_dataService.IsValidEmail(model.Email))
+        {
+            return BadRequest("Invalid email format.");
+        }
+
+        if (model.Email == null)
+        {
+            return BadRequest("Email cannot be empty.");
         }
 
         if (model.Password.Length < 8 || model.Password.Length > 16)
@@ -194,6 +211,10 @@ public class UserController : BaseController
         {
             return BadRequest("Password must contain at least one uppercase character.");
         }
+        if (string.IsNullOrEmpty(model.Password))
+        {
+            return BadRequest("Password cannot be empty.");
+        }
 
         (var hashedPwd, var salt) = _hashing.Hash(model.Password);
         model.Password = hashedPwd;
@@ -203,6 +224,8 @@ public class UserController : BaseController
 
         return Ok();
     }
+
+
     [HttpPost("login")]
     public IActionResult Login (UserLoginModel model)
     {

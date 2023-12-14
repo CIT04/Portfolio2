@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DataLayer
@@ -16,6 +17,18 @@ namespace DataLayer
         { 
             var db = new Context();
             return db.User.FirstOrDefault(x => x.Username == username); 
+        }
+
+        public bool IsEmailAlreadyRegistered(string email)
+        {
+            var db = new Context();
+            return db.User.Any(user => user.Email == email);
+        }
+
+        public bool IsValidEmail(string email)
+        {
+            string emailPattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+            return Regex.IsMatch(email, emailPattern);
         }
 
         public (IList<User> products, int count) GetUsers(int page, int pageSize)
