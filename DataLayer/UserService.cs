@@ -79,7 +79,7 @@ namespace DataLayer
 
         public bool DeleteUser(int u_id) 
         {
-            if(u_id != null) {
+            if(u_id != null && u_id > 1) {
                 using var db = new Context();
                 db.Database.ExecuteSqlInterpolated($"select delete_user_by_id({u_id})");
                 db.SaveChanges();

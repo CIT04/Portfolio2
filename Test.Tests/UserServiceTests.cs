@@ -1,5 +1,7 @@
 ﻿
 ﻿using DataLayer;
+using DataLayer.Objects;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net;
@@ -17,9 +19,53 @@ public class MediaTest
 //
 public class UserTest
 {
+    [Fact]
+    public void GetUserByUsername_ReturnsUser()
+    {   
+        var service = new UserService();
+        var userToCreate = new DataLayer.Objects.User()
+        {
+            Username = "Morade4",
+            Password = "123456789",
+            FirstName = "Ulla",
+            LastName = "Terkelsen",
+            Dob = "1979-10-10",
+            Email = "Jegelskmaer@.dk"
+        };
+        var newuserid = service.CreateUser(userToCreate);
+
+        var usergot = service.GetUser(newuserid);
+
+        Assert.Equal(usergot.Id,newuserid);
+       
+
+        service.DeleteUser(newuserid);
+    }
+
+    [Fact]
+    public void GetUserByUsername_WithIncorrectUsername_ReturnsNull()
+    {
+        var service = new UserService();
+
+        var incorrectUsername = "NonExistentUser";
+        var nonExistentUser = service.GetUserByUsername(incorrectUsername);
+
+        Assert.Null(nonExistentUser);
+    }
+    [Fact]
+    public void GetUser_WithIncorrectUserId_ReturnsNull()
+    {
+        var service = new UserService();
+
+
+        var incorrectUserId = -1; // 
+        var nonExistentUserById = service.GetUser(incorrectUserId);
+
+        Assert.Null(nonExistentUserById);
+    }
+
 
    
-    private const string UserApi = "http://localhost:5001/api/user";
     //TEST CREATE USER WORKS WITH VALID INPUT
     [Fact]
     public void CreateUser_ValidData_CreatesUserAndReturnsNewObject()
@@ -27,21 +73,56 @@ public class UserTest
         var service = new UserService();
         var userToCreate = new DataLayer.Objects.User()
         {
-            Username = "Mor4",
+            Username = "jajfisk",
             Password = "123456789",
             FirstName = "Ulla",
             LastName = "Terkelsen",
             Dob = "1979-10-10",
-            Email = "Jegelsker@.dk"
+            Email = "Jegelsdsaker@da.dk"
         };
         var createdId = service.CreateUser(userToCreate);
         var newcreated = service.GetUser(createdId);
         Assert.NotNull(newcreated);
-        Assert.Equal("Mor4", newcreated.Username);
+        Assert.Equal("jajfisk", newcreated.Username);
         Assert.Equal("1979-10-10", newcreated.Dob);
         service.DeleteUser(createdId);
 
     }
+   
+
+    [Fact]
+    public void Delete_user_test()
+    {
+        var service = new UserService();
+        var userToCreate = new DataLayer.Objects.User()
+        {
+            Username = "Maor4",
+            Password = "123456789",
+            FirstName = "Ulla",
+            LastName = "Terkelsen",
+            Dob = "1979-10-10",
+            Email = "Jegealsker@.dk"
+        };
+        var createdId = service.CreateUser(userToCreate);
+        var newcreated = service.GetUser(createdId);
+        Assert.NotNull(newcreated);
+        var del = service.DeleteUser(createdId);
+        Assert.True(del);
+
+    }
+
+    [Fact]
+    public void DeleteUser_WithNonExistentUser_ReturnsFalse()
+    {
+        var service = new UserService();
+
+        
+        var nonExistentUserId = -1; 
+        var deletionResult = service.DeleteUser(nonExistentUserId);
+
+        Assert.False(deletionResult); 
+    }
+
     [Fact]
     public void UpdateUser_ValidData_UpdatesUserProperties()
     {
