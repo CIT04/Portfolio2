@@ -108,29 +108,30 @@ public class LocalRatingController : BaseController
     [HttpPut("update")]
     public IActionResult UpdateLocalRating(LocalRating localRating)
     {
-     
+        if (localRating == null || string.IsNullOrWhiteSpace(localRating.M_id) || localRating.U_id <= 0 || localRating.LocalScore < 0)
         {
-            if (localRating == null || string.IsNullOrWhiteSpace(localRating.M_id) || localRating.U_id <= 0 || localRating.LocalScore < 0)
-            {
-                return BadRequest("Invalid request: Missing or invalid data in the request body");
-            }
-
-            var result = _dataService.UpdateLocalRating(localRating);
-
-            if (result)
-            {
-                return Ok(localRating);
-            }
-
-            return NotFound();
+            return BadRequest("Invalid request: Missing or invalid data in the request body");
         }
-      
+
+        localRating.M_id = localRating.M_id.Trim(); // Trim the M_id
+
+        var result = _dataService.UpdateLocalRating(localRating);
+
+        if (result)
+        {
+            return Ok(localRating);
+        }
+
+        return NotFound();
     }
 
-    //TODO: Add authorization for - Administrators AND for the requesting users Id
-    //TODO: u_id/m_id path does not look good in url, needs fix
-    //CRUD Delete
-    [HttpDelete("delete")]
+
+
+
+//TODO: Add authorization for - Administrators AND for the requesting users Id
+//TODO: u_id/m_id path does not look good in url, needs fix
+//CRUD Delete
+[HttpDelete("delete")]
     public IActionResult DeleteLocalRating(LocalRating localrating)
     {
         

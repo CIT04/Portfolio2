@@ -78,20 +78,20 @@ public class LocalRatingService : ILocalRatingService
     }
     public bool UpdateLocalRating(LocalRating localRating)
     {
-        using var db = new Context();
-        var xLocalRating = db.LocalRating.FirstOrDefault(x => x.M_id == localRating.M_id && x.U_id == localRating.U_id);
-
-        if (xLocalRating != null)
+        try
         {
-            // Update the properties of xLocalRating with the values from localRating
-            xLocalRating.LocalScore = localRating.LocalScore;
+            using var db = new Context();
 
-            db.SaveChanges();
+            db.Database.ExecuteSqlInterpolated($"SELECT update_localrating({localRating.M_id}, {localRating.U_id}, {localRating.LocalScore})");
 
-     
             return true;
         }
-        return false;
+        catch (Exception ex)
+        {
+            // Handle exceptions if needed
+            Console.WriteLine($"Error updating local rating using function: {ex.Message}");
+            return false;
+        }
     }
 
     //CRUD Delete
