@@ -14,8 +14,11 @@ public class MediaTest
 
     /* /api/categories */
 }
+//
 public class UserTest
 {
+
+   
     private const string UserApi = "http://localhost:5001/api/user";
     //TEST CREATE USER WORKS WITH VALID INPUT
     [Fact]
@@ -29,7 +32,7 @@ public class UserTest
             FirstName = "Ulla",
             LastName = "Terkelsen",
             Dob = "1979-10-10",
-            Email = "Jegelsker@fødder4.dk"
+            Email = "Jegelsker@.dk"
         };
         var createdId = service.CreateUser(userToCreate);
         var newcreated = service.GetUser(createdId);

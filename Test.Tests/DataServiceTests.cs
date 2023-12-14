@@ -20,8 +20,8 @@ public class WEBSERVERTESTS
         public void SignIn_ValidUser_CreatesUserAndReturnsOkResult()
         {
             // Arrange
-            var Service = new UserService(); // Replace this with your actual UserService implementation
-            var hashing = new Hashing(); // Replace this with your actual Hashing implementation
+            var Service = new UserService();
+            var hashing = new Hashing(); 
 
             var controller = new UserController(Service, null, hashing, null);
 
